@@ -1,0 +1,89 @@
+body
+{
+    background-color: #ffffff;
+    font-family: 'Vollkorn', serif;
+    text-align: justify;
+    overflow-y: scroll;
+    color: #333;
+    background-color: #fff;
+    font-size:15px;
+    padding-bottom: 5em;
+}
+
+a, a:visited
+{
+    text-decoration:none;
+    color:#000;
+    font-weight: bold;
+}
+a:hover
+{
+    text-decoration:underline;
+}
+
+p {
+    margin: 0 0 0.5em 0;
+}
+p.quote {
+    margin: 0 2em 0.8em 2em;
+}
+
+#root {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70em;
+    height:auto;
+    text-align: center;
+}
+
+@media only screen and (max-width : 840px) {
+    #root {
+        width:100%;
+    }
+}
+
+.path-colors > div {
+    display: inline-block;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.color-button {
+    width: 6em;
+    height: 6em;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+
+    webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+    padding: 0 3px;
+}
+.color-button table {
+    height: 100%;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.color-button td {
+    border-spacing: 0px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.path-colors {
+
+}
+.card-holder {
+    display: inline-block;
+}
+
+.card {
+    max-width: 30em;
+    width: 100%;
+}

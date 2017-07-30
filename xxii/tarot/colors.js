@@ -34,6 +34,18 @@ var blankColor = {back:'ffffff'};
 
 var currentColor = blankColor;
 
+colors["3"] = {
+    type: 'Sphere',
+    name: 'Saturn',
+    colors: [
+        { back: "AE0E36", name:"Crimson" },
+        { back: "000000", name:"Black" },
+        { back: "38200a", name:"Dark brown" },
+        { back: "808080", flecked: "FDC3C6", name:"Grey flecked pink"}
+    ]
+};
+
+
 colors["11"] = {
     type: '',
     name: '',
@@ -57,8 +69,8 @@ colors["12"] = {
 };
 
 colors["13"] = {
-    type: '',
-    name: '',
+    type: 'Planet',
+    name: 'Luna',
     colors: [
         { back: "0085ca" },
         { back: "e8e8e8" },
@@ -167,8 +179,8 @@ colors["22"] = {
 };
 
 colors["23"] = {
-    type: '',
-    name: '',
+    type: 'Element',
+    name: 'Water',
     colors: [
         { back: "004dab" },
         { back: "149C88" },
