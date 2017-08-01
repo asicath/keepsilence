@@ -69,18 +69,42 @@ p.quote {
     width: 100%;
     border-collapse: collapse;
 }
-
 .color-button td {
     border-spacing: 0px;
     vertical-align: middle;
     text-align: center;
 }
+.color-button-label {
+    font-size: 0.8em;
+}
+.color-button canvas {
+
+}
+.color-button .nameHolder {
+    position: relative;
+    top: -6em;
+}
+.color-button .effectHolder {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    left: -3px;
+}
+.color-name {
+    font-size: 0.8em;
+}
+
 
 .path-colors {
 
 }
 .card-holder {
     display: inline-block;
+}
+
+.color-holder {
+    display: inline-block;
+    width: 30em;
 }
 
 .card {
