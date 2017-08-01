@@ -3,16 +3,24 @@
 
 class CardDisplay extends React.Component {
     render() {
-        return <div>
-            <div className="col-text">test</div>
-            <div className="col-card"><img className="card" src="img/c01.jpg" /></div>
-            <div className="col-color">
-                <PathColors path={paths["2"]} />
+        return <table className="card-display"><tbody><tr>
+            <td className="col-text">
+                <p>
+                This card represents the element of Water in its most secret and original form. It is the feminine complement of the Ace of Wands, and is derived from the Yoni and the Moon exactly as that is from the Lingam and the Sun. The third in the Hierarchy. This accordingly represents the essential form of the Holy Grail. Upon the dark sea of Binah, the Great Mother, are Lotuses, two in one, which fill the cup with the Life-fluid, symbolically represented either as Water, as Blood, or as Wine, according to the selected purpose of the symbolism. This being a primordial card, the liquid is shown as water; it can be transformed into Wine or Blood as may be required.
+                </p><p>
+                Above the Cup, descending upon it, is the Dove of the Holy Ghost, thus consecrating the element.
+                </p><p>
+                At the base of the Cup is the Moon, for it is the virtue of this card to conceive and to produce the second form of its Nature.
+                </p>
+            </td>
+            <td className="col-card"><div className="card-title">Ace of Cups</div><img className="card" src="img/c01.jpg" /></td>
+            <td className="col-color">
                 <PathColors path={paths["3"]} />
+                <PathColors path={paths["2"]} />
                 <PathColors path={paths["23"]} />
                 <PathColors path={paths["29"]} />
-            </div>
-        </div>
+            </td>
+        </tr></tbody></table>
     }
 }
 
@@ -33,7 +41,7 @@ class PathColors extends React.Component {
 class ColorButton extends React.Component {
     render() {
         return <div className="color-button" style={{backgroundColor: "#" + this.props.color.back}}>
-            <div className="effectHolder"><canvas className="buttonEffectCanvas" width="96" height="90" data-color={JSON.stringify(this.props.color)}></canvas></div>
+            <div className="effectHolder"><canvas className="buttonEffectCanvas" width="88" height="88" data-color={JSON.stringify(this.props.color)}></canvas></div>
             <div className="nameHolder"><table><tbody><tr><td className="color-name">{this.props.color.name}</td></tr></tbody></table></div>
         </div>
     }

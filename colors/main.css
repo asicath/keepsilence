@@ -3,12 +3,13 @@ body
     background-color: #ffffff;
     font-family: 'Vollkorn', serif;
     text-align: justify;
-    overflow-y: scroll;
+    overflow-y: hidden;
     color: #333;
     background-color: #fff;
     font-size:15px;
     padding-bottom: 5em;
     margin: 0;
+    height: 100%;
 }
 
 a, a:visited
@@ -40,23 +41,17 @@ p.quote {
     }
 }
 
-.col-text {
-    display: inline-block;
-    width: 33%;
+table.card-display {
     height: 100%;
+    width: 100%;
+    border-collapse: collapse;
 }
-.col-card {
-    display: inline-block;
+table.card-display > tbody > tr > td {
+    border-spacing: 0px;
+    vertical-align: middle;
+    text-align: left;
     width: 33%;
-    height: 100%;
 }
-
-.col-color {
-    display: inline-block;
-    width: 33%;
-    height: 100%;
-}
-
 
 .path {
     margin-bottom: 1em;
@@ -74,8 +69,8 @@ p.quote {
 }
 
 .color-button {
-    width: 6em;
-    height: 6em;
+    width: 5.5em;
+    height: 5.5em;
     border-radius: 5px;
     display: inline-block;
     cursor: pointer;
@@ -108,7 +103,7 @@ p.quote {
 }
 .color-button .nameHolder {
     position: relative;
-    top: -6em;
+    top: -5.5em;
 }
 .color-button .effectHolder {
     width: 100%;
@@ -123,8 +118,21 @@ p.quote {
 
 
 
-
+.card-title {
+    margin-bottom: 0.3em;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
+    width: 100%;
+    margin-top: -0.6em;
+}
 .card {
     max-width: 30em;
     width: 100%;
+}
+
+.col-text {
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+    vertical-align: top;
 }
