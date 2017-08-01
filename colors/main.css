@@ -8,6 +8,7 @@ body
     background-color: #fff;
     font-size:15px;
     padding-bottom: 5em;
+    margin: 0;
 }
 
 a, a:visited
@@ -29,11 +30,8 @@ p.quote {
 }
 
 #root {
-    margin-left: auto;
-    margin-right: auto;
-    width: 70em;
-    height:auto;
-    text-align: center;
+    width: 100%;
+    height:100%;
 }
 
 @media only screen and (max-width : 840px) {
@@ -42,10 +40,37 @@ p.quote {
     }
 }
 
+.col-text {
+    display: inline-block;
+    width: 33%;
+    height: 100%;
+}
+.col-card {
+    display: inline-block;
+    width: 33%;
+    height: 100%;
+}
+
+.col-color {
+    display: inline-block;
+    width: 33%;
+    height: 100%;
+}
+
+
+.path {
+    margin-bottom: 1em;
+}
+.path-title {
+    margin-left: 0.4em;
+    font-weight:bold;
+}
+.path-colors {
+
+}
 .path-colors > div {
     display: inline-block;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    margin-left: 0.4em;
 }
 
 .color-button {
@@ -76,6 +101,7 @@ p.quote {
 }
 .color-button-label {
     font-size: 0.8em;
+    text-align: center;
 }
 .color-button canvas {
 
@@ -95,17 +121,8 @@ p.quote {
 }
 
 
-.path-colors {
 
-}
-.card-holder {
-    display: inline-block;
-}
 
-.color-holder {
-    display: inline-block;
-    width: 30em;
-}
 
 .card {
     max-width: 30em;

@@ -4,11 +4,12 @@
 class CardDisplay extends React.Component {
     render() {
         return <div>
-            <div className="color-holder">test</div>
-            <div className="card-holder"><img className="card" src="img/c01.jpg" /></div>
-            <div className="color-holder">
+            <div className="col-text">test</div>
+            <div className="col-card"><img className="card" src="img/c01.jpg" /></div>
+            <div className="col-color">
                 <PathColors path={paths["2"]} />
-                <PathColors path={paths["13"]} />
+                <PathColors path={paths["3"]} />
+                <PathColors path={paths["23"]} />
                 <PathColors path={paths["29"]} />
             </div>
         </div>
@@ -17,12 +18,15 @@ class CardDisplay extends React.Component {
 
 class PathColors extends React.Component {
     render() {
-        return <div className="path-colors">
-            <div><ColorButton color={this.props.path.colors[0]} /><div className="color-button-label">king scale</div></div>
-            <div><ColorButton color={this.props.path.colors[1]} /><div className="color-button-label">queen scale</div></div>
-            <div><ColorButton color={this.props.path.colors[2]} /><div className="color-button-label">emperor scale</div></div>
-            <div><ColorButton color={this.props.path.colors[3]} /><div className="color-button-label">empress scale</div></div>
-        </div>
+        return <div className="path">
+                <div className="path-title">{this.props.path.name}</div>
+                <div className="path-colors">
+                    <div><ColorButton color={this.props.path.colors[0]} /><div className="color-button-label">king scale</div></div>
+                    <div><ColorButton color={this.props.path.colors[1]} /><div className="color-button-label">queen scale</div></div>
+                    <div><ColorButton color={this.props.path.colors[2]} /><div className="color-button-label">emperor scale</div></div>
+                    <div><ColorButton color={this.props.path.colors[3]} /><div className="color-button-label">empress scale</div></div>
+                </div>
+            </div>
     }
 }
 
@@ -46,6 +50,17 @@ const paths = {
             { back: "ffffff", flecked: ["ed1c24", "0085ca", "FEDD00"], name: "White, flecked red, blue, and yellow" }
         ]
     },
+    //							"808080    FDC3C6"
+    "3": {
+        type: 'Sphere',
+        name: 'Binah',
+        colors: [
+            { back: "AE0E36", name: "Crimson" },
+            { back: "000000", name: "Black" },
+            { back: "38200a", name: "Dark brown" },
+            { back: "808080", flecked: "FDC3C6", name: "Grey flecked pink" }
+        ]
+    },
     "13": {
         type: 'Planet',
         name: 'Luna',
@@ -54,6 +69,16 @@ const paths = {
             { back: "e8e8e8", name: "Silver" },
             { back: "A5C5D9", name: "Cold pale blue" },
             { back: "e8e8e8", rayed: "8ABAD3", name: "Silver, rayed sky blue" }
+        ]
+    },
+    "23": {
+        type: 'Element',
+        name: 'Water',
+        colors: [
+            { back: "004dab", name: "Deep blue" },
+            { back: "149C88", name: "Sea green" },
+            { back: "5b6300", name: "Deep olive-green" },
+            { back: "ffffff", flecked:"BB29BB", name: "White, flecked purple, like mother-of-pearl" }
         ]
     },
     "29": {
