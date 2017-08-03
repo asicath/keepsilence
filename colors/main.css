@@ -73,14 +73,15 @@ table.card-display > tbody > tr > td {
 .path-colors {
 
 }
-.path-colors > div {
+.path-colors > .col {
     display: inline-block;
     margin-left: 0.4em;
 }
 
+
 .color-button {
-    width: 5.5em;
-    height: 5.5em;
+    width: 7em;
+    height: 7em;
     border-radius: 5px;
     display: inline-block;
     cursor: pointer;
@@ -94,6 +95,13 @@ table.card-display > tbody > tr > td {
     user-select: none;
     padding: 0 3px;
 }
+@media only screen and (max-width : 1600px) {
+    .color-button {
+        width: 5.5em;
+        height: 5.5em;
+    }
+}
+
 .color-button table {
     height: 100%;
     width: 100%;
@@ -144,4 +152,11 @@ table.card-display > tbody > tr > td {
     padding-left: 0.6em;
     padding-right: 0.6em;
     vertical-align: top;
+}
+
+.prev {
+    float:left;
+}
+.next {
+    float:right;
 }
