@@ -685,9 +685,6 @@ function quarterIt(canvas, color) {
     var w = canvas.width;
     var h = canvas.height;
 
-
-
-
     //top
     ctx.beginPath();
     ctx.moveTo(center.x, center.y);
@@ -723,12 +720,47 @@ function quarterIt(canvas, color) {
 
 }
 
+function drawFleck(ctx, color, xCenter, yCenter) {
+
+    //yourNumber = parseInt(hexString, 16);
+    //"rgba(255, 255, 255, 0.5)";
+
+    // draw at point
+    //var size = Math.random() * 4 + 4;
+
+    var angleOffset = Math.random() * Math.PI * 2;
+
+    //var sides = Math.floor(Math.random() * 3) + 3;
+    var sides = 4;
+    var angleIncr = Math.PI * 2 / sides;
+
+    ctx.beginPath();
+    for (var i = 0; i < sides; i++) {
+        var size = Math.random() * 4 + 4;
+        var angle = (angleIncr * i + angleOffset) % (Math.PI * 2);
+        var x = Math.cos(angle) * (size/2) + xCenter;
+        var y = Math.sin(angle) * (size/2) + yCenter;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = "#" + color;
+    ctx.fill();
+
+    /*
+    ctx.beginPath();
+    ctx.arc(x, y, size/2, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "#" + color;
+    ctx.fill();
+    */
+
+}
+
 function fleckIt(canvas, color) {
     var ctx = canvas.getContext('2d');
     var colorArray = Array.isArray(color.flecked) ? color.flecked : [color.flecked];
     var colorIndex = 0;
 
-    var size = 3;
     var radius = 1;
     var angle = 0;
     var maxRadius = Math.max(canvas.width, canvas.height);
@@ -745,10 +777,8 @@ function fleckIt(canvas, color) {
         var y = Math.sin(angle) * radius + center.y;
 
         // draw at point
-        ctx.beginPath();
-        ctx.arc(x, y, size/2, 0, 2 * Math.PI, false);
-        ctx.fillStyle = "#" + colorArray[colorIndex++ % colorArray.length];
-        ctx.fill();
+        drawFleck(ctx, colorArray[colorIndex++ % colorArray.length], x, y);
+
 
         var d = idealDistance;
         var percent = -1;
