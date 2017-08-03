@@ -720,32 +720,44 @@ function quarterIt(canvas, color) {
 
 }
 
+function alphaColor(color, alpha) {
+    var r = parseInt(color.substr(0, 2), 16);
+    var g = parseInt(color.substr(2, 2), 16);
+    var b = parseInt(color.substr(4, 2), 16);
+    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha.toString() + ")";
+}
+
 function drawFleck(ctx, color, xCenter, yCenter) {
 
     //yourNumber = parseInt(hexString, 16);
-    //"rgba(255, 255, 255, 0.5)";
+    //"
 
     // draw at point
     //var size = Math.random() * 4 + 4;
 
-    var angleOffset = Math.random() * Math.PI * 2;
 
-    //var sides = Math.floor(Math.random() * 3) + 3;
-    var sides = 4;
+
+    var sides = Math.floor(Math.random() * 3) + 3;
+    //var sides = 4;
     var angleIncr = Math.PI * 2 / sides;
 
-    ctx.beginPath();
-    for (var i = 0; i < sides; i++) {
-        var size = Math.random() * 4 + 4;
-        var angle = (angleIncr * i + angleOffset) % (Math.PI * 2);
-        var x = Math.cos(angle) * (size/2) + xCenter;
-        var y = Math.sin(angle) * (size/2) + yCenter;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+    for (var n = 0; n < 3; n++) {
+        var angleOffset = Math.random() * Math.PI * 2;
+        ctx.beginPath();
+        for (var i = 0; i < sides; i++) {
+            var size = Math.random() * 8 + 4;
+            var angle = (angleIncr * i + angleOffset) % (Math.PI * 2);
+            var x = Math.cos(angle) * (size/2) + xCenter;
+            var y = Math.sin(angle) * (size/2) + yCenter;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = alphaColor(color, 0.5); // "#" + color;
+        ctx.fill();
     }
-    ctx.closePath();
-    ctx.fillStyle = "#" + color;
-    ctx.fill();
+
+
 
     /*
     ctx.beginPath();
@@ -766,8 +778,8 @@ function fleckIt(canvas, color) {
     var maxRadius = Math.max(canvas.width, canvas.height);
     var center = {x:canvas.width/2, y: canvas.height/2};
 
-    var idealDistance = 8;
-    var radiusIncrPerRevolution = 10;
+    var idealDistance = 15;
+    var radiusIncrPerRevolution = 12;
 
     var maxTimes = 1000000;
 
