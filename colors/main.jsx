@@ -13,9 +13,17 @@ class CardDisplay extends React.Component {
         var nextUrl = "index.htm?id=" + nextId;
 
         var imgUrl = "img/" + this.props.cardId + ".jpg";
+        var cardImg = <img className="card" src={imgUrl} />;
+        if (this.props.card.noCard) cardImg = <div>&nbsp;</div>;
+
         return <table className="card-display"><tbody><tr>
             <td className="col-text" id="info-text">&nbsp;</td>
-            <td className="col-card"><div className="prev"><a href={prevUrl}>prev</a></div><div className="next"><a href={nextUrl}>next</a></div><div className="card-title">{this.props.card.title}</div><img className="card" src={imgUrl} /></td>
+            <td className="col-card">
+                <div className="prev"><a href={prevUrl}>prev</a></div>
+                <div className="next"><a href={nextUrl}>next</a></div>
+                <div className="card-title">{this.props.card.title}</div>
+                {cardImg}
+            </td>
             <td className="col-color">
             {this.props.card.paths.map(function(pathId, i){
                 return <PathColors path={paths[pathId]} key={i} />;
@@ -63,35 +71,155 @@ class ColorButton extends React.Component {
 }
 
 
-function setBackground(color) {
-
-    var background = document.getElementById('background');
-    var canvas = document.getElementById("background-effect");
-
-    if (color === null) {
-        background.style.backgroundColor = "#ffffff";
-        clearIt(canvas);
-        return;
-    }
-
-
-    background.style.backgroundColor = "#" + color.back;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    if (color.hasOwnProperty('rayed')) rayIt(canvas, color);
-    else if (color.hasOwnProperty('flecked')) fleckIt(canvas, color);
-    else if (color.hasOwnProperty('quartered')) quarterIt(canvas, color);
-    else clearIt(canvas);
-
-}
 
 const cards = {
 
+    "kether": {
+        title: "Kether",
+        paths: ["1"],
+        noCard: true
+    },
+    "chokmah": {
+        title: "Chokmah",
+        paths: ["2"],
+        noCard: true
+    },
+    "binah": {
+        title: "Binah",
+        paths: ["3"],
+        noCard: true
+    },
+    "daath": {
+        title: "Daath",
+        paths: ["d"],
+        noCard: true
+    },
+    "chesed": {
+        title: "Chesed",
+        paths: ["4"],
+        noCard: true
+    },
+    "geburah": {
+        title: "Geburah",
+        paths: ["5"],
+        noCard: true
+    },
+    "tiphareth": {
+        title: "Tiphareth",
+        paths: ["6"],
+        noCard: true
+    },
+    "netzach": {
+        title: "Netzach",
+        paths: ["7"],
+        noCard: true
+    },
+    "hod": {
+        title: "Hod",
+        paths: ["8"],
+        noCard: true
+    },
+    "yesod": {
+        title: "Yesod",
+        paths: ["9"],
+        noCard: true
+    },
+    "malkuth": {
+        title: "Malkuth",
+        paths: ["10"],
+        noCard: true
+    },
+
+
+
+    "t00": {
+        title: "",
+        paths: ["11"]
+    },
+    "t01": {
+        title: "",
+        paths: ["12"]
+    },
+    "t02": {
+        title: "",
+        paths: ["13"]
+    },
+    "t03": {
+        title: "",
+        paths: ["14"]
+    },
     "t04": {
         title: "The Emperor",
         paths: ["15"]
+    },
+
+    "t05": {
+        title: "",
+        paths: ["16"]
+    },
+    "t06": {
+        title: "",
+        paths: ["17"]
+    },
+    "t07": {
+        title: "",
+        paths: ["18"]
+    },
+    "t08": {
+        title: "",
+        paths: ["19"]
+    },
+    "t09": {
+        title: "",
+        paths: ["20"]
+    },
+    "t10": {
+        title: "",
+        paths: ["21"]
+    },
+    "t11": {
+        title: "",
+        paths: ["22"]
+    },
+    "t12": {
+        title: "",
+        paths: ["23"]
+    },
+    "t13": {
+        title: "",
+        paths: ["24"]
+    },
+    "t14": {
+        title: "",
+        paths: ["25"]
+    },
+    "t15": {
+        title: "",
+        paths: ["26"]
+    },
+    "t16": {
+        title: "",
+        paths: ["27"]
+    },
+    "t17": {
+        title: "",
+        paths: ["28"]
+    },
+    "t18": {
+        title: "",
+        paths: ["29"]
+    },
+    "t19": {
+        title: "",
+        paths: ["30"]
+    },
+    "t20": {
+        title: "",
+        paths: ["31"]
+    },
+    "t21": {
+        title: "",
+        paths: ["32"]
     },
 
     "w01": {
@@ -121,7 +249,7 @@ const cards = {
     },
     "w07": {
         title: "Seven of Wands",
-        paths: ["31", "27","19"]
+        paths: ["27","19"]
     },
     "w08": {
         title: "Eight of Wands",
@@ -326,11 +454,27 @@ const cards = {
     "d-princess": {
         title: "princess of Disks",
         paths: ["32bis"]
+    },
+    "spirit": {
+        title: "Spirit",
+        paths: ["31bis"],
+        noCard:true
     }
 
 };
 
 const paths = {
+
+    "1": {
+        type: 'Sphere',
+        name: 'Kether',
+        colors: [
+            { back: "ffffff", name: "Brilliance" },
+            { back: "ffffff", name: "White brilliance" },
+            { back: "ffffff", name: "White brilliance" },
+            { back: "ffffff", flecked: "FEDD00", name: "White flecked gold" }
+        ]
+    },
     "2": {
         type: 'Sphere',
         name: 'Chokmah',
@@ -351,6 +495,36 @@ const paths = {
             { back: "808080", flecked: "FDC3C6", name: "Grey flecked pink" }
         ]
     },
+    "d": {
+        type: 'Sphere',
+        name: 'Daath',
+        colors: [
+            { back: "9A90CD", name: "Lavender" },
+            { back: "bfbfbf", name: "Grey-white" },
+            { back: "5b00cc", name: "Pure Violet" },
+            { back: "808080", flecked: "FEDD00", name: "Grey flecked gold" }
+        ]
+    },
+    "4": {
+        type: 'Sphere',
+        name: 'Chesed',
+        colors: [
+            { back: "2d0066", name: "Deep Violet" },
+            { back: "0085ca", name: "Blue" },
+            { back: "550055", name: "Deep purple" },
+            { back: "1f649a", flecked: "FEDD00", name: "Deep azure, flecked yellow" }
+        ]
+    },
+    "5": {
+        type: 'Sphere',
+        name: 'Geburah',
+        colors: [
+            { back: "FF6D00", name: "Orange" },
+            { back: "F2301B", name: "Scarlet red" },
+            { back: "ff321c", name: "Bright scarlet" },
+            { back: "ed1c24", flecked: "000000", name: "Red, flecked black" }
+        ]
+    },
     "6": {
         type: 'Sphere',
         name: 'Tiphareth',
@@ -362,6 +536,26 @@ const paths = {
             { back: "FFCA1A", name: "Gold amber" }
         ]
     },
+    "7": {
+        type: 'Sphere',
+        name: 'Netzach',
+        colors: [
+            { back: "ffb734", name: "Amber" },
+            { back: "00A550", name: "Emerald" },
+            { back: "e0f317", name: "Bright yellow green" },
+            { back: "8d8800", flecked: "FEDD00", name: "Olive, flecked gold" }
+        ]
+    },
+    "8": {
+        type: 'Sphere',
+        name: 'Hod',
+        colors: [
+            { back: "7f14aa", name: "Violet Purple" },
+            { back: "FF6D00", name: "Orange" },
+            { back: "B1282B", name: "Red-russet" },
+            { back: "AD8809", flecked: "ffffff", name: "Yellow-brown, flecked white" }
+        ]
+    },
     "9": {
         type: 'Sphere',
         name: 'Yesod',
@@ -370,6 +564,16 @@ const paths = {
             { back: "440099", name: "Violet" },
             { back: "330b33", name: "Very dark purple" },
             { back: "dedb2c", flecked: "4D91C6", name: "Citrine, flecked azure" }
+        ]
+    },
+    "10": {
+        type: 'Sphere',
+        name: 'Malkuth',
+        colors: [
+            { back: "FEDD00", name: "Yellow" },
+            { back: "000000", quartered:["dedb2c", "8d8800", "731817", "000000"], name: "Citrine, olive, russet, and black" },
+            { back: "000000", quartered:["dedb2c", "8d8800", "731817", "000000"], flecked: "FEDD00", name: "As Queen scale, but flecked with gold" },
+            { back: "000000", rayed:"FEDD00", name: "Black rayed with yellow" }
         ]
     },
     "11": {
@@ -596,17 +800,17 @@ const paths = {
         type: 'Element',
         name: 'Spirit',
         colors: [
-            { back: "ffffff", name: "White merging into grey" },
+            { back: "ffffff", gradient:["ffffff", "808080"], name: "White merging into grey" },
             { back: "220022", name: "Deep purple, nearly black" },
-            { back: "000000", name: "The 7 prismatic colours, the violet being outside" },
-            { back: "000000", name: "White, red, yellow, blue, black (the latter outside)" }
+            { back: "440099", circles:["440099", "001489", "0085ca", "00A550", "FEDD00", "FF6D00", "ed1c24"], name: "The 7 prismatic colours, the violet being outside" },
+            { back: "000000", circles:["000000", "0085ca", "FEDD00", "ed1c24", "ffffff"], name: "White, red, yellow, blue, black (the latter outside)" }
         ]
     },
     "32bis": {
         type: 'Element',
         name: 'Earth',
         colors: [
-            { back: "000000", quartered:["dedb2c", "8d8800", "731817", "000000"], name: "Emerald (Citrine, olive, russet, and black)" },
+            { back: "000000", quartered:["dedb2c", "8d8800", "731817", "000000"], name: "Citrine, olive, russet, and black" },
             { back: "ffb734", name: "Amber" },
             { back: "38200a", name: "Dark brown" },
             { back: "000000", flecked:"FEDD00", name: "Black, flecked yellow" }
@@ -626,6 +830,36 @@ const paths = {
     
 };
 
+
+function setBackground(color) {
+
+    var background = document.getElementById('background');
+    var canvas = document.getElementById("background-effect");
+
+    if (color === null) {
+        background.style.backgroundColor = "#ffffff";
+        clearIt(canvas);
+        return;
+    }
+
+
+    background.style.backgroundColor = "#" + color.back;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    if (color.hasOwnProperty('rayed')) rayIt(canvas, color);
+    else if (color.hasOwnProperty('quartered')) {
+        quarterIt(canvas, color);
+        if (color.hasOwnProperty('flecked')) fleckIt(canvas, color);
+    }
+    else if (color.hasOwnProperty('circles')) drawCircles(canvas, color);
+    else if (color.hasOwnProperty('gradient')) drawGradient(canvas, color);
+    else if (color.hasOwnProperty('flecked')) fleckIt(canvas, color);
+    else clearIt(canvas);
+
+}
+
 function updateButtonEffects() {
     var a = document.getElementsByClassName("buttonEffectCanvas");
     for (var i = 0; i < a.length; i++) {
@@ -640,8 +874,11 @@ function updateButtonEffects() {
         if (canvas.parentElement.clientHeight !==  canvas.height) canvas.height = canvas.parentElement.clientHeight;
 
         if (color.hasOwnProperty('rayed')) rayIt(canvas, color);
+        if (color.hasOwnProperty('quartered')) quarterIt(canvas, color);
+        if (color.hasOwnProperty('circles')) drawCircles(canvas, color);
+        if (color.hasOwnProperty('gradient')) drawGradient(canvas, color, true);
         if (color.hasOwnProperty('flecked')) fleckIt(canvas, color);
-        if (color.hasOwnProperty('quartered')) quarterIt(canvas, color)
+
     }
 
 }
@@ -649,6 +886,77 @@ function updateButtonEffects() {
 function clearIt(canvas) {
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawCircles(canvas, color) {
+
+    var center = {x:canvas.width/2, y: canvas.height/2};
+    var maxRadius = Math.max(center.x, center.y);
+    var radiusIncr = maxRadius / color.circles.length;
+
+    var ctx = canvas.getContext('2d');
+    for (var i = 0; i < color.circles.length; i++) {
+
+        var radius = radiusIncr * (color.circles.length - i);
+
+        ctx.beginPath();
+        ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "#" + color.circles[i];
+        ctx.fill();
+    }
+
+}
+
+function drawGradient(canvas, color, roundCorners) {
+    var ctx = canvas.getContext('2d');
+
+    if (roundCorners) {
+        var round = 5;
+
+        // top
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(0, round);
+        ctx.arc(round, round, round, Math.PI, 1.5 * Math.PI, false);
+        ctx.lineTo(canvas.width - round, 0);
+        ctx.arc(canvas.width - round, round, round, 1.5 * Math.PI, 0, false);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.closePath();
+        ctx.fillStyle = "#" + color.gradient[0];
+        ctx.fill();
+
+        // bottom
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(0, canvas.height - round);
+        ctx.arc(round, canvas.height - round, round, Math.PI, 0.5 * Math.PI, true);
+        ctx.lineTo(canvas.width - round, canvas.height);
+        ctx.arc(canvas.width - round, canvas.height - round, round, 0.5 * Math.PI, 0, true);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.closePath();
+        ctx.fillStyle = "#" + color.gradient[1];
+        ctx.fill();
+
+    }
+    else {
+        ctx.fillStyle = "#" + color.gradient[0];
+        ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
+
+        ctx.fillStyle = "#" + color.gradient[1];
+        ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2);
+    }
+
+
+    // now the middle
+    var x = canvas.width / 2;
+    var p = 0.05;
+    var gradient = ctx.createLinearGradient(x, canvas.height * p, x, canvas.height * (1-p-p));
+
+    gradient.addColorStop(0, "#" + color.gradient[0]);
+    gradient.addColorStop(1, "#" + color.gradient[1]);
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, canvas.height * (p), canvas.width, canvas.height * (1-p-p));
 }
 
 function rayIt(canvas, color) {
@@ -859,11 +1167,49 @@ function getParameterByName(name, url) {
 var list = [];
 function main() {
 
-    // get the id from the url
+    // get the id from the url, try to show the card page
     var cardId = getParameterByName("id");
+    if (cardId !== null && cards.hasOwnProperty(cardId)) return showCardPage(cardId);
+
+    // otherwise show the menu
+    return showIndexPage();
+}
+
+function showIndexPage() {
+    const element = <Index />;
+    ReactDOM.render(
+        element,
+        document.getElementById('root')
+    );
+}
+
+class Index extends React.Component {
+    render() {
+        return <div>
+
+            <div>
+                Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed.
+            </div>
+            <div>
+                Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans
+            </div>
+            <div>
+                SRIA II, Theoricus Grade, The Lecture on Colours
+            </div>
+            <div>
+                Order of the Golden Dawn, Hodos Chamelionis
+            </div>
+            <div>
+                Aleister Crowley, 777, Notes to the Table of Correspondences
+            </div>
+        </div>
+    }
+}
+
+
+function showCardPage(cardId) {
 
     // get the card info
-    if (!cards.hasOwnProperty(cardId)) return;
     var card = cards[cardId];
 
     // create the list
@@ -881,6 +1227,9 @@ function main() {
 
 window.onresize = function(event) {
     updateButtonEffects();
+    if (currentColor !== null) {
+        setBackground(currentColor);
+    }
 };
 
 main();
