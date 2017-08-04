@@ -63,15 +63,23 @@ class ColorButton extends React.Component {
             }
 
         };
-        return <div className="color-button" onClick={click} style={{backgroundColor: "#" + this.props.color.back}}>
-            <div className="effectHolder"><canvas className="buttonEffectCanvas" width="94" height="88" data-color={JSON.stringify(this.props.color)}></canvas></div>
-            <div className="nameHolder"><table><tbody><tr><td className="color-name">{this.props.color.name}</td></tr></tbody></table></div>
+
+        var buttonTextColor = "222222";
+        if (color.hasOwnProperty('fore')) {
+            if (color.fore === 'w') buttonTextColor = 'dddddd';
+            else buttonTextColor = color.fore;
+        }
+
+        return <div className="color-button" onClick={click}>
+            <div className="effectHolder"><canvas className="buttonEffectCanvas" width="10" height="10" data-color={JSON.stringify(this.props.color)}></canvas></div>
+            <div className="nameHolder"><table><tbody><tr><td className="color-name" style={{color: "#" + buttonTextColor}}>{this.props.color.name}</td></tr></tbody></table></div>
         </div>
     }
 }
 
 
 function setBackground(color) {
+
 
     var background = document.getElementById('background');
     var canvas = document.getElementById("background-effect");
@@ -114,7 +122,9 @@ function updateButtonEffects() {
     }
 
 
+
     var a = document.getElementsByClassName("buttonEffectCanvas");
+
     for (var i = 0; i < a.length; i++) {
 
         var canvas = a[i];
@@ -128,12 +138,15 @@ function updateButtonEffects() {
         //if (minSize !== canvas.width) canvas.width = minSize;
         //if (minSize !== canvas.height) canvas.height = minSize;
 
+        drawButtonBackground(canvas, color);
+
         if (color.hasOwnProperty('rayed')) rayIt(canvas, color);
         if (color.hasOwnProperty('quartered')) quarterIt(canvas, color);
         if (color.hasOwnProperty('circles')) drawCircles(canvas, color);
         if (color.hasOwnProperty('gradient')) drawGradient(canvas, color, true);
         if (color.hasOwnProperty('flecked')) fleckIt(canvas, color);
 
+        roundCorners(canvas);
     }
 
 }
@@ -162,45 +175,70 @@ function drawCircles(canvas, color) {
 
 }
 
+function drawButtonBackground(canvas, color) {
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = "#" + color.back;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function roundCorners(canvas) {
+
+
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = "#ffffff";
+    ctx.globalCompositeOperation = "destination-out";
+
+    var round = canvas.height * 0.1;
+
+    // upper left
+    ctx.beginPath();
+    ctx.moveTo(-1, -1);
+    ctx.lineTo(-1, round);
+    ctx.lineTo(0, round);
+    ctx.arc(round, round, round, Math.PI, 1.5 * Math.PI, false);
+    ctx.lineTo(round, -1);
+    ctx.closePath();
+    ctx.fill();
+
+    // upper right
+    ctx.moveTo(canvas.width+1, -1);
+    ctx.lineTo(canvas.width - round, -1);
+    ctx.lineTo(canvas.width - round, 0);
+    ctx.arc(canvas.width - round, round, round, 1.5 * Math.PI, 0, false);
+    ctx.lineTo(canvas.width+1, round);
+    ctx.closePath();
+    ctx.fill();
+
+    // lower right
+    ctx.moveTo(canvas.width+1, canvas.height+1);
+    ctx.lineTo(canvas.width+1, canvas.height - round);
+    ctx.lineTo(canvas.width, canvas.height - round);
+    ctx.arc(canvas.width - round, canvas.height - round, round, 0, 0.5 * Math.PI, false);
+    ctx.lineTo(canvas.width - round, canvas.height+1);
+    ctx.closePath();
+    ctx.fill();
+
+    // lower left
+    ctx.moveTo(-1, canvas.height+1);
+    ctx.lineTo(round, canvas.height+1);
+    ctx.lineTo(round, canvas.height);
+    ctx.arc(round, canvas.height - round, round, 0.5 * Math.PI, Math.PI, false);
+    ctx.lineTo(-1, canvas.height - round);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.globalCompositeOperation = "source-over";
+}
+
 function drawGradient(canvas, color, roundCorners) {
     var ctx = canvas.getContext('2d');
 
-    if (roundCorners) {
-        var round = 5;
+    ctx.fillStyle = "#" + color.gradient[0];
+    ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
 
-        // top
-        ctx.beginPath();
-        ctx.moveTo(0, canvas.height / 2);
-        ctx.lineTo(0, round);
-        ctx.arc(round, round, round, Math.PI, 1.5 * Math.PI, false);
-        ctx.lineTo(canvas.width - round, 0);
-        ctx.arc(canvas.width - round, round, round, 1.5 * Math.PI, 0, false);
-        ctx.lineTo(canvas.width, canvas.height / 2);
-        ctx.closePath();
-        ctx.fillStyle = "#" + color.gradient[0];
-        ctx.fill();
-
-        // bottom
-        ctx.beginPath();
-        ctx.moveTo(0, canvas.height / 2);
-        ctx.lineTo(0, canvas.height - round);
-        ctx.arc(round, canvas.height - round, round, Math.PI, 0.5 * Math.PI, true);
-        ctx.lineTo(canvas.width - round, canvas.height);
-        ctx.arc(canvas.width - round, canvas.height - round, round, 0.5 * Math.PI, 0, true);
-        ctx.lineTo(canvas.width, canvas.height / 2);
-        ctx.closePath();
-        ctx.fillStyle = "#" + color.gradient[1];
-        ctx.fill();
-
-    }
-    else {
-        ctx.fillStyle = "#" + color.gradient[0];
-        ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
-
-        ctx.fillStyle = "#" + color.gradient[1];
-        ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2);
-    }
-
+    ctx.fillStyle = "#" + color.gradient[1];
+    ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2);
 
     // now the middle
     var x = canvas.width / 2;
@@ -480,8 +518,20 @@ function showCardPage(cardId) {
     updateButtonEffects();
 }
 
+var redrawTimeout = null;
+
 window.onresize = function(event) {
-    updateButtonEffects();
+
+    if (redrawTimeout != null) {
+        clearTimeout(redrawTimeout);
+    }
+
+    redrawTimeout = setTimeout(function() {
+        updateButtonEffects();
+        redrawTimeout = null;
+    }, 16);
+
+
     if (currentColor !== null) {
         setBackground(currentColor);
     }

@@ -522,7 +522,7 @@ const paths = {
             { back: "FEDD00", name: "Yellow" },
             { back: "BB29BB", name: "Purple" },
             { back: "808080", name: "Grey" },
-            { back: "001489", rayed: "440099", name: "Indigo, rayed violet" }
+            { back: "001489", fore:"dddddd", rayed: "440099", name: "Indigo, rayed violet" }
         ]
     },
     "13": {
@@ -730,7 +730,7 @@ const paths = {
         name: 'Spirit',
         colors: [
             { back: "ffffff", gradient:["ffffff", "808080"], name: "White merging into grey" },
-            { back: "220022", name: "Deep purple, nearly black" },
+            { back: "220022", fore:'w', name: "Deep purple, nearly black" },
             { back: "440099", circles:["440099", "001489", "0085ca", "00A550", "FEDD00", "FF6D00", "ed1c24"], name: "The 7 prismatic colours, the violet being outside" },
             { back: "000000", circles:["000000", "0085ca", "FEDD00", "ed1c24", "ffffff"], name: "White, red, yellow, blue, black (the latter outside)" }
         ]
@@ -739,10 +739,10 @@ const paths = {
         type: 'Element',
         name: 'Earth',
         colors: [
-            { back: "000000", quartered:["dedb2c", "8d8800", "731817", "000000"], name: "Citrine, olive, russet, and black" },
+            { back: "000000", fore:'w', quartered:["dedb2c", "8d8800", "731817", "000000"], name: "Citrine, olive, russet, and black" },
             { back: "ffb734", name: "Amber" },
-            { back: "38200a", name: "Dark brown" },
-            { back: "000000", flecked:"FEDD00", name: "Black, flecked yellow" }
+            { back: "38200a", fore:'w', name: "Dark brown" },
+            { back: "000000", fore:'w', flecked:"FEDD00", name: "Black, flecked yellow" }
         ]
     },
     "32bis-green": {
