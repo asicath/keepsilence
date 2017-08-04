@@ -38,10 +38,10 @@ class PathColors extends React.Component {
         return <div className="path">
             <div className="path-title">{this.props.path.name}</div>
             <div className="path-colors">
-                <div className="col"><ColorButton color={this.props.path.colors[0]} /><div className="color-button-label">king scale</div></div>
-                <div className="col"><ColorButton color={this.props.path.colors[1]} /><div className="color-button-label">queen scale</div></div>
-                <div className="col"><ColorButton color={this.props.path.colors[2]} /><div className="color-button-label">emperor scale</div></div>
-                <div className="col"><ColorButton color={this.props.path.colors[3]} /><div className="color-button-label">empress scale</div></div>
+                <div className="col square"><ColorButton color={this.props.path.colors[0]} /><div className="color-button-label">king scale</div></div>
+                <div className="col square"><ColorButton color={this.props.path.colors[1]} /><div className="color-button-label">queen scale</div></div>
+                <div className="col square"><ColorButton color={this.props.path.colors[2]} /><div className="color-button-label">emperor scale</div></div>
+                <div className="col square"><ColorButton color={this.props.path.colors[3]} /><div className="color-button-label">empress scale</div></div>
             </div>
         </div>
     }
@@ -101,6 +101,19 @@ function setBackground(color) {
 }
 
 function updateButtonEffects() {
+
+    var squares = document.getElementsByClassName("square");
+    var minSize = 99999;
+    for (var i = 0; i < squares.length; i++) {
+        var square = squares[i];
+        if (minSize > Math.floor(square.clientWidth)) minSize = Math.floor(square.clientWidth);
+    }
+    for (var i = 0; i < squares.length; i++) {
+        var square = squares[i];
+        square.style.height = minSize;
+    }
+
+
     var a = document.getElementsByClassName("buttonEffectCanvas");
     for (var i = 0; i < a.length; i++) {
 
@@ -110,8 +123,10 @@ function updateButtonEffects() {
         //ctx.fillStyle = "#ff0000";
         //ctx.fillRect(0, 0, width, height);
 
-        if (canvas.parentElement.clientWidth !==  canvas.width) canvas.width = canvas.parentElement.clientWidth + 6;
-        if (canvas.parentElement.clientHeight !==  canvas.height) canvas.height = canvas.parentElement.clientHeight;
+        if (canvas.width !== canvas.parentElement.clientWidth) canvas.width = canvas.parentElement.clientWidth;
+        if (canvas.height !== canvas.parentElement.clientHeight) canvas.height = canvas.parentElement.clientHeight;
+        //if (minSize !== canvas.width) canvas.width = minSize;
+        //if (minSize !== canvas.height) canvas.height = minSize;
 
         if (color.hasOwnProperty('rayed')) rayIt(canvas, color);
         if (color.hasOwnProperty('quartered')) quarterIt(canvas, color);
