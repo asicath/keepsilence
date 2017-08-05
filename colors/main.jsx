@@ -12,9 +12,28 @@ class CardDisplay extends React.Component {
         var prevUrl = "index.htm?id=" + prevId;
         var nextUrl = "index.htm?id=" + nextId;
 
+        // display a single card
         var imgUrl = "img/" + this.props.cardId + ".jpg";
         var cardImg = <img className="card" src={imgUrl} />;
-        if (this.props.card.noCard) cardImg = <div>&nbsp;</div>;
+
+        // if no card specified...
+        if (this.props.card.noCard) cardImg = "";
+
+        if (this.props.card.hasOwnProperty('cardGroups')) {
+            cardImg = [];
+
+            for (var j = 0; j < this.props.card.cardGroups.length; j++) {
+                var group = this.props.card.cardGroups[j];
+                var html = [];
+                for (var i = 0; i < group.cards.length; i++) {
+                    var id = group.cards[i];
+                    var url = "index.htm?id=" + id;
+                    var imgUrl = "img/" + id + ".jpg";
+                    html.push(<div className="small-card-holder"><a href={url}><img className="small-card" src={imgUrl}/></a></div>);
+                }
+                cardImg.push(<div className="card-group"><div className="name">{group.name}</div><div className="cards">{html}</div></div>);
+            }
+        }
 
         return <table className="card-display"><tbody><tr>
             <td className="col-text" id="info-text">&nbsp;</td>

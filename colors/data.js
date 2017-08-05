@@ -4,17 +4,35 @@ const cards = {
     "kether": {
         title: "Kether",
         paths: ["1"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Aces",
+                cards:["w01", "c01", "s01", "d01"]
+            }
+        ]
     },
     "chokmah": {
         title: "Chokmah",
         paths: ["2"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Twos",
+                cards:["w02", "c02", "s02", "d02"]
+            }
+        ]
     },
     "binah": {
         title: "Binah",
         paths: ["3"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Threes",
+                cards:["w03", "c03", "s03", "d03"]
+            }
+        ]
     },
     "daath": {
         title: "Daath",
@@ -24,39 +42,468 @@ const cards = {
     "chesed": {
         title: "Chesed",
         paths: ["4"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Fours",
+                cards: ["w04", "c04", "s04", "d04"]
+            }
+        ]
     },
     "geburah": {
         title: "Geburah",
         paths: ["5"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Fives",
+                cards: ["w05", "c05", "s05", "d05"]
+            }
+        ]
     },
     "tiphareth": {
         title: "Tiphareth",
         paths: ["6"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Sixes",
+                cards: ["w06", "c06", "s06", "d06"]
+            }
+        ]
     },
     "netzach": {
         title: "Netzach",
         paths: ["7"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Sevens",
+                cards: ["w07", "c07", "s07", "d07"]
+            }
+        ]
     },
     "hod": {
         title: "Hod",
         paths: ["8"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Eights",
+                cards: ["w08", "c08", "s08", "d08"]
+            }
+        ]
     },
     "yesod": {
         title: "Yesod",
         paths: ["9"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Nines",
+                cards: ["w09", "c09", "s09", "d09"]
+            }
+        ]
     },
     "malkuth": {
         title: "Malkuth",
         paths: ["10"],
-        noCard: true
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Four Tens",
+                cards: ["w10", "c10", "s10", "d10"]
+            }
+        ]
     },
 
+    "aleph": {
+        title: "Aleph",
+        paths: ["11"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu 0: The Fool",
+                cards: ["t00"]
+            },
+            {
+                name: "The Court Cards: Air",
+                cards: ["s-knight", "s-queen", "s-prince", "s-princess"]
+            },
+            {
+                name: "The Small Cards: Air",
+                cards: ["s01"]
+            }
+        ]
+    },
+    "beth": {
+        title: "Beth",
+        paths: ["12"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu I: The Magus",
+                cards: ["t01"]
+            },
+            {
+                name: "The Small Cards: Mercury",
+                cards: ["w08", "c03", "s06", "d05", "d10"]
+            }
+        ]
+    },
+    "gimel": {
+        title: "Gimel",
+        paths: ["13"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu II: The Priestess",
+                cards: ["t02"]
+            },
+            {
+                name: "The Small Cards: Luna",
+                cards: ["w09", "c04", "s02", "s07", "d06"]
+            }
+        ]
+    },
+    "daleth": {
+        title: "Daleth",
+        paths: ["14"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu III: The Empress",
+                cards: ["t03"]
+            },
+            {
+                name: "The Small Cards: Venus",
+                cards: ["w04", "c02", "c07", "s05", "d09"]
+            }
+        ]
+    },
+    "heh": {
+        title: "Heh",
+        paths: ["15"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu IV: The Emperor",
+                cards: ["t04"]
+            },
+            {
+                name: "The Small Cards: Aries",
+                cards: ["w02", "w03", "w04"]
+            }
+        ]
+    },
+    "vav": {
+        title: "Vav",
+        paths: ["16"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu V: The Hierophant",
+                cards: ["t05"]
+            },
+            {
+                name: "The Small Cards: Taurus",
+                cards: ["d05", "d06", "d07"]
+            }
+        ]
+    },
+    "zain": {
+        title: "Zain",
+        paths: ["17"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu VI: The Lovers",
+                cards: ["t06"]
+            },
+            {
+                name: "The Small Cards: Gemini",
+                cards: ["s08", "s09", "s10"]
+            }
+        ]
+    },
+    "cheth": {
+        title: "Cheth",
+        paths: ["18"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu VII: The Chariot",
+                cards: ["t07"]
+            },
+            {
+                name: "The Small Cards: Cancer",
+                cards: ["c02", "c03", "c04"]
+            }
+        ]
+    },
+    "teth": {
+        title: "Teth",
+        paths: ["19"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XI: Lust",
+                cards: ["t08"]
+            },
+            {
+                name: "The Small Cards: Leo",
+                cards: ["w05", "w06", "w07"]
+            }
+        ]
+    },
+    "yod": {
+        title: "Yod",
+        paths: ["20"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu IX: The Hermit",
+                cards: ["t09"]
+            },
+            {
+                name: "The Small Cards: Virgo",
+                cards: ["d08", "d09", "d10"]
+            }
+        ]
+    },
+    "kaph": {
+        title: "Kaph",
+        paths: ["21"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu X: Fortune",
+                cards: ["t10"]
+            },
+            {
+                name: "The Small Cards: Jupiter",
+                cards: ["w06", "c09", "s04", "s08", "d02"]
+            }
+        ]
+    },
+    "lamed": {
+        title: "Lamed",
+        paths: ["22"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu VIII: Adjustment",
+                cards: ["t11"]
+            },
+            {
+                name: "The Small Cards: Libra",
+                cards: ["s02", "s03", "s04"]
+            }
+        ]
+    },
+    "mem": {
+        title: "Mem",
+        paths: ["23"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XII: The Hanged Man",
+                cards: ["t12"]
+            },
+            {
+                name: "The Court Cards: Water",
+                cards: ["c-knight", "c-queen", "c-prince", "c-princess"]
+            },
+            {
+                name: "The Small Cards: Water",
+                cards: ["c01"]
+            }
+        ]
+    },
+    "nun": {
+        title: "Nun",
+        paths: ["24"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XIII: Death",
+                cards: ["t13"]
+            },
+            {
+                name: "The Small Cards: Scorpio",
+                cards: ["c05", "c06", "c07"]
+            }
+        ]
+    },
+    "sameckh": {
+        title: "Sameckh",
+        paths: ["25"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XIV: Art",
+                cards: ["t14"]
+            },
+            {
+                name: "The Small Cards: Sagittarius",
+                cards: ["w08", "w09", "w10"]
+            }
+        ]
+    },
+    "ayin": {
+        title: "Ayin",
+        paths: ["26"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XV: The Devil",
+                cards: ["t15"]
+            },
+            {
+                name: "The Small Cards: Capricorn",
+                cards: ["d02", "d03", "d04"]
+            }
+        ]
+    },
+    "peh": {
+        title: "Peh",
+        paths: ["27"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XVI: The Tower",
+                cards: ["t16"]
+            },
+            {
+                name: "The Small Cards: Mars",
+                cards: ["w01", "w02", "w07", "c05", "c10", "s09","d03"]
+            }
+        ]
+    },
+    "tzaddi": {
+        title: "Tzaddi",
+        paths: ["28"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XVII: The Star",
+                cards: ["t17"]
+            },
+            {
+                name: "The Small Cards: Aquarius",
+                cards: ["s05", "s06", "s07"]
+            }
+        ]
+    },
+    "qoph": {
+        title: "Qoph",
+        paths: ["29"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XVIII: The Moon",
+                cards: ["t18"]
+            },
+            {
+                name: "The Small Cards: Pisces",
+                cards: ["c08", "c09", "c10"]
+            }
+        ]
+    },
+    "resh": {
+        title: "Resh",
+        paths: ["30"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XIX: The Sun",
+                cards: ["t19"]
+            },
+            {
+                name: "The Small Cards: Sol",
+                cards: ["w01", "w03", "c06", "s10", "d04", "d08"]
+            }
+        ]
+    },
+    "shin": {
+        title: "Shin",
+        paths: ["31"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XX: The Aeon",
+                cards: ["t20"]
+            },
+            {
+                name: "The Court Cards: Fire",
+                cards: ["w-knight", "w-queen", "w-prince", "w-princess"]
+            },
+            {
+                name: "The Small Cards: Fire",
+                cards: ["w01"]
+            }
+        ]
+    },
+    "tav": {
+        title: "Tav",
+        paths: ["32"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XXI: The Universe",
+                cards: ["t21"]
+            },
+            {
+                name: "The Small Cards: Saturn",
+                cards: ["w05","w10","c08","s03","d07"]
+            }
+        ]
+    },
+
+    "tav": {
+        title: "Tav",
+        paths: ["32"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "Atu XXI: The Universe",
+                cards: ["t21"]
+            },
+            {
+                name: "The Small Cards: Saturn",
+                cards: ["w05","w10","c08","s03","d07"]
+            }
+        ]
+    },
+
+    "spirit": {
+        title: "Spirit",
+        paths: ["31bis"],
+        noCard:true
+    },
+
+    "earth": {
+        title: "Earth",
+        paths: ["32bis"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Court Cards: Earth",
+                cards: ["d-knight", "d-queen", "d-prince", "d-princess"]
+            }
+        ]
+    },
+    "earth-green": {
+        title: "Earth (Green)",
+        paths: ["32bis-green"],
+        noCard: true,
+        cardGroups: [
+            {
+                name: "The Small Cards: Earth",
+                cards: ["d01"]
+            }
+        ]
+    },
 
 
     "t00": {
@@ -142,7 +589,7 @@ const cards = {
     },
     "t20": {
         title: "",
-        paths: ["31"]
+        paths: ["31", "23", "11"]
     },
     "t21": {
         title: "",
@@ -381,11 +828,6 @@ const cards = {
     "d-princess": {
         title: "princess of Disks",
         paths: ["32bis"]
-    },
-    "spirit": {
-        title: "Spirit",
-        paths: ["31bis"],
-        noCard:true
     }
 
 };
@@ -642,7 +1084,7 @@ const paths = {
             { back: "00958d", name:"Green blue" },
             { back: "9D7446", name:"Dull brown" },
             { back: "211307", name:"Very dark brown" },
-            { back: "1c131b", name:"Livid indigo brown (like a black beetle)" }
+            { back: "0c1225", name:"Livid indigo brown (like a black beetle)" }
         ]
     },
     "25": {

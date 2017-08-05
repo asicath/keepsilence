@@ -131,15 +131,24 @@ table.card-display > tbody > tr > td {
 
 
 .card-title {
-    margin-bottom: 0.3em;
     font-weight: bold;
     font-size: 1.3em;
     text-align: center;
     width: 100%;
-    margin-top: -0.6em;
 }
 .card {
     width: 100%;
+    margin-top: 0.4em;
+}
+.small-card {
+    width: 100%;
+    margin-bottom: 20%;
+}
+.small-card-holder {
+    display: inline-block;
+    width: 21%;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 .col-text {
@@ -153,4 +162,16 @@ table.card-display > tbody > tr > td {
 }
 .next {
     float:right;
+}
+
+.card-group {
+    margin-top: 2em;
+}
+.card-group .name {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+.card-group .cards {
+    text-align: center;
 }
