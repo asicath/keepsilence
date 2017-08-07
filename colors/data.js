@@ -569,7 +569,7 @@ const cards = {
     },
     "t15": {
         title: "",
-        paths: ["26"]
+        paths: ["26", "6"]
     },
     "t16": {
         title: "",
@@ -593,7 +593,7 @@ const cards = {
     },
     "t21": {
         title: "",
-        paths: ["32"]
+        paths: ["32", "32bis-green", "10"]
     },
 
     "w01": {
@@ -715,7 +715,7 @@ const cards = {
 
     "s01": {
         title: "Ace of Swords",
-        paths: ["11", "6"]
+        paths: ["11", "6", "22"]
     },
     "s02": {
         title: "Two of Swords",

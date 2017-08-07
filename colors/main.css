@@ -3,7 +3,6 @@ body
     background-color: #ffffff;
     font-family: 'Vollkorn', serif;
     text-align: justify;
-    overflow-y: hidden;
     color: #333;
     background-color: #fff;
     font-size:15px;
@@ -51,6 +50,20 @@ p.quote {
     }
 }
 
+
+.index {
+    margin-left: auto;
+    margin-right: auto;
+    width: 35em;
+    height:auto;
+}
+.text-source {
+    margin-bottom: 1em;
+}
+
+
+
+
 table.card-display {
     height: 100%;
     width: 100%;
@@ -66,7 +79,8 @@ table.card-display > tbody > tr > td {
 
 
 .col-color {
-    padding-left: 0.4%;
+    padding-left: 1%;
+    padding-right: 0.6%;
 }
 .path {
     margin-bottom: 1em;
@@ -124,9 +138,64 @@ table.card-display > tbody > tr > td {
     height: 100%;
 }
 .color-name {
-    font-size: 0.8em;
+    font-size: 1em;
 }
-
+@media only screen and (max-width : 1400px) {
+    .color-name {
+        font-size: 0.8em;
+    }
+    .color-button-label {
+        font-size: 0.7em;
+    }
+}
+@media only screen and (max-width : 1150px) {
+    .color-name {
+        font-size: 0.7em;
+    }
+    .color-button-label {
+        font-size: 0.6em;
+    }
+}
+@media only screen and (max-width : 1000px) {
+    .color-name {
+        font-size: 0.6em;
+    }
+    .color-button-label {
+        font-size: 0.5em;
+    }
+}
+@media only screen and (max-width : 800px) {
+    .color-name {
+        font-size: 0.5em;
+    }
+    .color-button-label {
+        font-size: 0.4em;
+    }
+}
+@media only screen and (max-width : 740px) {
+    .color-name {
+        font-size: 0.4em;
+    }
+    .color-button-label {
+        font-size: 0.3em;
+    }
+}
+@media only screen and (max-width : 550px) {
+    .color-name {
+        font-size: 0.3em;
+    }
+    .color-button-label {
+        font-size: 0.2em;
+    }
+}
+@media only screen and (max-width : 450px) {
+    .color-name {
+        font-size: 0.3em;
+    }
+    .color-button-label {
+        display: none;
+    }
+}
 
 
 
@@ -165,7 +234,7 @@ table.card-display > tbody > tr > td {
 }
 
 .card-group {
-    margin-top: 2em;
+    margin-top: 1em;
 }
 .card-group .name {
     font-weight: bold;

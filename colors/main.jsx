@@ -481,7 +481,16 @@ function main() {
 
     // get the id from the url, try to show the card page
     var cardId = getParameterByName("id");
-    if (cardId !== null && cards.hasOwnProperty(cardId)) return showCardPage(cardId);
+    if (cardId !== null && cards.hasOwnProperty(cardId)) {
+        document.body.style.overflowY = "hidden";
+        return showCardPage(cardId);
+    }
+
+    var source = getParameterByName("source");
+    if (source) {
+        loadHtml('htm/' + source + '.html');
+        return;
+    }
 
     // otherwise show the menu
     return showIndexPage();
@@ -497,25 +506,46 @@ function showIndexPage() {
 
 class Index extends React.Component {
     render() {
-        return <div>
+        return <div className="index">
 
-            <div>
-                Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed.
+            <div className="text-source">
+                <a href="index.htm?source=agrippa">
+                    Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed.
+                </a>
             </div>
-            <div>
-                Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans
+            <div className="text-source">
+                <a href="index.htm?source=levi">
+                    Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans
+                </a>
             </div>
-            <div>
-                SRIA II, Theoricus Grade, The Lecture on Colours
+            <div className="text-source">
+                <a href="index.htm?source=sria">
+                    SRIA II, Theoricus Grade, The Lecture on Colours
+                </a>
             </div>
-            <div>
-                Order of the Golden Dawn, Hodos Chamelionis
+            <div className="text-source">
+                <a href="index.htm?source=chamelionis">
+                    Order of the Golden Dawn, Hodos Chamelionis
+                </a>
             </div>
-            <div>
-                Aleister Crowley, 777, Notes to the Table of Correspondences
+            <div className="text-source">
+                <a href="index.htm?source=777">
+                    Aleister Crowley, 777, Notes to the Table of Correspondences
+                </a>
             </div>
         </div>
     }
+}
+
+function loadHtml(url) {
+    var xhr= new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onreadystatechange= function() {
+        if (this.readyState!==4) return;
+        if (this.status!==200) return; // or whatever error handling you want
+        document.getElementById('root').innerHTML = '<div class="index">' + this.responseText + '</div>';
+    };
+    xhr.send();
 }
 
 
