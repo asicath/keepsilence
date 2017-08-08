@@ -543,9 +543,23 @@ function loadHtml(url) {
     xhr.onreadystatechange= function() {
         if (this.readyState!==4) return;
         if (this.status!==200) return; // or whatever error handling you want
-        document.getElementById('root').innerHTML = '<div class="index">' + this.responseText + '</div>';
+        var html = '<div class="index">' + addColorSpans(this.responseText) + '</div>';
+        document.getElementById('root').innerHTML = html;
     };
     xhr.send();
+}
+
+var reColors = /(\W)(red|orange|yellow|green|blue|indigo|violet|purple|black|white|grey|brown|amber)(\W)/ig;
+var reAltColors = /(\W)(saffron|golden|saphire|honey|reddish|hempen|mud|blewish|citrine|pale)(\W)/ig;
+
+function addColorSpans(html) {
+    html = html.replace(reColors, spanColor);
+    html = html.replace(reAltColors, spanColor);
+    return html
+}
+
+function spanColor(match, p1, p2, p3, offset, string) {
+    return p1 + '<span class="color ' + p2.toLowerCase() + '">' + p2 + '</span>' + p3;
 }
 
 

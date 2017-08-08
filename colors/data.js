@@ -537,11 +537,11 @@ const cards = {
     },
     "t07": {
         title: "",
-        paths: ["18"]
+        paths: ["18","13"]
     },
     "t08": {
         title: "",
-        paths: ["19"]
+        paths: ["19", "21", "18"]
     },
     "t09": {
         title: "",
@@ -581,7 +581,7 @@ const cards = {
     },
     "t18": {
         title: "",
-        paths: ["29"]
+        paths: ["29", "13","30"]
     },
     "t19": {
         title: "",
@@ -1132,7 +1132,7 @@ const paths = {
         name: 'Pisces',
         colors: [
             { back: "AE0E36", name: "Crimson (ultra violet)" },
-            { back: "D8B998", flecked:"F2F2F2", name: "Buff, flecked silver-white"},
+            { back: "F0DC82", flecked:"F2F2F2", name: "Buff, flecked silver-white"},
             { back: "C08A80", name: "Light translucent pinkish brown" },
             { back: "76826a", name: "Stone color" }
         ]
