@@ -1,7 +1,7 @@
 body
 {
     background-color: #ffffff;
-    font-family: 'Vollkorn', serif;
+    font-family: 'Vollkorn', 'Georgia', serif;
     text-align: justify;
     color: #333;
     background-color: #fff;
@@ -264,6 +264,32 @@ table.card-display > tbody > tr > td {
 .indent {
     margin-left: 2em;
 }
+
+.index .main-title {
+    font-size: 4em;
+    text-align: center;
+    margin-top: 1.5em;
+
+    margin-bottom: 0;
+}
+.index .main-subtitle {
+    font-size: 1.7em;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.text-list, .path-list {
+    margin-top: 2em;
+}
+.main .subtitle {
+    margin-bottom: 0.5em;
+}
+.quarter-col {
+    width: 25%;
+    float:left;
+}
+
 .index .title {
     font-size: 1.5em;
     text-align: center;
