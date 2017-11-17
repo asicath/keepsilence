@@ -506,33 +506,106 @@ function showIndexPage() {
 
 class Index extends React.Component {
     render() {
-        return <div className="index">
+        return <div className="index main">
 
-            <div className="text-source">
-                <a href="index.htm?source=agrippa">
-                    Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed.
-                </a>
+            <div className="main-title">LIBER ΙΡΙΣ</div>
+            <div className="main-subtitle">SVB FIGVRA CXXVI</div>
+            <div className="main-subtitle">An Exposition of the Occult Meaning of Colors</div>
+
+            <div className="text-list">
+
+                <div className="subtitle">Texts</div>
+
+                <ul>
+
+                <li className="text-source">
+                    <a href="index.htm?source=agrippa">
+                        Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed.
+                    </a>
+                </li>
+                <li className="text-source">
+                    <a href="index.htm?source=levi">
+                        Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans
+                    </a>
+                </li>
+                <li className="text-source">
+                    <a href="index.htm?source=aasr">
+                        AASR, 14th Degree, The Explanation of the Girdle
+                    </a>
+                </li>
+                <li className="text-source">
+                    <a href="index.htm?source=sria">
+                        SRIA II, Theoricus Grade, The Lecture on Colours
+                    </a>
+                </li>
+                <li className="text-source">
+                    <a href="index.htm?source=chamelionis">
+                        Order of the Golden Dawn, Hodos Chamelionis
+                    </a>
+                </li>
+                <li className="text-source">
+                    <a href="index.htm?source=777">
+                        Aleister Crowley, 777, Notes to the Table of Correspondences
+                    </a>
+                </li>
+                </ul>
             </div>
-            <div className="text-source">
-                <a href="index.htm?source=levi">
-                    Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans
-                </a>
+
+            <div className="path-list">
+                <div className="subtitle">On the Tree</div>
+
+                <div>
+                    <div className="quarter-col">
+                        <div className="subtitle">Spheres</div>
+                        <div><a href="?id=kether">Kether</a></div>
+                        <div><a href="?id=chokmah">Chokmah</a></div>
+                        <div><a href="?id=binah">Binah</a></div>
+                        <div><a href="?id=daath">Daath</a></div>
+                        <div><a href="?id=chesed">Chesed</a></div>
+                        <div><a href="?id=geburah">Geburah</a></div>
+                        <div><a href="?id=tiphareth">Tiphareth</a></div>
+                        <div><a href="?id=netzach">Netzach</a></div>
+                        <div><a href="?id=hod">Hod</a></div>
+                        <div><a href="?id=yesod">Yesod</a></div>
+                        <div><a href="?id=malkuth">Malkuth</a></div>
+                    </div>
+                    <div className="quarter-col">
+                        <div className="subtitle">Elements</div>
+                        <div><a href="?id=shin">Fire</a></div>
+                        <div><a href="?id=aleph">Air</a></div>
+                        <div><a href="?id=mem">Water</a></div>
+                        <div><a href="?id=earth">Earth</a></div>
+                        <div><a href="?id=earth-green">Earth (Green)</a></div>
+                        <div><a href="?id=spirit">Spirit</a></div>
+                    </div>
+                    <div className="quarter-col">
+                        <div className="subtitle">Planets</div>
+                        <div><a href="?id=gimel">Luna</a></div>
+                        <div><a href="?id=beth">Mercury</a></div>
+                        <div><a href="?id=daleth">Venus</a></div>
+                        <div><a href="?id=resh">Sol</a></div>
+                        <div><a href="?id=peh">Mars</a></div>
+                        <div><a href="?id=kaph">Jupiter</a></div>
+                        <div><a href="?id=tav">Saturn</a></div>
+                    </div>
+                    <div className="quarter-col">
+                        <div className="subtitle">Zodiac</div>
+                        <div><a href="?id=heh">Aries</a></div>
+                        <div><a href="?id=vav">Taurus</a></div>
+                        <div><a href="?id=zain">Gemini</a></div>
+                        <div><a href="?id=cheth">Cancer</a></div>
+                        <div><a href="?id=teth">Leo</a></div>
+                        <div><a href="?id=nun">Scorpio</a></div>
+                        <div><a href="?id=lamed">Libra</a></div>
+                        <div><a href="?id=yod">Virgo</a></div>
+                        <div><a href="?id=sameckh">Sagittarius</a></div>
+                        <div><a href="?id=ayin">Capricorn</a></div>
+                        <div><a href="?id=tzaddi">Aquarius</a></div>
+                        <div><a href="?id=qoph">Pisces</a></div>
+                    </div>
+                </div>
             </div>
-            <div className="text-source">
-                <a href="index.htm?source=sria">
-                    SRIA II, Theoricus Grade, The Lecture on Colours
-                </a>
-            </div>
-            <div className="text-source">
-                <a href="index.htm?source=chamelionis">
-                    Order of the Golden Dawn, Hodos Chamelionis
-                </a>
-            </div>
-            <div className="text-source">
-                <a href="index.htm?source=777">
-                    Aleister Crowley, 777, Notes to the Table of Correspondences
-                </a>
-            </div>
+
         </div>
     }
 }
@@ -543,7 +616,8 @@ function loadHtml(url) {
     xhr.onreadystatechange= function() {
         if (this.readyState!==4) return;
         if (this.status!==200) return; // or whatever error handling you want
-        var html = '<div class="index">' + addColorSpans(this.responseText) + '</div>';
+        //var html = '<div class="index">' + addColorSpans(this.responseText) + '</div>'; // disable for now
+        var html = '<div class="index">' + this.responseText + '</div>';
         document.getElementById('root').innerHTML = html;
     };
     xhr.send();
