@@ -516,39 +516,31 @@ class Index extends React.Component {
 
                 <div className="subtitle">Texts</div>
 
-                <ul>
-
-                <li className="text-source">
+                <div className="text-source">
                     <a href="index.htm?source=agrippa">
                         Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed.
                     </a>
-                </li>
-                <li className="text-source">
+                </div>
+                <div className="text-source">
                     <a href="index.htm?source=levi">
                         Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans
                     </a>
-                </li>
-                <li className="text-source">
-                    <a href="index.htm?source=aasr">
-                        AASR, 14th Degree, The Explanation of the Girdle
-                    </a>
-                </li>
-                <li className="text-source">
+                </div>
+                <div className="text-source">
                     <a href="index.htm?source=sria">
                         SRIA II, Theoricus Grade, The Lecture on Colours
                     </a>
-                </li>
-                <li className="text-source">
+                </div>
+                <div className="text-source">
                     <a href="index.htm?source=chamelionis">
                         Order of the Golden Dawn, Hodos Chamelionis
                     </a>
-                </li>
-                <li className="text-source">
+                </div>
+                <div className="text-source">
                     <a href="index.htm?source=777">
                         Aleister Crowley, 777, Notes to the Table of Correspondences
                     </a>
-                </li>
-                </ul>
+                </div>
             </div>
 
             <div className="path-list">
