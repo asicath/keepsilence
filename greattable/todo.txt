@@ -1,0 +1,13 @@
+
+* unselected *
+ - Show list of types of spirits on right
+
+* Spirit type list *
+ - hover over type should highlight all those types
+ - Click a type should show a list
+
+* Square hover & click *
+ - hover over a square should show list of spirits associated on right
+ - mouse out of great tablet should clear back to 0 state
+ - click a square should select that square and lock the list on the right even when hover or mouse out
+

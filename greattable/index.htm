@@ -1,0 +1,846 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <title>Spirits of the Great Table</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <meta property="og:image" content="fbpreviewcolor.jpg" />
+
+    <link type="text/css" rel="stylesheet" href="main.css" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNhqGdMP0Kz3eNYr8zFSxGeHFtysoDD8E&sensor=false"></script>
+    <script type="text/javascript" src="scripts/api/lodash.min.js"></script>
+    <script type="text/javascript" src="scripts/api/handlebars-v1.3.0.js"></script>
+
+    <script type="text/javascript" src="scripts/fonts/vollkorn_regular.typeface.js"></script>
+    <script type="text/javascript" src="scripts/fonts/enochian_plain.typeface.js"></script>
+
+    <script type="text/javascript" src="scripts/model/color.js"></script>
+    <script type="text/javascript" src="scripts/model/cell.js"></script>
+    <script type="text/javascript" src="scripts/model/spirit.js"></script>
+    <script type="text/javascript" src="scripts/model/model.js"></script>
+
+    <script type="text/javascript" src="scripts/view/jsfont.js"></script>
+    <script type="text/javascript" src="scripts/view/table_draw.js"></script>
+    <script type="text/javascript" src="scripts/view/table_view.js"></script>
+    <script type="text/javascript" src="scripts/view/spirit_info_view.js"></script>
+
+    <script type="text/javascript" src="scripts/controller/main.js"></script>
+
+</head>
+<body>
+
+    <div id="left"></div>
+    <div id="right"></div>
+
+
+    <!-- Top level list of spirit classes -->
+    <script id="spiritTypeList-template" type="text/x-handlebars-template">
+        <div class="breadcrumb">Great Table</div>
+        <div class="title">Classes of Spirits</div>
+        <table id="spiritTypes">
+            {{#each this}}
+            <tr class="link spiritType" data-name="{{name}}"><td>{{display}}</td></tr>
+            {{/each}}
+        </table>
+    </script>
+
+    <!-- List of all governours and aethyrs -->
+    <script id="governourList-template" type="text/x-handlebars-template">
+        <div class="breadcrumb">Great Table > <span class="link crumbSpirits">Spirits</span></div>
+
+        <div class="title">Governours</div>
+
+        <div class="info">
+            <div class="date">May 21, 1584</div>
+            <div class="quote">
+                <p>
+                Nalvage: There are 30 Calls yet to come. Those 30 are the Calls of Ninety one Princes and spiritual
+                Governours, unto whom the Earth is delivered as a portion. These bring in and again disposes Kings and
+                all the Governments upon the Earth, and vary the Natures of things: with the variation of every moment;
+                Unto whom, the Providence of the eternal Judgement, is already opened. There are generally governed by
+                the twelve Angles of the 12 Tribes: which are also governed by the 7 which stand before the presence of
+                God. Let him that can see lookup: and let him that can here, attend; for this is wisdom. They are all
+                spirits of the Air; not rejected, but dignified; and they dwell and have their habitation in the air
+                diversly, and in sundry places; for their mansions are not alike, neither are their powers equal.
+                Understand therefore, that from the fire to the earth, there are 30 places or abidings: one above and
+                beneath another: wherein these aforesaid Creatures have their aboad, for a time.
+                </p>
+                <p>
+                    They bear no name.
+                </p>
+                <p>
+                    ...... But what they have, in respect of their being. Understand them therefore, by the first second, third ... so thirtieth Air.
+                </p>
+                <p>
+                    They are so to be nominated, O thou the Twentieth air, O thou sixteenth Air, &c.
+                </p>
+            </div>
+
+            <div class="date">June 20th 1584</div>
+            <div class="quote">
+                <p>Out of these Crosses, come the Angels of all the Aires: which presently give obedience to the will of men, when they see them.</p>
+                <p>Hereby you may subvert whole Countries without Armies: which you must, and shall do, for the glory of God.</p>
+                <p>By these you shall get the favour of all the Princes, whom you take pity of, or wish well unto.</p>
+                <p>Hereby you shall know the secret Treasures of the waters, and unknown Caves of the Earth.</p>
+                <p>And it shall be a Doctrine, for you onely, the instrument of the World.</p>
+                <p>For, the rest of your Instructions, are touching the Heavens, and the time to come: of the which, this is the last and extream knowledge.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="governourMap link">Governour Map</div>
+
+        </div>
+
+        <table id="governours">
+
+            <tr>
+                <td><div class="names">Aethyr</div></td>
+                <td><div class="names">Governour</div></td>
+            </tr>
+
+            {{#each this}}
+
+                {{#each governours}}
+                <tr>
+
+                    {{#if @first}}
+                    <td class="aethyrLink link" data-id="{{aethyr.id}}">{{aethyr.id}} {{aethyr.name}}</td>
+                    {{else}}
+                    <td class="aethyrLink" data-id="{{aethyr.id}}"></td>
+                    {{/if}}
+
+                    <td class="governourLink link" data-id="{{id}}">{{id}} {{name}}</td>
+                </tr>
+                {{/each}}
+
+            {{/each}}
+        </table>
+
+    </script>
+
+    <!-- Detail page for a governour -->
+    <script id="governour-template" type="text/x-handlebars-template">
+        <div class="breadcrumb">Great Table > <span class="link crumbSpirits">Spirits</span> > <span class="link crumbGovernours">Governours</span></div>
+
+        <div class="title">{{gov.name}}</div>
+
+        <div id="governour">
+            <div>
+                Number: {{gov.id}}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                [
+                <span class="noSelect {{#if prevId}}link governourLink noPreview{{else}}na{{/if}}" {{#if prevId}}data-id="{{prevId}}"{{/if}}>previous</span>
+                |
+                <span class="noSelect {{#if nextId}}link governourLink noPreview{{else}}na{{/if}}" {{#if nextId}}data-id="{{nextId}}"{{/if}}>next</span>
+                ]
+            </div>
+            <div>Aethyr: {{gov.aethyr.id}}. {{gov.aethyr.name}}</div>
+            <div>Letters From Table: {{gov.nameFromCells}}</div>
+
+            <div>Ministers: {{gov.ministers}}</div>
+            <div>Angel of the Tribes: {{gov.angelOfTribe}}</div>
+
+            <div>Portion of the Earth: {{gov.location}}</div>
+            <div id="map">
+                <div id="map-canvas"></div>
+            </div>
+
+            <div>
+                Cotton
+                <img class="govImg" src="cotton/governours/{{gov.id}}.jpg" />
+            </div>
+            <div>
+                Sloane 3191
+                <img class="govImg" src="sloane3191/governours/{{gov.id}}.jpg" />
+            </div>
+
+
+
+        </div>
+
+    </script>
+
+    <script id="governourMap-template" type="text/x-handlebars-template">
+        <div id="map" class="large">
+            <div id="map-canvas"></div>
+        </div>
+    </script>
+
+    <!-- Detail Page for a cell? -->
+    <script id="cellInfo-template" type="text/x-handlebars-template">
+        <div class="breadcrumb">Great Table > <span class="link crumbSpirits">Spirits</span></div>
+
+        <div class="title">Cell: {{name}}</div>
+        <div>Value: {{val}}</div>
+    </script>
+
+    <!-- Top level list of spirits -->
+    <script id="spiritList-template" type="text/x-handlebars-template">
+
+        {{#each this}}
+
+            <div class="names">{{info.display}}:</div>
+
+            <div class="innernames">
+                {{#if spirits.top}}
+                <table>
+                    {{#each spirits.top}}
+                    <tr>
+                        <td class="link spiritLink{{#if id}} governourLink{{/if}}" data-spiritid="{{spiritId}}"{{#if id}} data-id="{{id}}"{{/if}}>{{nameFromCells}}</td>
+                    </tr>
+                    {{/each}}
+                </table>
+                {{/if}}
+
+                {{#each spirits.subtypes}}
+
+                <div class="names">{{info.display}}:</div>
+                <table>
+                    {{#each spirits}}
+                    <tr>
+                        <td class="link spiritLink" data-spiritid="{{spiritId}}">{{nameFromCells}}</td>
+                    </tr>
+                    {{/each}}
+                </table>
+
+                {{/each}}
+            </div>
+
+        {{/each}}
+
+    </script>
+
+
+    <!-- list of spirits of a specific type -->
+    <script id="spiritListByType-template" type="text/x-handlebars-template">
+        <div class="breadcrumb">Great Table > <span class="link crumbSpirits">Spirits</span></div>
+
+        <div class="title">{{typeInfo.display}}</div>
+
+        <div id="info"></div>
+
+        {{#if spirits.top}}
+        <div class="names">Names:</div>
+        <table>
+            {{#each spirits.top}}
+            <tr>
+                <td class="link spiritLink" data-spiritid="{{spiritId}}">{{nameFromCells}}</td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+
+        {{#each spirits.subtypes}}
+
+            <div class="names">{{info.display}}:</div>
+            <table>
+                {{#each spirits}}
+                <tr>
+                    <td class="link spiritLink" data-spiritid="{{spiritId}}">{{nameFromCells}}</td>
+                </tr>
+                {{/each}}
+            </table>
+
+        {{/each}}
+
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="seniorInfo-template" type="text/x-handlebars-template">
+
+        <div class="date">June 20th 1584</div>
+        <div class="quote"><p>After them six ancient men, with white heads and staves in their hands.</p></div>
+        <div class="quote"><p>The 24 old men, are the 24 Seniors, that St. John remembereth.</p></div>
+        <div class="quote"><p>There follow Seniors six, alike from the 4 Gates:</p></div>
+        <div class="quote">
+            <p>
+            They proceed. And, in, and about the middle of the Court, the Ensigns keep their standings, opposite to the
+            middle of the Gate: The rest pause. The 24 senators meet: They seem to consult.</p>
+        </div>
+
+        <div class="date">June 25th 1584</div>
+        <div class="quote">
+            <p>
+                Now for you six Seniors: whose judgement is of God the Father, the Son, and the Holy Ghost.
+            </p>
+            <p>
+                In the line De Spiritu Sancto, you have 'A b i o r o' of six letters: The second name of the second
+                Senior is of 7 as, 'A' (the same, ascending) 'A ä b x ă.'
+            </p>
+            <p>If the third, as the second, in patre & filio, 'H c m o r d A.'</p>
+            <p>Again in Spiritu Sancto, 'h a o z p i.'</p>
+            <p>The fifth, in patre & filio descendens 'hi pot ga.' The sixth, 'A V' to 'Tar.'</p>
+            <p>
+                If you will make them of 7 letters (because two of them, are but of six) that is, when the wrath of God
+                is to be encreased.
+            </p>
+            <p>Note.</p>
+            <p>
+                Then whereas you say, 'Abioro,' say 'Habioro;' and where you say 'Haozpi,' say 'ahaozpi.' Thou
+                hast 'haospi,' before 'h' is 'A;' take that unto it and it maketh 'Aha ozpi.'
+            </p>
+            <p>And so they consist all, of 7 letters.</p>
+
+        </div>
+
+        <div class="date">June 26th 1584</div>
+        <div class="quote">
+            <p>
+            ...... The name of God in the middest of the great Crosse (where the name may have 'A' or 'H' is the end)
+            upon which the 4 Crosses of the first Angel attend, (or first part of the table attendeth) calleth out the six Seniors:
+            which give scientiam rerum humanarum & Judicum, according to the nature of their parts:
+            as in the East after one sort, in the West after another, and so of the rest.
+            </p>
+        </div>
+
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="kingInfo-template" type="text/x-handlebars-template">
+
+        <div class="date">June 20th 1584</div>
+        <div class="quote"><p>Then followed a comely man, with very much Apparel on his back, his Robe having a long train. After him came five men, carrying up of his train.</p></div>
+        <div class="quote"><p>In each of these Houses, the Chief Watchman, is a mighty Prince, a mighty Angel of the Lord: which hath under him 5 Princes (these names I must use for your instruction).</p></div>
+        <div class="quote"><p>After them cometh from every part a King, whose Princes are five, gardant, and holding up his train.</p></div>
+
+
+        <div class="date">June 25th 1584</div>
+        <div class="quote">
+            <p>
+                Thou hast 'b' the fifth, in the left part of the line, de Spiritu Sancto, thou hast 'a' the sixth, (the
+                first part of the line de patre & filio descending.) 'T' the sixth in the second part ascending.
+            </p>
+            <p>Thou hast 'a' the fifth, in 'aozpi.'</p>
+            <p>'i' The sixth, and 'V' the sixth, ascending in the part descending of the line de patre & filio, the second and first part.</p>
+            <p>Put the 'A' of the 'h' that stand in the Center, to it: Thou hast 'Bataiva' or 'Bataivh.'</p>
+            <p>You must take but one of them, either the 'A' orthe 'h.' 'A,' comuniter, and 'h' in extremis Judiciis.</p>
+            <p>Δ. So I see when the contract 'A,' and when the centrall 'H' must end this word: That is the mighty Prince whose traine was holden up in the East.</p>
+
+        </div>
+
+        <div class="date">June 26th 1584</div>
+        <div class="quote">
+            <p>
+            ...... The name of God in the middest of the great Crosse (where the name may have 'A' or 'H' is the end)
+            upon which the 4 Crosses of the first Angel attend, (or first part of the table attendeth) calleth out the six Seniors:
+            which give scientiam rerum humanarum & Judicum, according to the nature of their parts:
+            as in the East after one sort, in the West after another, and so of the rest.
+            </p>
+        </div>
+
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="namesOfGodInfo-template" type="text/x-handlebars-template">
+
+        <div class="date">June 20th 1584</div>
+        <div class="quote"><p>After the Trumpter followed three Ensign bearers.</p></div>
+        <div class="quote"><p>The 12 Banners are the 12 names of God, that govern all the creatures upon the Earth, visible and invisible, comprehending 3, 4, and 5.</p></div>
+        <div class="quote"><p>There followeth out of every Castle 3, holding up three Banners displayed, with ensigne, the names of God.</p></div>
+
+        <div class="date">June 25th 1584</div>
+        <div class="quote">
+            <p>
+            Thou hast in the middle line 'o r o i b A h a o z p i.' There are 6 lines above, and six below. That line is
+            called Linea Spiritus Sancti: and out of that line cometh the three names of God, from the East gate, being
+            of 3, 4, and 5 letters, which were the armes of the Ensignes that were spoken of before. 'Oro, ibah, aozpi.'
+            </p>
+        </div>
+
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="greatCrossInfo-template" type="text/x-handlebars-template">
+
+        <div class="date">June 20th 1584</div>
+        <div class="quote">Then followed one great Crosse</div>
+        <div class="quote">
+            <p>He said further more, "God the father is a standing Pillar."</p>
+            <p>Divided with a straight line, is one and two.</p>
+            <p>Δ. What is to be divided with a straight line?</p>
+            <p>The Pillar.</p>
+        </div>
+        <div class="quote">
+            Next issueth the Crosse of 4 Angles
+        </div>
+
+        <div class="date">June 25th 1584</div>
+        <div class="quote">
+            <p>Thou hast in the middle line 'o r o i b A ha o z p i.' There are 6 lines above, and six below. That line is called Linea Spiritus Sancti:</p>
+            <p>I said before, that God the Father was a mighty pillar divided with a right line.</p>
+            <p>That is the great Crosses that came out of the East gate.</p>
+            <p>Δ. With that line of the Holy Ghost?</p>
+        </div>
+        <div class="quote">
+            <p>I said before, that God the Father was a mighty pillar divided with a right line.</p>
+            <p>The Father himself, without the line.</p>
+            <p>The Father and Son by addition of the line.</p>
+            <p>
+                There two lines beginning<br>
+                J&nbsp;&nbsp;&nbsp;A<br>
+                i&nbsp;&nbsp;&nbsp;d<br>
+                a&nbsp;&nbsp;&nbsp;r<br>
+                &c.
+            </p>
+            <p>That is the great Crosses that came out of the East gate.</p>
+            <p>Δ. With that line of the Holy Ghost?</p>
+        </div>
+
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="attendantInfo-template" type="text/x-handlebars-template">
+
+        <div class="date">June 20th 1584</div>
+        <div class="quote">
+            <p>Then followed one great Crosse, and about that four lesser Crosses.</p>
+            <p>These Crosses had on them, each of them on, like men, their faces distinctly appearing on the four parts of the Crosse, all over.</p>
+        </div>
+        <div class="quote">
+            <p>
+            Next issueth the Crosse of 4 Angles, of the Majesty of Creation in God attended upon every one, with 4:
+            a white Cloud, 4 Crosses bearing the witnesses of the Covenant of God, with the prince gone out before:
+            which were confirmed, every one, with ten Angels, visible in countenance:
+            </p>
+        </div>
+
+
+        <div class="date">June 25th 1584</div>
+        <div class="quote">
+            <p>...... I. Thou hast in the upper left angle in the second line 'a r d z a.'</p>
+            <p>Thou hast that maketh the crosse downward: first 'i,' then the same 'd, o, i, g o.'</p>
+            <p>
+                Δ. Will you have six letters downward?<br>
+                ...... I.
+            </p>
+            <p>
+                So then hast the three other crosses in their angles.<br>
+                Δ. Will you give me leave to repeat them, for fear of erring?<br>
+                'I L a c z a,' the down line of six letters, and 'p a L a m' the crosse line.<br>
+                ...... It is so.
+            </p>
+            <p>
+                Δ. Now to the other on the left side below.<br>
+                a<br>
+                i<br>
+                a<br>
+                o<br>
+                a<br>
+                i
+            </p>
+            <p>
+                the down right line. Now the crosse line, is<br>
+                O i I i t
+            </p>
+            <p>Here those Crosses have ten faces.</p>
+            <p>
+                Δ. One letter is reckoned twice which is in the center of the Crosse: and so should seem to be eleven.<br>
+                ...... This is true knowledge.
+            </p>
+            <p>Δ. The last crosse is thus, his down line is<br>
+            a<br>
+            O<br>
+            u<br>
+            r<br>
+            r<br>
+            z
+            </p>
+            <p>
+                Δ. The Crosse is<br>
+                a L O a i
+            </p>
+            <p>Δ. So have I the 4 Crosses attendant on the principal Crosse.</p>
+        </div>
+
+        <div class="date">June 26th 1584</div>
+        <div class="quote">
+            <p>Take 'X' which is the next letter: look under the Crosse in the the first angle;
+            thou hast ' C z' (then 'o,' in the crosse:) then 'n s.' Call it 'C zod-en es:' It is one of the 4 angels that serve to that crosse, which we ruled by this name Idoigo.</p>
+
+            <p>
+                It is the name of God, of six letters: Look in the crosse that descendth,
+                In that name [Δ. Idoigo] they appear, by the name [Δ. Ardza] that is in the crosse, [Δ. Transversary] they do that they are commanded.</p>
+        </div>
+        <div class="quote">
+            <p>Δ. As they do appear in the name of God, Idoigo, so what shall be the name of God Ardza?</p>
+            <p>Ave...... The one is to call them, the other is to command them.</p>
+        </div>
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="aboveInfo-template" type="text/x-handlebars-template">
+
+        <div class="date">June 20th 1584</div>
+        <div class="quote">
+            <p>After every crosse, attendeth 16 Angels, dispositors of the will of those, that govern the Castles.</p>
+        </div>
+
+        <div class="date">June 25th 1584</div>
+        <div class="quote">
+            <p>...... Here thou mayst see the cause, that Pilat wrote with 4 letters.</p>
+            <p>How doth the cause appear?</p>
+            <p>...... For above every crosse, standeth 4 letters: Not that Pilat knew it, but that it was the fore-determination of God.</p>
+            <p>They are thus to be read. In the upper left angle thou hast 'r z l a:' pronounce, 'urzla:' this name the first Angel appeareth, 'z l a:' go then to the first 'r,' and pronounce it 'zlar.' That was the first letter of the first Angel, is now the last letter of the name of the second Angel, beginning at 'z,' as 'z l a,' and so back again to the 'r.'</p>
+            <p>Δ. So that the third beginneth at 'L,' whose last letter is the first of the second name, and is called 'Larz,' and so of the last: as 'a r z l,' to be pronounced 'arzel.'</p>
+            <p>Δ. So that you have, of these 4 letters, 4 Angels names, here thus gathered out: but how are they to be used?</p>
+            <p>...... Let it be sufficient that you know these names. I will teach you to use them.</p>
+            <p>Δ. Shall we labour by like order of every the 4 letters over the crosses to make 4 such names?</p>
+            <p>...... They are also to be made.</p>
+            <p>Δ. I do know assuredly that there is very much matter in this Table.</p>
+            <p>...... It is true: for hither to, stretched the knowledge of Solomon.</p>
+        </div>
+        <div class="quote">
+            <p>In the first four of the right side thou hast 'r' beginning the name of the Angel Urzla: put 'e' to it, and it changeth the sound, into Erzla.</p>
+            <p>Erzla is the name of God that governeth, Urzla.</p>
+            <p>Δ. And likewise the other three above the crosse are governed by that name of God, Erzla.</p>
+        </div>
+        <div class="quote">
+
+            <p>1. The knitting together of Natures lieth in the four Angels that are over the first Crosse.</p>
+            <p>Δ. As Urzla, zlar? &c.</p>
+            <p>...... I.</p>
+            <p>2. The carrying to place, to place lieth in the Angels of the second Crosse [Upper Right].</p>
+            <p>Δ. I understand in the Angels over the Crosse.</p>
+            <p>3. All Hand-crafts, or arts are in the Angels of this third Crosse [Lower Left].</p>
+            <p>Δ. I understand in the Angels over the Crosse.</p>
+
+        </div>
+
+        <div class="date">June 25th 1584</div>
+        <div class="quote">
+            <p>4.	Ave. ...... The Crosse of the fourth, first Angle.</p>
+            <p>Δ. I understand the Angels over the Crosse in the lower right corner.</p>
+            <p>...... Herein may you finde the secrets of Kings, and so unto the lowest degree.</p>
+        </div>
+        <div class="quote">
+            <p>Note. Notwithstanding, to know the world before the waters, to be privy of the doings of men from the
+                waters to Christ; from Christ unto the rewarding of the wicked: the wicked doings of the flesh, or the
+                fonds and devilish imaginations of man, or to see what the blessed Kingdom shall be, and how the earth
+                shall be dignified, purged, and made clean, is a meat too sweet for your mouths.
+            </p>
+            <p>Δ. Curiosity is far from our intents.</p>
+            <p>
+                Ave. ..... But there is neither Patriarch nor Prophet sanctified, Martyr, or Confessor,
+                King, or Governour of the people upon the earth, that his name, continuance, and end,
+                is not (like the Moon at midnight) in these Tables.
+            </p>
+            <p>Δ. Mean you not the Crosse of the fourth Angle, to be that, which is of 'a O u r r z.'</p>
+            <p>And his transversary of  'a l O a i?'</p>
+            <p>Ave. ..... It is so.</p>
+        </div>
+
+
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="belowInfo-template" type="text/x-handlebars-template">
+
+        <div class="date">June 20th 1584</div>
+        <div class="quote">
+            <p>After every crosse, attendeth 16 Angels, dispositors of the will of those, that govern the Castles.</p>
+        </div>
+
+        <div class="date">June 26th 1584</div>
+        <div class="quote">
+            <p>Take 'X' which is the next letter: look under the Crosse in the the first angle;
+                thou hast ' C z'(then 'o,' in the crosse:) then 'n s.' Call it 'C zod-en es:' It is one of
+                the 4 angels that serve to that crosse, which we ruled by this name Idoigo.</p>
+            <p>It is the name of God, of six letters: Look in the crosse that descendth,
+                In that name [Δ. Idoigo] they appear, by the name [Δ. Ardza] that is in the
+                crosse, [Δ. Transversary] they do that they are commanded.</p>
+            <p>Δ. Which they? you named onely 'C zod n es.'</p>
+            <p>Ave...... There followeth 'Tot t.'</p>
+            <p>Δ. Which more?</p>
+            <p>Δ. The principal Crosse transversary.</p>
+            <p>Those two, under, till you come to the Crosse.</p>
+            <p>Δ. Do you mean 'Sias, f m n d?'</p>
+            <p>...... Those 4 be of Physick.</p>
+            <p>Δ. As they do appear in the name of God, Idoigo, so what shall be the name of God Ardza?</p>
+            <p>Ave...... The one is to call them, the other is to command them.</p>
+            <p>If it be an incurable disease (in judgement of man) then adde the letter that standeth against the name, and make him up five: then he cureth miraculously.</p>
+        </div>
+        <div class="quote">
+            <p>The upper right angle in the next crosse, hath the same name of God to call out, and to constrain.</p>
+            <p>Δ. Which name mean you?</p>
+            <p>Ave. ...... The name that is in the crosse.	Δ. Ilacza --</p>
+            <p>The good Angels are also 4. They have power over Metals, to find them, to gather them together, and to use them.</p>
+            <p>These, that are the wicked ones, (made by three letters) are the Princes of those wicked ones,
+            that stood afar off in the Table of the Creation.</p>
+            <p>Δ. You mean in our fourth Book.</p>
+            <p>Ave. ...... These can give money coined, in Gold or Silver.</p>
+            <p>Δ. Which these?</p>
+            <p>Δ. These wicked ones mean you?</p>
+            <p>...... I.</p>
+            <p>The other give no money coined, but [only] the metal.</p>
+            <p>Δ. You mean the good.</p>
+            <p>...... I.</p>
+        </div>
+        <div class="quote">
+            <p>The third Crosse is the Crosse of transformation.</p>
+            <p>Δ. Mean you that on the left side underneath?</p>
+            <p>...... I.</p>
+        </div>
+        <div class="quote">
+            <p>The fourth is the Crosse of those Creatures that live in the four Elements, as you call them.</p>
+            <p>The first Angel --	the aire.</p>
+            <p>The second --		the water.</p>
+            <p>The third --		the earth.</p>
+            <p>The fourth --		the life, or fire of things that live.</p>
+            <p>Δ. Is not Acca the first Angel?</p>
+            <p>Δ. 'En pe at.'</p>
+            <p>...... I. Then 'NP at.'</p>
+            <p>Δ. Then 'O toi,' and 'P mox.'</p>
+            <p>AVE. They are easie to call.</p>
+        </div>
+
+        <div class="date">June 26th 1584</div>
+        <div class="quote">
+            <p>
+                But you must Note, That as the Angels of the first of the four Crosses in the East, which are for Medicine:
+                so are the first of the second, the first of the third, and the first of the fourth;
+                so that for Medicine there be sixteen, and so of all the rest in their order:
+                but that they differ in that, some be the Angels of the East, other some of the West, and so of the rest.
+            </p>
+        </div>
+        <div class="quote">
+            <p>Δ. I understand not well, your account of 16 Angels for medicine.</p>
+            <p>Ave. ..... Are there not four principal Crosses? Every Crosse hath also four. The first of every four are the Crosse of medicine, so that there be sixteen.</p>
+        </div>
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="devilInfo-template" type="text/x-handlebars-template">
+        <div class="date">June 20th 1584</div>
+        <div class="quote">
+            <p>After every crosse, attendeth 16 Angels, dispositors of the will of those, that govern the Castles.</p>
+        </div>
+
+        <div class="date">June 26th 1584</div>
+        <div class="quote">
+            <p>[Speaking of the good angels below the cross] If it be an incurable disease (in judgement of man) then adde the letter that standeth against the name, and make him up five: then he cureth miraculously.</p>
+            <p>But if thou wilt send sicknesse, then take two of the letters, and adde the letter of the Crosse [Δ. the black crosse] to it, as in the second, a To.</p>
+            <p>[Δ. This a, is of the crosse of union, or the black crosse.]</p>
+            <p>...... Then he is a wicked power, and bringeth in disease: and when thou callest him, call him by the name of god, backward: for unto him, so, he is a god: and so constrain him backward, as Ogiodi.</p>
+            <p>Δ. I think the Constraint must be, by the name of the Transversary backward pronounced, as of 'Ardza,' is backway, 'azdra:' For 'ogiodi,' should but cause him to appear by the order of 'Idoigo,' used for the 4 good Angels.</p>
+        </div>
+
+        <div class="quote">
+            <p>The upper right angle in the next crosse, hath the same name of God to call out, and to constrain.</p>
+            <p>Δ. Which name mean you?</p>
+            <p>Ave. ...... The name that is in the crosse.	Δ. Ilacza --</p>
+            <p>The good Angels are also 4. They have power over Metals, to find them, to gather them together, and to use them.</p>
+            <p>These, that are the wicked ones, (made by three letters) are the Princes of those wicked ones,
+                that stood afar off in the Table of the Creation.</p>
+            <p>Δ. You mean in our fourth Book.</p>
+            <p>Ave. ...... These can give money coined, in Gold or Silver.</p>
+            <p>Δ. Which these?</p>
+            <p>Δ. These wicked ones mean you?</p>
+            <p>...... I.</p>
+            <p>The other give no money coined, but [only] the metal.</p>
+            <p>Δ. You mean the good.</p>
+            <p>...... I.</p>
+            <p>Δ. As 'XOY.'</p>
+            <p>...... 'EXOY.'</p>
+            <p>Δ. I note this pronunciation.</p>
+            <p>Δ. The next is apa.</p>
+        </div>
+        <div class="date">July 2nd 1584</div>
+        <div class="quote">
+            <p>Δ. As concerning the wicked here, shall I call or summon them all, as I do the good ones in the name of God?</p>
+            <p>Ave ..... No man calleth upon the name of God in the wicked: They are servents and vile slaves.</p>
+            <p>Δ. We call upon the name of Jesus in the expulsing of devils, saying in the name of Jesus, etc.</p>
+            <p>Ave ..... That 'In' is against the wicked. No just man calleth upon the name of God, to allure the devil.</p>
+            <p>Δ. Then they are not to be named in the first summoning or invitation?</p>
+            <p>Ave ..... At no time to be called.</p>
+            <p>E.K. How then shall we proceed with them?</p>
+            <p>
+                Ave ..... When the Earth lieth opened unto your eyes, and when the Angels of Light, shall offer the passages of the Earth,
+                unto the entrance of your senses, (chiefly of seeing) Then shall you see the Treasures of the Earth, as you go:
+                And the caves of the Hills shall not be unknown unto you: Unto these, you may say, "Arise, be gone, Thou art of destruction
+                and of the places of darknesse: These are provided for the use of man. So shalt thou use the wicked, and no otherwise."
+            </p>
+            <p>Δ. This is as concerning the natural Mines of the Earth.</p>
+            <p>Ave ..... Not so, for they have nothing to do with the natural Mines of the Earth, but, with that which is corrupted with man.</p>
+            <p>Δ. As concerning the coined they have power to bring it.</p>
+            <p>Ave. So they may: that they keep, and no other.</p>
+        </div>
+
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="alchemicalInfo-template" type="text/x-handlebars-template">
+        <div class="date">January 17th 1585</div>
+        <div class="quote">
+            <p>...... He seemeth to read of the book.</p>
+            <p>...... Take of your Dlasod.</p>
+            <p>E.K. The book seemeth to be written in the holy characters.</p>
+            <p>...... Dlasod dignified.</p>
+            <p>E.K. -- (E.K. thought this is ignotum per ignotius)</p>
+            <p>...... My brother, leave off thy childishnesse; murmur not, thou hinderest me.</p>
+            <p>E.K. He is again in a cloud.</p>
+            <p>E.K. Now he is cleer again.</p>
+            <p>...... And Luminus or from due degrees.</p>
+            <p>...... Read it.</p>
+            <p>Δ. I read it. ...... Take off your Dlasod dignified, and Luminus, or from due degrees.</p>
+            <p>E.K. He seemeth to labour much about the reading of it.</p>
+            <p>...... Gather or take fiery degree.</p>
+            <p>...... [I feel no power, therefore have patience.]</p>
+            <p>...... "Notwithstanding, work it diverse dayes multiplying four digestions.</p>
+            <p>E.K. Now he is in a cloud again.</p>
+            <p>...... Pray, that it may be given unto me of God.</p>
+            <p>...... "And double then Dlasod, and thy Rodlnr. [It is a word which cannot be sounded]</p>
+            <p>...... Mend it Rlo.</p>
+            <p>Δ. Must it be R l o d n r?</p>
+            <p>...... Look about you, for Satan would hinder you of God's benefits.</p>
+            <p>...... "R l o d n r.</p>
+            <p>...... "Diligently.</p>
+            <p>...... Pray, that you may understand.</p>
+            <p>Δ. We prayed.</p>
+            <p>...... "For, until thou watch so continuing.</p>
+            <p>E.K. A cloud standeth by him, and now commeth before him as other times before: and then goeth away from before him again.</p>
+            <p>...... "is, a holy hour descendeth.</p>
+            <p>...... Note this, very well, for here you may be cast over shoes.</p>
+            <p>E.K.</p>
+            <p>...... This cloud is in thee. We had talk of the foresaid cloud.</p>
+            <p>...... "Of every work there ascendeth one Audcal, and so every Law R l o d n r.</p>
+            <p>E.K. Now he is covered in his vail or cloud again.</p>
+            <p>E.K. Prayed a short fervent prayer, whereat I rejoyced much.</p>
+            <p>E.K. Now there commeth a beam from above into his head as big as my little finger.</p>
+            <p>...... "And purpose Dlasod, take a swift Image, and have the proportion of a most glorious mixture Audcal and also Lulo. Continue and by office seek Rnodnr backward by the red digestion. But he by the common or red Darr doth gather most ripest work, purge the last fortune well fixed. Then the four through your [Rlodnr]</p>
+            <p>[I said] Roxtan finished more together at the lower body by one degree [bu] be by you for him hold it, for him in one of them.</p>
+            <p>E.K. Now he lyeth down prostrate.</p>
+            <p>...... Until of the last thing.</p>
+            <p>E.K. -- (He speaketh swift.)</p>
+            <p>...... In him become his red and highest degree of his resurrection through coition.</p>
+            <p>E.K. Now there commeth a great thing like a fire, and covereth him.</p>
+            <p>Now sit up.</p>
+            <p>Δ. We did rise up from kneeling.</p>
+            <p>...... After a while I come again.</p>
+            <p>...... There is the whole work.</p>
+            <p>E.K. Here [he] is again.</p>
+            <p>...... Bring forth the book of Enoch.</p>
+            <p>...... Read your lesson ...... Δ. I read the former, Take off your, &c.</p>
+            <p>Gather your six words, 4 words consist of 6 letters, and two of 4.</p>
+            <p>R l o d n r read that, in the upper angle descending in the first square.</p>
+            <p>It is a great thing to know which is the first table there in Nature.</p>
+            <p>Deliver the Book here.</p>
+            <p>Δ. I gave the Book to E.K.</p>
+            <p>...... Look where thou E.K. seest the letter clear.</p>
+            <p>E.K. looked, and saw a spark of light upon 'R', then on 'L', &c.</p>
+            <p>Δ. He was led by light appearing on the letters to read the six words,</p>
+            <p>Dlasod, Roxtan, Rlodnr, Audcal, Darr, Lulo.</p>
+            <p>...... Here is Quaternarius in Circumferentia, and Quaternarius in Centro.</p>
+            <p>There be the 4 mediating wayes to the center.</p>
+            <p>All that may be spoken in that you call Animal, Vegetable, or Mineral workemanship of Nature is here, as in a part of the four. This far now, more as you desire it. But that you may see, I am a companion with the rest.</p>
+        </div>
+
+        <div class="date">January 21st 1585</div>
+        <div class="quote">
+            <p>...... Two things you have to be instructed in, in Rlodnr, and in the Law of Coition and Mixture.</p>
+            <p>The first, is the instrument working, and drawing things together of one nature. The second is the bounds and termes, wherein every mixture consisteth, and beyond the which it cannot go.</p>
+            <p>The first of 4 parts, every part conteining, conteineth his conteined double.</p>
+            <p>The first is Tepens, this teacheth the rest.</p>
+            <p>These two things can I open unto you in two revolutions, which is but one daye's work.</p>
+            <p>But now I cease to open any more unto you till I see the favour of God more open unto you.</p>
+            <p>After 7 dayes I will come again, until then, I neither am, nor speak.</p>
+        </div>
+
+        <div class="date">March 20th 1585</div>
+        <div class="quote">
+            <p>Take common Audcal, purge and work it by Rlodnr of four divers digestions, continuing the last digestion for fourteen dayes, in one and a swift proportion, untill it be Dlasod fixed a most red and luminous body, the Image of Resurrestion.</p>
+            <p>Take also Lulo of red Roxtan, and work him through the four fiery degrees, until thou have his Audcal, and there gather him.</p>
+            <p>Then double every degree of your Rlodnr, and by the law of coition and mixture work and continue them diligently together. Notwithstanding backward, through every degree, multiplying the lower and last Rlodnr his due office finished by one degree more than the highest.</p>
+            <p>So doth it become Darr, the thing you seek for: a holy, most glorious, red, and dignified Dlasod.</p>
+            <p>But watch well, and gather him, so, at the highest: For in one hour, he descendeth, or ascendeth from the purpose.</p>
+            <p>Take hold.</p>
+        </div>
+        <div class="quote">
+            <p>Levan ..... What is Audcal!</p>
+            <p>Δ. God knoweth, I know not.</p>
+            <p>Levan ..... It is Gold.</p>
+            <p>Δ. Purge and work it. How you purging is, I know not.</p>
+            <p>Levan ..... Read and god forward.</p>
+            <p>Levan ..... Dlasod is Sulphur.</p>
+            <p>Go on let me teach you generally.</p>
+            <p>Δ. Take also Lulo of red Roxtan.</p>
+            <p>Levan ..... Roxtan, is pure and simple Wine in her self.</p>
+            <p>Lulo is her mother.</p>
+            <p>Δ. There may be in these words great ambiguitie.</p>
+            <p>Levan ..... Lulo is Tartar, simply of red wine.</p>
+            <p>Audcal is his Mercury.</p>
+            <p>Darr, (in the angelical tongue) is the true Name of the Sonne.</p>
+        </div>
+        <div class="quote">
+            <p>Levan ..... How many letters are in Audcal. ------- Δ ---- Six.</p>
+            <p>So many wayes is this a working.</p>
+        </div>
+    </script>
+
+    <!-- list of spirits of a specific type -->
+    <script id="gazavaaInfo-template" type="text/x-handlebars-template">
+        <div class="date">September 1st 1584</div>
+        <div class="quote">
+            <p>Δ. As I, and E.K. sat in my little study: after our talk of divers matters, and of my expecting audience at the Emperor his hand, &c. E.K. saw three little creatures walk up and down in the sun-shine, about an handfull from the pavement: and the creatures themselves very small, not an handfull long, like little shadows, or smokes, and the path wherein they walked seemed yellow. They walked a good while to and fro, till at length I suspected that they were sent to us; and so prepared the shew-stone: But E.K. said, he had rather see them thus out of the stone. I said that in the stone we have warrant that no wicked thing shall enter: but without the stone, Illuders might deal with us, unlesse God prevented it, &c.</p>
+            <p>E.K. said again, he had rather deal thus.</p>
+            <p>One of the 3 spiritual creatures said ...... His meaning is above thy sight.</p>
+            <p>E.K. Now two of them seem to kneel down in the Sun beams.</p>
+            <p>He in the middle of the Three ..... Blessed be God the Father, God the Son, and God the Holy Ghost, the most holy and blessed Trinity: One, true, mighty, perfect everlasting and incomprehensible God.</p>
+            <p>[Δ. Amen, Amen, Amen]</p>
+            <p>..... Which will be comprehended with those that live in the Heavens (the true Church of God) of such as measure him by faith, and not reason: which hath sent us to do his will; Both in that he will turn his heart: And in that he doth vouchsafe to make you witnesses of his secret purposes, and determinations in hand.</p>
+            <p>1. The middlemost said ------ I am the midst of the third, and the last [Δ.] of the spirit of life. Understood in this temporal controversie, and conflict of man's soul: but not according to his eternal and immeasurable proportion.</p>
+            <p>2. The second on the right side said ------ I am the second of the third, which dwell in the spirit, and power of God in earth: I have power to scourage them that resist the power, will, and commandment of God: and I am one of those that stand, and is perpetual.</p>
+            <p>For even as the father, son, and holy spirit are one, but of themselves and being dilated, is full of power, and many. So are we one particularly in power, but separated; notwithstanding, spiritually, of, and amongst others, and dilated in the will of God, and into the branches of his determinations: but particularly living, and joyntly praising God.</p>
+            <p>E.K. Now the other (the third) on the other side standeth up, and sayeth.</p>
+            <p>3. ......... The Kingdom of God, and of his son Christ: (which is true God, and the substance of his father, True God of true God).</p>
+            <p>E.K. What is that, God of God?</p>
+            <p>E.K. They are disappeared: but their path appeareth in the aire, in the sun-beams still.</p>
+            <p>E.K. They are here again.</p>
+            <p>...... Is contrary to ye kingdome of this world.</p>
+            <p>...... Happy are those that are of his Kingdom, for it hath no end; yea, happy are those that are the sons of faith, and not of the world: which is called Reason. Which is blinde, and is sealed with the mark of destruction. Because she persecuted, and put to death the Son of God, the God of righteousnesse, and light of all that live.</p>
+            <p>[3.] ..... I am the last, of the first, of the fourth, and I have power to gather up the blessings of God, and to set them (if they be disdained) in a better soyl.</p>
+            <p>3 [.....] For thus sayeth the God of Hoasts.</p>
+            <p>If he dream and will not hear me Gather up that he hath, and that which should be given him: that his life may be short, and his house without comfort: that he may passe away nakedly, as a shadow.</p>
+            <p>And lo, behold, we go, and we will dwell there; yea, even in the skirts of their Garments will we take up our habitation. And why?</p>
+            <p>Behold, this hath God said: In the morning watch them, and see how they rise. In the day time give ear unto them, and listen unto their counsels. Stand over them in the night, and note their filthinesse. And when it exceedeth the number, strike.</p>
+            <p>We are they that must direct your practises.</p>
+            <p>...... Behold, let us give Testimony of our names.</p>
+            <p>My name is ----- Ga ------ E.K. He in the middle.</p>
+            <p>My name is ----- Za</p>
+            <p>My name is ----- Vaa</p>
+            <p>Δ. The three names make one name of 7 letters, Gazavaa.</p>
+            <p>So we are called by position.</p>
+            <p>Thou shalt find us amongst the mercifull Tables delivered unto Enoch: and so unto you.</p>
+            <p>1. The middle most { I am on the third Table, and am extreme.</p>
+            <p>2. { I am of the third, but of the humanitie, and the second. Δ. of the physick part. Δ. Note the third Table here meant, is that of the South, as East, West, South, and North, their placing is other.</p>
+            <p>3. { And I am of the fourth, but Angular, and extreme, Linear of the uppermost. Δ. The three last Letters in the uppermost line of the fourth Table.</p>
+            <p>---- We are gone. --- E.K. They are out of sight.</p>
+        </div>
+        <div class="quote">
+            <p>Δ. {
+            <p>Ga ----- Ultimus spiritus vivorum.</p>
+            <p>Za ----- Flagellator resistentium potestati, voluntati, preacepto Dei.</p>
+            <p>Vaa ---- Transplator Donorum.</p>
+            <p>Δ. Aeterno, Omnipotenti, Trino et Trini Deo sit omnis honour laus et gloriam. Amen</p>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1249265-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+</body>
+</html>

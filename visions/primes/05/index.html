@@ -1,0 +1,76 @@
+<html>
+<head>
+
+    <style>
+        body {
+            font-family: "Courier New";
+            font-size: 0.8em;
+            background-color: black;
+            color: #ccc;
+        }
+        #config table, #config input, #config select {
+            font-size: 1em;
+            font-family: "Courier New";
+        }
+        .label {
+            text-align: right;
+        }
+        .num {
+            width: 100px;
+            text-align: right;
+        }
+        .btn {
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script type="text/javascript" src="pool.js"></script>
+    <script type="text/javascript" src="prime.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+
+    <div id="config">
+        <table>
+            <!-- number -->
+            <tr>
+                <td class="label">position: </td>
+                <td><input type="text" class="num" value="1" id="txtStart"></td>
+                <td><input type="button" class="btn" value="START" id="btnStart"></td>
+                <td><input type="button" class="btn" value="STOP" id="btnStop"></td>
+            </tr>
+            <tr>
+                <td class="label">velocity: </td>
+                <td><input type="text" class="num" value="1" id="txtSpeed"></td>
+                <td><input type="button" class="btn" value="FASTER" id="btnFaster"></td>
+                <td><input type="button" class="btn" value="SLOWER" id="btnSlower"></td>
+            </tr>
+            <tr>
+                <td class="label">method: </td>
+                <td colspan="3">
+                    <select id="selectMethod">
+                        <option value="getPercent_linear" selected>linear: n -/+ 0.5</option>
+                        <option value="getPercent_square" >squared: n^2</option>
+                        <option value="getPercent_cube" >cubed: n^3</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div id="display">
+
+    </div>
+
+    <!-- Google Analytics -->
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        _uacct = "UA-1249265-2";
+        urchinTracker();
+    </script>
+
+</body>
+</html>

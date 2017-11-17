@@ -1,0 +1,15 @@
+<STYLE>;
+A:link    {COLOR: #CC0000; TEXT-DECORATION: none;font-weight: bold}
+A:link    {COLOR: #CC0000; TEXT-DECORATION: none;font-weight: bold}
+A:visited {COLOR: #CC0000; TEXT-DECORATION: none;font-weight: bold}
+A:active  {COLOR: #FF0000; TEXT-DECORATION: none;font-weight: bold}
+A:hover   {COLOR: #FF0000; TEXT-DECORATION: none;font-weight: bold}
+
+.bigAlchemy		{font-family:alchemy;font-size:100pt}
+.bigHebrewText	{font-family:hebrew;font-size:20pt}
+.littleHebrewText	{font-family:hebrew;font-size:16pt}
+.pageTitleText	{font-family:arial;font-size:20pt;font-weight: bold}
+.sectionTitleText	{font-family:arial;font-size:16pt;font-weight: bold}
+.normalBoldText	{font-family:arial;font-size:12pt;font-weight: bold}
+.normalText		{font-family:arial;font-size:12pt}
+</style>

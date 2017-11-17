@@ -1,0 +1,174 @@
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Vollkorn;
+}
+td {
+    vertical-align: top;
+}
+table {
+    border-spacing: 0;
+}
+p {
+    margin: 0 0 0.5em 0;
+}
+
+@media only screen and (max-device-width: 720px) and (max-width: 500px) {
+    #left, #right {
+        vertical-align: top;
+    }
+    #left {
+        width: 100%;
+    }
+    #right {
+        width: 96%;
+        margin-left:2%;
+        padding-right:2%;
+    }
+}
+
+@media only screen and (min-device-width: 721px) and (min-width: 500px) {
+    #left, #right {
+        float: left;
+        vertical-align: top;
+    }
+    #left {
+        width: 50%;
+        height: 100%;
+        overflow-y: hidden;
+        text-align: right;
+    }
+    #right {
+        width: 46%;
+        height: 100%;
+        margin-left:2%;
+        padding-right:2%;
+        overflow-y: scroll;
+    }
+}
+
+.breadcrumb {
+    margin-top: 10px;
+}
+
+.link {
+    cursor: pointer;
+}
+.link:hover {
+    color:#f00;
+}
+.na {
+    color:#aaa;
+}
+.noSelect, .breadcrumb {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.title {
+    font-size:30px;
+}
+
+
+
+.govImg {
+    width: 100%;
+}
+.back {
+    cursor: pointer;
+    color:#f00;
+}
+
+#table {
+    cursor: pointer;
+}
+
+#info {
+    text-align: justify;
+    overflow-y: hidden;
+}
+.read-fade {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height:80px;
+
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+
+}
+
+.read-more {
+
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 10px 0;
+    height:20px;
+
+    font-weight: bold;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+
+.read-more:hover {
+    border: 1px solid #c00;
+}
+
+
+.date {
+    font-weight: bold;
+    margin-bottom: 0.2em;
+}
+.names {
+    font-weight: bold;
+    margin-top: 0.2em;
+}
+.innernames {
+    margin-left:1em;
+}
+.quote {
+    margin-bottom: 10px;
+    text-align: justify;
+    border-bottom: #ccc solid 1px;
+}
+
+#governours {
+    border-spacing: 1em 0;
+}
+
+#map
+{
+    width: 100%;
+    height: 300px;
+}
+#map.large
+{
+    width: 100%;
+    height: 100%;
+}
+#map-canvas
+{
+    width: 100%;
+    height: 100%;
+}

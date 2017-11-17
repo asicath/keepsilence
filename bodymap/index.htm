@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNhqGdMP0Kz3eNYr8zFSxGeHFtysoDD8E&sensor=false"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <title>Local Body History Map</title>
+    </head>
+    <body>
+        
+        <div id="control">
+            <div><div class="label">Month: </div><input type="text" id="month" value="1" disabled="disabled" /> <span class="button" id="prevMonth">prev</span> - <span class="button" id="nextMonth">next</span></div>
+            <div><div class="label">Year: </div><input type="text" id="year" value="1978" disabled="disabled" /> <span class="button" id="prevYear">prev</span> - <span class="button" id="nextYear">next</span></div>
+            <div>
+                <span class="button" id="pause">pause</span> - 
+                <span class="button" id="playslower" title="30 minutes">slower</span> - 
+                <span class="button" id="playslow" title="10 minutes">slow</span> - 
+                <span class="button" id="playfast" title="3 minutes">fast</span> - 
+                <span class="button" id="playfaster" title="1 minute">faster</span>
+            </div>
+            <div id="bodycount">XX Bodies</div>
+        </div>
+
+        <div id="about">
+            Ordo Templi Orientis<br />
+            United States Grand Lodge<br />
+            Local Body History
+        </div>
+
+        <div id="map">
+            <div id="map-canvas"></div>
+        </div>
+
+        <script src="https://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            _uacct = "UA-1249265-2";
+            urchinTracker();
+        </script>
+
+    </body>
+</html>
