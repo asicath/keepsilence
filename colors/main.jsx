@@ -548,6 +548,14 @@ class Index extends React.Component {
                         Aleister Crowley, 777, Notes to the Table of Correspondences
                     </a>
                 </li>
+                <li className="text-source">
+                    <a href="https://docs.google.com/spreadsheets/d/15g8Y9E5mG2qD4Z2nYTPNQs2LJ9za4EeNcD_akGJ9s9g/edit?usp=sharing">
+                        Our recommendations for RGB hex codes of 777 Columns XV-XVIII Scales of Colour
+                    </a>
+                </li>
+
+
+
                 </ul>
             </div>
 
