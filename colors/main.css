@@ -1,11 +1,10 @@
 body
 {
     background-color: #ffffff;
-    font-family: 'Vollkorn', 'Georgia', serif;
+    font-family: 'Georgia', serif;
     text-align: justify;
     color: #333;
-    background-color: #fff;
-    font-size:15px;
+    font-size:16px;
     padding-bottom: 5em;
     margin: 0;
     height: 100%;
@@ -15,7 +14,6 @@ a, a:visited
 {
     text-decoration:none;
     color:#000;
-    font-weight: bold;
 }
 a:hover
 {
@@ -27,6 +25,9 @@ p {
 }
 p.quote {
     margin: 0 2em 0.8em 2em;
+}
+ul {
+    margin: 0;
 }
 
 #background {
@@ -268,22 +269,23 @@ table.card-display > tbody > tr > td {
 .index .main-title {
     font-size: 4em;
     text-align: center;
-    margin-top: 1.5em;
-
+    margin-top: 0.5em;
     margin-bottom: 0;
+    font-family: 'Vollkorn', 'Georgia', serif;
 }
 .index .main-subtitle {
     font-size: 1.7em;
     text-align: center;
     font-weight: bold;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+    font-family: 'Vollkorn', 'Georgia', serif;
 }
 
 .text-list, .path-list {
-    margin-top: 2em;
+    margin-top: 1em;
 }
 .main .subtitle {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.2em;
 }
 .quarter-col {
     width: 25%;
@@ -296,11 +298,13 @@ table.card-display > tbody > tr > td {
     margin-top: 1.5em;
     font-weight: bold;
     margin-bottom: 0;
+    font-family: 'Vollkorn', 'Georgia', serif;
 }
 .index .subtitle {
     font-size: 1.3em;
     text-align: center;
     font-weight: bold;
+    font-family: 'Vollkorn', 'Georgia', serif;
 }
 
 .index .color {
@@ -310,16 +314,17 @@ table.card-display > tbody > tr > td {
 .black {    color: #000000;}
 
 .red, .reddish { color: #ed1c24; }
-.orange, .saffron { color: #FF6D00; }
+.orange, .saffron, .flame { color: #FF6D00; }
 .yellow, .golden { color: #FEDD00; }
 .green { color: #00A550; }
 .blue, .blewish { color: #0085ca; }
 .indigo, .saphire { color: #001489; }
 .violet { color: #440099; }
 .purple { color: #BB29BB; }
-.grey, .gray { color: #808080; }
+.grey, .gray, .stone { color: #808080; }
 .brown, .mud { color: #5c3312; }
 .amber, .honey {color:#ffb734;}
 .buff, .hempen {color:#F0DC82;}
 .citrine {color:#dedb2c;}
 .pale {color:#B2E79F;}
+.olive {color:#8d8800;}
