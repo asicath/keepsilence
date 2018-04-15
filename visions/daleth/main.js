@@ -5,7 +5,7 @@ var config = {
     calcPercent: 'getPercent_cube',
     cutOff: 0.5,
 
-    deltaPerSecond: 1,
+    deltaPerSecond: 5,
     startAt: 1,
     interval: 10,
     freqBase: 100,
@@ -35,14 +35,14 @@ $(function() {
     });
 
     $('#btnFaster').on('click', function() {
-        var c = Math.round((config.deltaPerSecond + 0.01) * 1000) / 1000;
+        var c = Math.round((config.deltaPerSecond + 1) * 1000) / 1000;
         config.deltaPerSecond = c;
         calcDelta();
         $('#txtSpeed').val(config.deltaPerSecond.toString());
     });
 
     $('#btnSlower').on('click', function() {
-        var c = Math.round((config.deltaPerSecond - 0.01) * 1000) / 1000;
+        var c = Math.round((config.deltaPerSecond - 1) * 1000) / 1000;
         if (c <= 0) return;
         config.deltaPerSecond = c;
         calcDelta();
