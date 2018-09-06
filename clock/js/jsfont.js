@@ -11,7 +11,7 @@ var JSFont = (function() {
         return glyph.bounds;
     };
 
-    exports.draw = function(ctx, font, char, scalePercent, x, y, width, height, colorStroke, colorFill, displayBackwards) {
+    exports.draw = function(ctx, font, char, scalePercent, x, y, width, height, colorStroke, colorFill, displayBackwards, center) {
 
         var glyph = getGlyphCached(font, char, scalePercent);
 
@@ -67,11 +67,29 @@ var JSFont = (function() {
             }
 
             glyph.rendered[renderKey] = buffer;
+
+            // some debug
+            /*
+            ctxBuffer.beginPath();
+            ctxBuffer.moveTo(0, 0);
+            ctxBuffer.lineTo(0, height);
+            ctxBuffer.lineTo(width, height);
+            ctxBuffer.lineTo(width, 0);
+            ctxBuffer.lineTo(0, 0);
+            ctxBuffer.lineWidth = 3;
+            ctxBuffer.strokeStyle = 'rgba(64, 0, 0, 1)';
+            ctxBuffer.stroke();
+            */
         }
 
         // Draw the letter
+        if (center) {
+            ctx.drawImage(glyph.rendered[renderKey], x-width/2, y-height/2);
+        }
+        else {
+            ctx.drawImage(glyph.rendered[renderKey], x, y);
+        }
 
-        ctx.drawImage(glyph.rendered[renderKey], x, y);
 
     };
 

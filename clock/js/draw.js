@@ -67,14 +67,14 @@ var Draw = (function() {
         imgZodiac[z] = new Image();
         var s = '' + z;
         if (s.length == 1) s = '0' + s;
-        imgZodiac[z].src = 'images/astro/' + s + '.png';
+        imgZodiac[z].src = 'images/equinox/' + s + '.png';
     }
 
     var imgSun = new Image();
-    imgSun.src = 'images/astro/sun.png';
+    imgSun.src = 'images/equinox/sun.png';
 
     var imgMoon = new Image();
-    imgMoon.src = 'images/astro/moon.png';
+    imgMoon.src = 'images/equinox/moon.png';
 
     var planetImage = {
         Jupiter: {
@@ -243,6 +243,7 @@ var Draw = (function() {
             ctx.stroke();
         }
 
+        // draw the images
         for (var z = 0; z < 12; z++) {
 
             r = angleOffsetDueToSun - Math.PI*2 * ((z+0.5)/12);
@@ -274,9 +275,6 @@ var Draw = (function() {
         // all other angles will be modified by this
         var angleOffsetDueToSun = (sunData.rightAscension / 24) * Math.PI * 2;
 
-        // draw moon
-        drawMoon(ctx, moonData.rightAscension, moonData.distance, angleOffsetDueToSun);
-
         // draw the planets
         if (showPlanets) {
             var pl = doPlanets(observer, 0);
@@ -285,6 +283,11 @@ var Draw = (function() {
                 drawPlanet(ctx, data.rightAscension, data.name, angleOffsetDueToSun);
             }
         }
+
+        drawTimeTics(ctx);
+
+        // draw moon
+        drawMoon(ctx, moonData.rightAscension, moonData.distance, angleOffsetDueToSun);
 
         // draw the resh times if provided
         if (times) {
@@ -326,6 +329,8 @@ var Draw = (function() {
 
         var size = fixedRadius;
 
+
+        // *** SUN INFO, lower left ***
         var houseIndex = determineHouseIndex(sunData.rightAscension);
         var imgSign = imgZodiac[houseIndex];
         x = width / 2 - maxRadius + size * 0.5;
@@ -335,7 +340,7 @@ var Draw = (function() {
         ctx.drawImage(imgSign, 0, 0, imgSign.width, imgSign.height, x, y, size, size);
         y += size;
 
-        var degree = determineDegree(sunData.rightAscension) + "";
+        var degree = determineDegree(sunData.rightAscension).toString();
         var digit0 = degree.length == 1 ? "0" : degree.substr(0, 1);
         var digit1 = degree.substr(degree.length - 1, 1);
         var colorFill = 'rgba(128, 128, 128, 1)';
@@ -344,6 +349,25 @@ var Draw = (function() {
         JSFont.draw(ctx, vollkorn, digit0, scale, x, y, size/2, size, colorStroke, colorFill, false);
         JSFont.draw(ctx, vollkorn, digit1, scale, x + size/2, y, size/2, size, colorStroke, colorFill, false);
 
+        // draw the min/sec
+        ctx.fillStyle = 'rgba(48, 48, 48, 1)';
+        let fontSize = (500*scale);
+        ctx.font = fontSize.toString() + "px Arial";
+        let exact = (sunData.rightAscension * 15) % 30;
+        exact -= Math.floor(exact);
+        let minutes = Math.floor(60*exact);
+        exact = 60*exact - minutes;
+        let seconds = Math.floor(60*exact);
+
+        minutes = minutes.toString();
+        seconds = seconds.toString();
+        if (minutes.length < 2) minutes = "0" + minutes;
+        if (seconds.length < 2) seconds = "0" + seconds;
+
+        ctx.fillText(minutes + "'", x + fontSize*4, y + fontSize*2.5);
+        ctx.fillText(seconds + '"', x + fontSize*5.5, y + fontSize*2.5);
+
+        // *** MOON INFO, lower right ***
         houseIndex = determineHouseIndex(moonData.rightAscension);
         imgSign = imgZodiac[houseIndex];
         x = width / 2 + maxRadius - size*1.5;
@@ -446,7 +470,7 @@ var Draw = (function() {
         var t0 = solarNoon.getHours() * 60 * 60 + solarNoon.getMinutes() * 60 + solarNoon.getSeconds();
         var t1 = time.getHours() * 60 * 60 + time.getMinutes() * 60 + time.getSeconds();
         var t2 = 24 * 60 * 60;
-        return angleOffset - (t1 - t0) / t2 * Math.PI * 2;
+        return angleOffset - ((t0 - t1) / t2) * Math.PI * 2;
     };
 
     // for drawing the time hand
@@ -473,9 +497,86 @@ var Draw = (function() {
 
             ctx.imageSmoothingEnabled = true;
             ctx.drawImage(img, 0, 0, img.width, img.height, x2 - size/2, y2 - size/2, size, size);
-
-
         }
+    };
+
+    var drawTimeTics = function(ctx) {
+
+        let ticCount = 24;
+
+        var colorFill = 'rgba(48, 48, 48, 1)';
+        var colorStroke = null;
+        var scale = 0.010 * (maxRadius / 350);
+        var fixedRadius = maxRadius * 0.1;
+        var size = fixedRadius/2;
+        var letterWidth = size * 0.35;
+
+        for (var z = 0; z < ticCount; z++) {
+
+            let hour = ((z+18)%24).toString();
+            if (hour.length < 2) hour = "0" + hour;
+
+            var r = Math.PI*2 * (z / ticCount);
+            var x1 = Math.cos(r) * (innerRadius * 0.95) + width / 2;
+            var y1 = Math.sin(r) * (innerRadius * 0.95) + height / 2;
+            var x2 = Math.cos(r) * innerRadius + width / 2;
+            var y2 = Math.sin(r) * innerRadius + height / 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineWidth = lineWidth/2;
+            ctx.strokeStyle = 'rgba(48, 48, 48, 1)';
+            if (hour !== "00" && hour !== "12") ctx.stroke();
+
+            ctx.save();
+            ctx.translate(width/2,height/2);
+
+
+            var x3 = Math.cos(r) * (innerRadius * 0.92);
+            var y3 = Math.sin(r) * (innerRadius * 0.92);
+
+            if (hour !== "00" && hour !== "12") {
+                JSFont.draw(ctx, vollkorn, hour.substr(0, 1).toString(), scale, x3 - letterWidth/2, y3, size/2, size, colorStroke, colorFill, false, true);
+                JSFont.draw(ctx, vollkorn, hour.substr(1, 1).toString(), scale, x3 + letterWidth/2, y3, size/2, size, colorStroke, colorFill, false, true);
+            }
+
+
+            /*
+            ctx.beginPath();
+            ctx.arc(x3, y3, earthRadius/4, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+            */
+
+            ctx.restore();
+        }
+
+
+
+        /*
+        for (var z = 0; z < ticCount; z++) {
+
+            r = Math.PI*2 * (z/ticCount);
+
+            ctx.save();
+            ctx.translate(width/2,height/2);
+            ctx.rotate(r);
+
+            let hour = z.toString();
+            if (hour.length < 2) hour = "0" + hour;
+
+            let x = 0;
+            let y = (innerRadius * 0.8);
+
+            JSFont.draw(ctx, vollkorn, hour.substr(0, 1).toString(), scale, x, y, size/2, size, colorStroke, colorFill, false);
+            JSFont.draw(ctx, vollkorn, hour.substr(1, 1).toString(), scale, x + letterWidth, y, size/2, size, colorStroke, colorFill, false);
+            //JSFont.draw(ctx, vollkorn, z.toString().substr(0, 1).toString(), scale, 0, (innerRadius * 0.8), size/2, size, colorStroke, colorFill, false);
+
+            // we’re done with the rotating so restore the unrotated context
+            ctx.restore();
+        }
+        */
+
     };
 
     var drawTime = function(ctx, time, solarNoon, color, outerRadius, innerRadius, img, timePercent, forceAngle) {
