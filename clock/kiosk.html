@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+
+    <title>Thelemic Clock</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta property="og:image" content="images/thumb.jpg" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        var fallbackPosition = {
+            coords: {
+                // Horizon Lodge OTO 3/18/2016
+                latitude: 47.6452826,
+                longitude: -122.3846057
+            }
+        };
+    </script>
+
+    <!-- hayes ephemeris for sun & moon positions -->
+    <script language="JavaScript" type="text/javascript" src="hayes/util.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/datetime.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/observer.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/sun.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/moon.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/planets.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/stars.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/separation.js"></script>
+    <script language="JavaScript" type="text/javascript" src="hayes/math.js"></script>
+
+    <!-- suncalc for resh times -->
+    <script language="JavaScript" type="text/javascript" src="js/suncalc.js"></script>
+
+    <script language="JavaScript" type="text/javascript" src="js/color.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/vollkorn_regular.typeface.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/jsfont.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/gong.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/draw.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/run.js"></script>
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            text-align: center;
+            cursor: none;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="blazingpixel" width="700" height="700"></canvas>
+
+</body>
+</html>
+
+
