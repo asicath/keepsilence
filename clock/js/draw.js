@@ -279,6 +279,7 @@ var Draw = (function() {
 
         // now fill in each space
         let highlight = -1;
+        let lineColor = 'grey';
         for (var z = 0; z < 12; z++) {
             let a = lines[z];
             let b = lines[(z+1)%12];
@@ -301,6 +302,7 @@ var Draw = (function() {
             if ((a.r+Math.PI/2) % (Math.PI *2) < topAngle) {
                 alpha = 0.75;
                 highlight = z;
+                //lineColor = `rgba(${color[0]*0.9}, ${color[1]*0.9}, ${color[2]*0.9}, 1)`;
             }
             //if (topAngle > a.r && topAngle < b.r) alpha = 1;
             ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
@@ -311,14 +313,14 @@ var Draw = (function() {
         ctx.beginPath();
         ctx.arc(width/2, height/2, outerRadius, 0, 2 * Math.PI, false);
         ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = 'grey';
+        ctx.strokeStyle = lineColor;
         ctx.stroke();
 
         // inner ring
         ctx.beginPath();
         ctx.arc(width/2, height/2, innerRadius, 0, 2 * Math.PI, false);
         ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = 'grey';
+        ctx.strokeStyle = lineColor;
         ctx.stroke();
 
         // the border lines
@@ -328,7 +330,7 @@ var Draw = (function() {
             ctx.moveTo(a.outer.x, a.outer.y);
             ctx.lineTo(a.inner.x, a.inner.y);
             ctx.lineWidth = lineWidth;
-            ctx.strokeStyle = 'grey';
+            ctx.strokeStyle = lineColor;
             ctx.stroke();
         }
 
@@ -571,7 +573,7 @@ var Draw = (function() {
 
         ctx.save();
         ctx.translate(width/2,height/2);
-        ctx.rotate(angle);
+        ctx.rotate(angle - Math.PI/2);
 
         let off = outerRadius/150;
         ctx.beginPath();
@@ -627,42 +629,8 @@ var Draw = (function() {
                 JSFont.draw(ctx, vollkorn, hour.substr(1, 1).toString(), scale, x3 + letterWidth/2, y3, size/2, size, colorStroke, colorFill, false, true);
             }
 
-
-            /*
-            ctx.beginPath();
-            ctx.arc(x3, y3, earthRadius/4, 0, 2 * Math.PI, false);
-            ctx.fillStyle = 'red';
-            ctx.fill();
-            */
-
             ctx.restore();
         }
-
-
-
-        /*
-        for (var z = 0; z < ticCount; z++) {
-
-            r = Math.PI*2 * (z/ticCount);
-
-            ctx.save();
-            ctx.translate(width/2,height/2);
-            ctx.rotate(r);
-
-            let hour = z.toString();
-            if (hour.length < 2) hour = "0" + hour;
-
-            let x = 0;
-            let y = (innerRadius * 0.8);
-
-            JSFont.draw(ctx, vollkorn, hour.substr(0, 1).toString(), scale, x, y, size/2, size, colorStroke, colorFill, false);
-            JSFont.draw(ctx, vollkorn, hour.substr(1, 1).toString(), scale, x + letterWidth, y, size/2, size, colorStroke, colorFill, false);
-            //JSFont.draw(ctx, vollkorn, z.toString().substr(0, 1).toString(), scale, 0, (innerRadius * 0.8), size/2, size, colorStroke, colorFill, false);
-
-            // we’re done with the rotating so restore the unrotated context
-            ctx.restore();
-        }
-        */
 
     };
 
@@ -670,6 +638,7 @@ var Draw = (function() {
         var angle = getAngle(time, solarNoon);
         if (typeof forceAngle !== 'undefined') angle = angleOffset + forceAngle;
 
+        /*
         var x1 = Math.cos(angle) * outerRadius + width / 2;
         var y1 = Math.sin(angle) * outerRadius + height / 2;
 
@@ -680,13 +649,35 @@ var Draw = (function() {
             y0 = Math.sin(angle) * innerRadius + height / 2;
         }
 
+
         ctx.beginPath();
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
         ctx.lineWidth = lineWidth;
         ctx.strokeStyle = inColor ? color : getColor(128, 128, 128, 1);
         ctx.stroke();
+        */
 
+
+        // draw the fancy hand
+        ctx.save();
+        ctx.translate(width/2,height/2);
+        ctx.rotate(angle - Math.PI/2);
+
+        let off = outerRadius/150;
+        ctx.beginPath();
+        ctx.moveTo(0, innerRadius);
+        ctx.lineTo(-off, outerRadius*0.95);
+        ctx.lineTo(0, outerRadius-2);
+        ctx.lineTo(off, outerRadius*0.95);
+
+        ctx.closePath();
+        ctx.fillStyle = inColor ? color : getColor(128, 128, 128, 1);
+        ctx.fill();
+
+        ctx.restore();
+
+        // draw the hieroglyph
         if (img) {
             var size = maxRadius * 0.15;
 
