@@ -7,6 +7,12 @@ var Draw = (function() {
     var planetRadii, maxPlanetRadius;
     var lineWidth, fixedRadius, outerRadius, innerRadius;
 
+    let inColor = true;
+
+    my.setColorMode = function(b) {
+        inColor = b;
+    };
+
     my.setSize = function(width_a, height_a) {
         width = width_a;
         height = height_a;
@@ -64,11 +70,17 @@ var Draw = (function() {
 
     var imgZodiac = [];
     for (var z = 0; z < 12; z++) {
-        imgZodiac[z] = new Image();
+        imgZodiac[z] = {};
+        imgZodiac[z].g = new Image();
+        imgZodiac[z].w = new Image();
         var s = '' + z;
         if (s.length == 1) s = '0' + s;
-        imgZodiac[z].src = 'images/equinox/' + s + '.png';
+        imgZodiac[z].g.src = 'images/equinox/' + s + '.png';
+        imgZodiac[z].w.src = 'images/equinox/' + s + '-w.png';
     }
+
+    var imgEarth = new Image();
+    imgEarth.src = 'images/planet/earth.png';
 
     var imgSun = new Image();
     imgSun.src = 'images/equinox/sun.png';
@@ -107,22 +119,35 @@ var Draw = (function() {
     }
 
     var imgResh = [];
-    imgResh[0] = new Image();
-    imgResh[0].src = 'images/resh/ra.png';
-    imgResh[1] = new Image();
-    imgResh[1].src = 'images/resh/hathoor.png';
-    imgResh[2] = new Image();
-    imgResh[2].src = 'images/resh/tum.png';
-    imgResh[3] = new Image();
-    imgResh[3].src = 'images/resh/kephra.png';
+    imgResh[0] = {w: new Image(), c:new Image()};
+    imgResh[1] = {w: new Image(), c:new Image()};
+    imgResh[2] = {w: new Image(), c:new Image()};
+    imgResh[3] = {w: new Image(), c:new Image()};
+
+    imgResh[0].w.src = 'images/resh/ra.png';
+    imgResh[1].w.src = 'images/resh/hathoor.png';
+    imgResh[2].w.src = 'images/resh/tum.png';
+    imgResh[3].w.src = 'images/resh/kephra.png';
+
+    imgResh[0].c.src = 'images/resh/ra-color.png';
+    imgResh[1].c.src = 'images/resh/hathoor-color.png';
+    imgResh[2].c.src = 'images/resh/tum-color.png';
+    imgResh[3].c.src = 'images/resh/kephra-color.png';
 
 
     var drawEarth = function(ctx) {
         // draw earth
+        /*
         ctx.beginPath();
         ctx.arc(width/2, height/2, earthRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = 'blue';
         ctx.fill();
+        */
+
+        let x = width/2;
+        let y = height/2;
+
+        ctx.drawImage(imgEarth, 0, 0, imgEarth.width, imgEarth.height, x - earthRadius, y - earthRadius, earthRadius * 2, earthRadius * 2);
     };
 
     var drawSun = function(ctx, sunAscension, sunDistance) {
@@ -214,34 +239,100 @@ var Draw = (function() {
 
     };
 
+
+    let colors = [
+        [0xed,0x20,0x00], // ed2000
+        [0xff,0x4e,0x00], // FF4E00
+        [0xff,0x6d,0x00], // FF6D00
+
+        [0xff,0xb7,0x34], // ffb734
+        [0xe5,0xd7,0x08], // E5D708
+        [0x59,0xb9,0x34], // 59B934
+
+        [0x00,0xa5,0x50], // 00A550
+        [0x00,0x95,0x8d], // 00958d
+        [0x00,0x85,0xca], // 0085ca
+
+        [0x00,0x14,0x89], // 001489
+        [0x5c,0x00,0xcc], // 5c00cc
+        [0xae,0x0e,0x36]  // AE0E36
+    ];
+
     var drawFixedStarRing = function(ctx, angleOffsetDueToSun) {
-        // outer
-        ctx.beginPath();
-        ctx.arc(width/2, height/2, outerRadius, 0, 2 * Math.PI, false);
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = 'grey';
-        ctx.stroke();
 
-        // inner
-        ctx.beginPath();
-        ctx.arc(width/2, height/2, innerRadius, 0, 2 * Math.PI, false);
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = 'grey';
-        ctx.stroke();
-
+        // calculate
+        let lines = [];
         for (var z = 0; z < 12; z++) {
             var r = angleOffset + angleOffsetDueToSun - Math.PI*2 *z/12;
             var x1 = Math.cos(r) * outerRadius + width / 2;
             var y1 = Math.sin(r) * outerRadius + height / 2;
             var x2 = Math.cos(r) * innerRadius + width / 2;
             var y2 = Math.sin(r) * innerRadius + height / 2;
+
+            // save for later
+            lines.push({
+                r: r,
+                outer: {x:x1,y:y1},
+                inner: {x:x2,y:y2},
+            });
+        }
+
+        // now fill in each space
+        let highlight = -1;
+        for (var z = 0; z < 12; z++) {
+            let a = lines[z];
+            let b = lines[(z+1)%12];
+
             ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
+            ctx.moveTo(a.inner.x, a.inner.y);
+            ctx.arc(width/2, height/2, innerRadius, a.r, b.r, true);
+            //ctx.lineTo(b.inner.x, b.inner.y); // replace with arc
+            ctx.lineTo(b.outer.x, b.outer.y);
+            ctx.arc(width/2, height/2, outerRadius, b.r, a.r, false);
+            //ctx.lineTo(a.outer.x, a.outer.y); // replace with arc
+            ctx.closePath();
+
+            let color = colors[z];
+
+
+
+            let alpha = '0.25';
+            let topAngle = Math.PI*2 / 12;
+            if ((a.r+Math.PI/2) % (Math.PI *2) < topAngle) {
+                alpha = 0.75;
+                highlight = z;
+            }
+            //if (topAngle > a.r && topAngle < b.r) alpha = 1;
+            ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+            if (inColor) ctx.fill();
+        }
+
+        // outer ring
+        ctx.beginPath();
+        ctx.arc(width/2, height/2, outerRadius, 0, 2 * Math.PI, false);
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = 'grey';
+        ctx.stroke();
+
+        // inner ring
+        ctx.beginPath();
+        ctx.arc(width/2, height/2, innerRadius, 0, 2 * Math.PI, false);
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = 'grey';
+        ctx.stroke();
+
+        // the border lines
+        for (var z = 0; z < 12; z++) {
+            let a = lines[z];
+            ctx.beginPath();
+            ctx.moveTo(a.outer.x, a.outer.y);
+            ctx.lineTo(a.inner.x, a.inner.y);
             ctx.lineWidth = lineWidth;
             ctx.strokeStyle = 'grey';
             ctx.stroke();
         }
+
+
 
         // draw the images
         for (var z = 0; z < 12; z++) {
@@ -254,7 +345,11 @@ var Draw = (function() {
 
             // draw the image
             var size = fixedRadius;
-            ctx.drawImage(imgZodiac[z], 0, 0, imgZodiac[z].width, imgZodiac[z].height, -size/2, -outerRadius, size, size);
+
+            let img = (z === highlight) ? imgZodiac[z].w : imgZodiac[z].g;
+
+
+            ctx.drawImage(img, 0, 0, img.width, img.height, -size/2, -outerRadius, size, size);
 
             // we’re done with the rotating so restore the unrotated context
             ctx.restore();
@@ -294,18 +389,19 @@ var Draw = (function() {
             var insideRadius = innerRadius * 0.666;
             var outsideRadius = innerRadius;
 
-            drawTime(ctx, times.dawn, times.solarNoon, null, outsideRadius, insideRadius, imgResh[0], 1.8);
-            drawTime(ctx, times.solarNoon, times.solarNoon, null, outsideRadius, insideRadius, imgResh[1], 1.5);
-            drawTime(ctx, times.sunset, times.solarNoon, null, outsideRadius, insideRadius, imgResh[2], 1.8);
-            drawTime(ctx, times.nadir, times.solarNoon, null, outsideRadius, insideRadius, imgResh[3], 1.3, Math.PI);
-
             if (speed < 200000) {
-                drawTimeArc(ctx, date, times.solarNoon, '#fff', outsideRadius, 0);
+                //drawTimeArc(ctx, date, times.solarNoon, '#fff', outsideRadius, 0);
+                drawTimePointer(ctx, date, times.solarNoon, outsideRadius);
 
                 if (showTimeText)
-                drawTimeText(ctx, date, Math.PI  * 1.5, -outerRadius * 0.05);
+                    drawTimeText(ctx, date, Math.PI  * 1.5, -outerRadius * 0.05);
             }
 
+            let imgType = inColor ? 'c' : 'w';
+            drawTime(ctx, times.dawn, times.solarNoon, getColor(0xfe, 0xe7, 0x4d, 0.5), outsideRadius, insideRadius, imgResh[0][imgType], 1.8);
+            drawTime(ctx, times.solarNoon, times.solarNoon, getColor(0xff, 0x2a, 0x00, 0.5), outsideRadius, insideRadius, imgResh[1][imgType], 1.5);
+            drawTime(ctx, times.sunset, times.solarNoon, getColor(0x02, 0x46, 0xbc, 0.5), outsideRadius, insideRadius, imgResh[2][imgType], 1.8);
+            drawTime(ctx, times.nadir, times.solarNoon, getColor(0x00, 0xA5, 0x50, 0.5), outsideRadius, insideRadius, imgResh[3][imgType], 1.3, Math.PI);
         }
 
         // draw the ring of fixed stars
@@ -332,7 +428,7 @@ var Draw = (function() {
 
         // *** SUN INFO, lower left ***
         var houseIndex = determineHouseIndex(sunData.rightAscension);
-        var imgSign = imgZodiac[houseIndex];
+        var imgSign = imgZodiac[houseIndex].g;
         x = width / 2 - maxRadius + size * 0.5;
         y = height / 2 + maxRadius - size*3.5;
         ctx.drawImage(imgSun, 0, 0, imgSun.width, imgSun.height, x, y, size, size);
@@ -350,7 +446,7 @@ var Draw = (function() {
         JSFont.draw(ctx, vollkorn, digit1, scale, x + size/2, y, size/2, size, colorStroke, colorFill, false);
 
         // draw the min/sec
-        ctx.fillStyle = 'rgba(48, 48, 48, 1)';
+        ctx.fillStyle = 'rgba(64, 64, 64, 1)';
         let fontSize = (500*scale);
         ctx.font = fontSize.toString() + "px Arial";
         let exact = (sunData.rightAscension * 15) % 30;
@@ -369,7 +465,7 @@ var Draw = (function() {
 
         // *** MOON INFO, lower right ***
         houseIndex = determineHouseIndex(moonData.rightAscension);
-        imgSign = imgZodiac[houseIndex];
+        imgSign = imgZodiac[houseIndex].g;
         x = width / 2 + maxRadius - size*1.5;
         y = height / 2 + maxRadius - size*3.5;
         ctx.drawImage(imgMoon, 0, 0, imgMoon.width, imgMoon.height, x, y, size, size);
@@ -403,9 +499,6 @@ var Draw = (function() {
 
             var y0 = Math.floor(year / 22);
             var y1 = year % 22;
-
-
-
             return roman(y0,1) + roman(y1,1).toLowerCase();
         })();
 
@@ -473,38 +566,32 @@ var Draw = (function() {
         return angleOffset - ((t0 - t1) / t2) * Math.PI * 2;
     };
 
-    // for drawing the time hand
-    var drawTimeArc = function(ctx, time, solarNoon, color, outerRadius, innerRadius, img) {
+    var drawTimePointer = function(ctx, time, solarNoon, outerRadius) {
         var angle = getAngle(time, solarNoon);
-        var angle0 = angle + Math.PI * 2 * 0.0005;
-        var angle1 = angle - Math.PI * 2 * 0.0005;
 
-        var x = Math.cos(angle) * innerRadius + width / 2;
-        var y = Math.sin(angle) * innerRadius + height / 2;
+        ctx.save();
+        ctx.translate(width/2,height/2);
+        ctx.rotate(angle);
 
+        let off = outerRadius/150;
         ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.arc(width/2, height/2, outerRadius, angle0, angle1, true);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-off, outerRadius*0.95);
+        ctx.lineTo(0, outerRadius-2);
+        ctx.lineTo(off, outerRadius*0.95);
+
         ctx.closePath();
-        ctx.fillStyle = color || getColor(128, 128, 128, 0.5);
+        ctx.fillStyle = getColor(255, 255, 255, 1);
         ctx.fill();
 
-        if (img) {
-            var size = maxRadius * 0.15;
-
-            var x2 = Math.cos(angle) * (innerRadius - size*0.6) + width / 2;
-            var y2 = Math.sin(angle) * (innerRadius - size*0.6) + height / 2;
-
-            ctx.imageSmoothingEnabled = true;
-            ctx.drawImage(img, 0, 0, img.width, img.height, x2 - size/2, y2 - size/2, size, size);
-        }
+        ctx.restore();
     };
 
     var drawTimeTics = function(ctx) {
 
         let ticCount = 24;
 
-        var colorFill = 'rgba(48, 48, 48, 1)';
+        var colorFill = 'rgba(64, 64, 64, 1)';
         var colorStroke = null;
         var scale = 0.010 * (maxRadius / 350);
         var fixedRadius = maxRadius * 0.1;
@@ -525,7 +612,7 @@ var Draw = (function() {
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.lineWidth = lineWidth/2;
-            ctx.strokeStyle = 'rgba(48, 48, 48, 1)';
+            ctx.strokeStyle = 'rgba(64, 64, 64, 1)';
             if (hour !== "00" && hour !== "12") ctx.stroke();
 
             ctx.save();
@@ -597,7 +684,7 @@ var Draw = (function() {
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
         ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = color || getColor(128, 128, 128, 1);
+        ctx.strokeStyle = inColor ? color : getColor(128, 128, 128, 1);
         ctx.stroke();
 
         if (img) {
@@ -627,12 +714,13 @@ var Draw = (function() {
         ctx.fillText("'t' to toggle time", 20, 80);
         ctx.fillText("'p' to toggle planets", 20, 100);
         ctx.fillText("'g' to sound gong", 20, 120);
+        ctx.fillText("'c' to toggle color mode", 20, 140);
 
-        ctx.fillText(date.toLocaleString(), 20, 140);
-        ctx.fillText(width + "x" + height, 20, 160);
+        ctx.fillText(date.toLocaleString(), 20, 160);
+        ctx.fillText(width + "x" + height, 20, 180);
 
         if (times) {
-            y = 180;
+            y = 200;
             ctx.fillText("Dawn: " + times.dawn.toLocaleTimeString(), 20, y);
             y+=20;
             ctx.fillText("Sunrise: " + times.sunrise.toLocaleTimeString(), 20, y);

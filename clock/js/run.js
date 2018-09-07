@@ -20,42 +20,89 @@ var hasMaxSped = false;
 
 $(document).on('keydown', function(e) {
     var ratio = 1.618033988;
-    if (e.which == 38) {
-        speed = Math.ceil(speed * ratio);
-        if (speed > 10000000) {
-            speed = 10000000;
+    if (e.which === 38) {
 
-            if (!hasMaxSped) {
-                _gaq.push(['_trackEvent', 'Event', 'SpeedMax', '']);
-                hasMaxSped = true;
+
+        if (speed === -1) {
+            speed = 1;
+        }
+        else if (speed < 0) {
+            speed = Math.ceil(speed / ratio);
+            if (speed > -1) speed = -1;
+        }
+        else {
+            speed = Math.ceil(speed * ratio);
+            if (speed > 10000000) {
+                speed = 10000000;
+
+                if (!hasMaxSped) {
+                    _gaq.push(['_trackEvent', 'Event', 'SpeedMax', '']);
+                    hasMaxSped = true;
+                }
+            }
+
+
+            if (!hasSpedUp) {
+                _gaq.push(['_trackEvent', 'Event', 'SpeedUp', '']);
+                hasSpedUp = true;
             }
         }
+
         showSpeedFrames = 60 * 10;
 
-        if (!hasSpedUp) {
-            _gaq.push(['_trackEvent', 'Event', 'SpeedUp', '']);
-            hasSpedUp = true;
-        }
     }
-    if (e.which == 40) {
-        speed = Math.floor(speed / ratio);
-        if (speed < 1) speed = 1;
+
+    // downpress
+    else if (e.which === 40) {
+
+        if (speed === 1) {
+            // go negative
+            speed = -1;
+        }
+        else if (speed < 0) {
+            speed = Math.floor(speed * ratio);
+            if (speed < -10000000) {
+                speed = -10000000;
+            }
+        }
+        // normal downpress, just slow down
+        else {
+            speed = Math.floor(speed / ratio);
+            if (speed < 1) speed = 1;
+        }
+
+
         showSpeedFrames = 60 * 10;
     }
-    if (e.which == 82) {
+
+    // space = back to 1
+    else if (e.which === 32) {
+        speed = 1;
+    }
+
+    // r = reset
+    else if (e.which === 82) {
         time = 0;
         speed = 1;
     }
-    if (e.which == 71) {
+    else if (e.which === 71) {
         Gong.play(4);
     }
-    if (e.which == 84) {
+    else if (e.which === 84) {
         showTimeText = !showTimeText;
         localStorage.setItem('showTimeText', showTimeText);
     }
-    if (e.which == 80) {
+    else if (e.which === 80) {
         showPlanets = !showPlanets;
         localStorage.setItem('showPlanets', showPlanets);
+    }
+    else if (e.which === 67) {
+        inColor = !inColor;
+        Draw.setColorMode(inColor);
+        localStorage.setItem('inColor', inColor);
+    }
+    else {
+        console.log(e.which);
     }
 });
 
@@ -82,7 +129,14 @@ var showPlanets = (function() {
     return false;
 })();
 
-
+var inColor = (function() {
+    return true;
+    var s = localStorage.getItem('inColor');
+    if (typeof s === 'string') {
+        return s == 'true';
+    }
+    return false;
+})();
 
 
 $(function() {
@@ -165,7 +219,7 @@ $(function() {
         // always draw after advancing the time
         needsDraw = true;
 
-        if (speed > 1) {
+        if (speed > 1 || speed < 0) {
             elapse = now.getTime() - last.getTime();
             time += elapse * (speed-1);
         }
@@ -210,7 +264,7 @@ $(function() {
         requestAnimFrame(drawCycle);
 
         // high speed, draw at will
-        if (speed > 1) advanceTime();
+        if (speed > 1 || speed < 0) advanceTime();
 
         if (needsDraw) {
 
