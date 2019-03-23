@@ -349,26 +349,23 @@ function alphaColor(color, alpha) {
 
 function drawFleck(ctx, color, xCenter, yCenter) {
 
-    //yourNumber = parseInt(hexString, 16);
-    //"
-
-    // draw at point
-    //var size = Math.random() * 4 + 4;
-
-
-
     var sides = Math.floor(Math.random() * 3) + 3;
     //var sides = 4;
     var angleIncr = Math.PI * 2 / sides;
 
+    let range = 16;
+    let xOffset = Math.random() * range - range/2;
+    let yOffset = Math.random() * range - range/2;
+
     for (var n = 0; n < 3; n++) {
         var angleOffset = Math.random() * Math.PI * 2;
         ctx.beginPath();
+
         for (var i = 0; i < sides; i++) {
-            var size = Math.random() * 8 + 4;
+            var size = Math.random() * 6 + 2;
             var angle = (angleIncr * i + angleOffset) % (Math.PI * 2);
-            var x = Math.cos(angle) * (size/2) + xCenter;
-            var y = Math.sin(angle) * (size/2) + yCenter;
+            var x = Math.cos(angle) * (size/2) + xCenter + xOffset;
+            var y = Math.sin(angle) * (size/2) + yCenter + yOffset;
             if (i === 0) ctx.moveTo(x, y);
             else ctx.lineTo(x, y);
         }
@@ -376,15 +373,6 @@ function drawFleck(ctx, color, xCenter, yCenter) {
         ctx.fillStyle = alphaColor(color, 0.5); // "#" + color;
         ctx.fill();
     }
-
-
-
-    /*
-    ctx.beginPath();
-    ctx.arc(x, y, size/2, 0, 2 * Math.PI, false);
-    ctx.fillStyle = "#" + color;
-    ctx.fill();
-    */
 
 }
 
@@ -504,6 +492,10 @@ function showIndexPage() {
     );
 }
 
+//Last, First M. “Section Title.” Book/Anthology. Ed. First M. Last. City: Publisher, Year Published. Page(s).
+//Serviss, Garrett P. “A Trip of Terror.” A Columbus of Space. New York: Appleton, 1911. 17-32. Print.
+
+// Levi, Eliphas. "Chapter VII. The Septenary of Talismans." Dogma et Rituel de la Haute Magie, Part II. 1856.
 class Index extends React.Component {
     render() {
         return <div className="index main">
@@ -520,22 +512,27 @@ class Index extends React.Component {
 
                 <li className="text-source">
                     <a href="index.htm?source=agrippa">
-                        Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed.
+                        Heinrich Cornelius Agrippa: Of Occult Philosophy, Book I, Part 3, Chapter XLIX. Of Light, Colours, Candles, and Lamps, and to what Stars, Houses, and Elements severall colours are ascribed. 1533.
                     </a>
                 </li>
                 <li className="text-source">
                     <a href="index.htm?source=levi">
-                        Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans
+                        Eliphas Levi, Dogma et Rituel de la Haute Magie, Part II, Chapter VII. The Septenary of Talismans. 1856.
                     </a>
                 </li>
                 <li className="text-source">
                     <a href="index.htm?source=aasr">
-                        AASR, 14th Degree, The Explanation of the Girdle
+                        AASR, 14th Degree, The Explanation of the Girdle. Published 1882.
                     </a>
                 </li>
                 <li className="text-source">
                     <a href="index.htm?source=sria">
-                        SRIA II, Theoricus Grade, The Lecture on Colours
+                        SRIA II, Theoricus Grade, The Lecture on Colours. 1867.
+                    </a>
+                </li>
+                <li className="text-source">
+                    <a href="index.htm?source=apr14">
+                        APR, 14th Degree, Description of the banners of the twelve tribes of the chosen people. Published 1881.
                     </a>
                 </li>
                 <li className="text-source">

@@ -313,6 +313,7 @@ table.card-display > tbody > tr > td {
 .white {    color: #000000;}
 .black {    color: #000000;}
 
+.pink { color: #ed8e91; }
 .red, .reddish { color: #ed1c24; }
 .orange, .saffron, .flame { color: #FF6D00; }
 .yellow, .golden { color: #FEDD00; }
