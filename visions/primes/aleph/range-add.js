@@ -4,6 +4,8 @@ var range = (function() {
     var exports = {};
 
     var primes = [];
+    exports.primes = primes;
+
     var upTo = 1;
 
     function createPrimesTo(n) {
@@ -71,7 +73,7 @@ var range = (function() {
         // make sure we've got enough primes
         //var target = Math.floor(Math.sqrt(n));
         var target = Math.floor(n/2);
-        createPrimesTo(n);
+        createPrimesTo(n*2);
 
         // find the max prime for this number
         var iMax = primes.length - 1;
