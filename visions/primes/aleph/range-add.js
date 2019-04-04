@@ -1,13 +1,14 @@
 
-var range = (function() {
+let range = (function() {
 
-    var exports = {};
+    let exports = {};
 
-    var primes = [];
+    let primes = [];
     exports.primes = primes;
 
-    var upTo = 1;
+    let upTo = 1;
 
+    // ensures that all primes up to N have been found
     function createPrimesTo(n) {
         while (n > upTo) {
             upTo += 1;
@@ -15,30 +16,14 @@ var range = (function() {
         }
     }
 
-    function isPrime(n) {
-
-        var max = Math.floor(Math.sqrt(n));
-
-        for (var j = 0; j < primes.length; j++) {
-            var prime = primes[j];
-
-            // don't find above the limit
-            if (prime.n > max) return true;
-
-            // found a factor
-            if (n % prime.n === 0) return false;
-        }
-
-        return true;
-    }
-
+    // only used in createPrimesTo, adds a prime to the list
     function addPrime(n) {
 
         // create the base prime
-        var prime = {n: n};
+        let prime = {n: n};
 
         // get the existing coverage gap
-        var uncovered = primes.length == 0 ? 1 : 1 - primes[primes.length - 1].sumCoverage;
+        let uncovered = primes.length === 0 ? 1 : 1 - primes[primes.length - 1].sumCoverage;
 
         // take a smaller portion each time
         prime.addCoverage = uncovered * (1 / n);
@@ -50,53 +35,71 @@ var range = (function() {
         primes.push(prime);
     }
 
+    // determines if a number is prime or not using existing primes
+    function isPrime(n) {
+
+        let max = Math.floor(Math.sqrt(n));
+
+        for (let j = 0; j < primes.length; j++) {
+            let prime = primes[j];
+
+            // don't find above the limit
+            if (prime.n > max) return true;
+
+            // found a factor
+            if (n % prime.n === 0) return false;
+        }
+
+        return true;
+    }
+
+    // returns an array of integers that are the prime factors of n
     exports.getPrimeFactors = function(n) {
 
-        var factors = [];
-        var max = n * n;
+        let factors = [];
+        let max = n * n;
 
-        for (var j = 0; j < primes.length; j++) {
-            var prime = primes[j];
+        for (let j = 0; j < primes.length; j++) {
+            let prime = primes[j];
 
             // don't find above the limit
             if (prime.n > max) break;
 
             // found a factor
-            if (n % prime.n == 0) factors.push(prime.n);
+            if (n % prime.n === 0) factors.push(prime.n);
         }
 
         return factors;
     };
 
-    exports.getRangeAt = function(n, intervalCount) {
+    // n is the current number
+    // intervalCount is the number of buckets
+    exports.getRangeAt = function(n, rangeCount) {
 
-        // make sure we've got enough primes
-        //var target = Math.floor(Math.sqrt(n));
-        var target = Math.floor(n/2);
+        // make sure we've got slightly more primes
         createPrimesTo(n*2);
 
-        // find the max prime for this number
-        var iMax = primes.length - 1;
-        while (iMax > 0 && primes[iMax].n > target) { // ?? Could make this sqrt n
+        // find the index of the prime that is equal to or slightly below n
+        let iMax = primes.length - 1;
+        while (iMax > 0 && primes[iMax].n > (n/2)) {
             iMax -= 1;
         }
 
-        // get max coverage
-        var coverage = primes[iMax].sumCoverage;
-
-        var ranges = [];
-        var range = null;
-        var prime, i = 0;
+        let ranges = [];
+        let range = null;
+        let i = 0;
 
         // create the initial ranges, up to the max count
-        while (i <= iMax && ranges.length < intervalCount) {
+        while (i <= iMax && ranges.length < rangeCount) {
             range = getSingularRange(i);
             ranges.push(range);
             i++;
         }
 
-        var j = ranges.length - 1;
+        // always add the next prime to the end
+        let j = ranges.length - 1;
 
+        // starting where we left off in the prime list
         while (i <= iMax) {
             range = ranges[j];
 
@@ -116,10 +119,10 @@ var range = (function() {
     function checkForBalance(j, ranges) {
 
         // at the bottom
-        if (j == 0) return true;
+        if (j === 0) return true;
 
-        var next = ranges[j];
-        var prev = ranges[j-1];
+        let next = ranges[j];
+        let prev = ranges[j-1];
         if (next.active > prev.active) {
             //console.log('needs step down');
 
@@ -136,9 +139,9 @@ var range = (function() {
     }
 
     function getSingularRange(i) {
-        var prime = primes[i];
+        let prime = primes[i];
 
-        var range = {
+        let range = {
             active: 1/prime.n,
             next: null,
 
@@ -158,10 +161,10 @@ var range = (function() {
     }
 
     function getNextRange(range) {
-        var i = range.endIndex + 1;
-        var prime = primes[i];
+        let i = range.endIndex + 1;
+        let prime = primes[i];
 
-        var next = {
+        let next = {
             active: range.active + (1 - range.active) * (1/prime.n),
             next: null,
 
@@ -182,11 +185,11 @@ var range = (function() {
 
     // drops one on the front end
     function getReducedRange(range) {
-        var i = range.startIndex;
-        var prime = primes[i];
-        var nextPrime = primes[i + 1];
+        let i = range.startIndex;
+        let prime = primes[i];
+        let nextPrime = primes[i + 1];
 
-        var next = {
+        let next = {
             active: range.active - (1 / (range.sum - prime.n)) * (1 / prime.n),
             next: null,
 
@@ -210,6 +213,6 @@ var range = (function() {
 })();
 
 //console.log(range.getRangeAt(2, 7));
-//console.log(range.getRangeAt(3, 7));
+console.log(range.getRangeAt(3, 7));
 
 // sub: p - 1/(sum-n) * (1/n)

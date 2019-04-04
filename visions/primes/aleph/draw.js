@@ -2,28 +2,50 @@ let Draw = function () {
 
     let radius = 249;
     let grey = "rgba(255,255,255, 0.2)";
+    let darkGrey = "rgba(255,255,255, 0.1)";
     let lineColor = "rgba(255,255,0, 0.4)";
     let capType = 'round';
-    let interval = 10;
+    let interval = 30;
     let currentHighlightIndex = [];
-    let currentNumber = 2;
+    let currentNumber = 1;
 
-    setInterval(() => {
-        currentNumber++;
-    }, 300);
 
-    let colorAlpha = 0.5;
+
+    let colorAlpha = 1;
+    let colorSaturation = 1.0;
     let colors = [
-        {color: `rgba(${0x8C},${0x15},${0xC4}, ${colorAlpha})`}, // violet 8C15C4
-        {color: `rgba(${0x00},${0x14},${0x89}, ${colorAlpha})`}, // indigo 001489
-        {color: `rgba(${0x00},${0x85},${0xCA}, ${colorAlpha})`}, // blue 0085ca
-        {color: `rgba(${0x00},${0xA5},${0x50}, ${colorAlpha})`}, // green 00A550
-        {color: `rgba(${0xFE},${0xDD},${0x00}, ${colorAlpha})`}, // yellow
-        {color: `rgba(${0xFF},${0x6D},${0x00}, ${colorAlpha})`}, // orange FF6D00
-        {color: `rgba(${0xED},${0x28},${0x00}, ${colorAlpha})`}, // red ed2800
+        {r:0x8C, g:0x15, b:0xC4}, // violet 8C15C4
+        {r:0x00, g:0x14, b:0x89}, // indigo 001489
+        {r:0x00, g:0x85, b:0xCA}, // blue 0085ca
+        {r:0x00, g:0xA5, b:0x50}, // green 00A550
+        {r:0xFE, g:0xDD, b:0x00}, // yellow
+        {r:0xFF, g:0x6D, b:0x00}, // orange FF6D00
+        {r:0xED, g:0x28, b:0x00}  // red ed2800
     ];
 
+    function moveToNextNumber() {
+        currentNumber++;
+        colorSaturation = 1.0;
+        lowerSaturation();
+        setTimeout(moveToNextNumber, 2000);
+    }
+    moveToNextNumber();
+
+    setInterval(() => {
+        interval *= 0.998;
+    }, 100);
+
+    function lowerSaturation() {
+
+        if (colorSaturation <= 0) return;
+        setTimeout(() => {
+            colorSaturation -= 0.03;
+            lowerSaturation();
+        }, 50);
+    }
+
     let canvas, c;
+    let lastPrimeCalc = null;
 
     function init() {
 
@@ -52,9 +74,28 @@ let Draw = function () {
         //drawIntegerLine();
 
         let n = currentNumber;
-        let ranges = range.getRangeAt(n, 7);
-        let factors = range.getPrimeFactors(n);
+        let ranges, factors, isPrime;
 
+        if (lastPrimeCalc !== null) {
+            if (lastPrimeCalc.n === n) {
+                ranges = lastPrimeCalc.ranges;
+                factors = lastPrimeCalc.factors;
+            }
+            else {
+                lastPrimeCalc = null;
+            }
+        }
+        if (lastPrimeCalc === null) {
+            ranges = range.getRangeAt(n, 7);
+            factors = range.getPrimeFactors(n);
+            lastPrimeCalc = {
+                n: n,
+                ranges: ranges,
+                factors: factors
+            };
+        }
+
+        // determine which range will be highlighted
         currentHighlightIndex = [];
         factors.forEach(m => {
             ranges.forEach((range, i) => {
@@ -64,8 +105,10 @@ let Draw = function () {
             })
         });
 
+        // create the spiral groups for each range and one for all the other primes
         let i = 0;
         let rangeIndex = 0;
+        let spiralGroups = [];
         while (range.primes[i].n <= n) {
             let m = range.primes[i].n;
 
@@ -73,11 +116,32 @@ let Draw = function () {
                 rangeIndex++;
             }
 
-            drawSpiral(m, rangeIndex);
+
+            //drawSpiral(m, rangeIndex);
+            if (typeof spiralGroups[rangeIndex] === 'undefined') {
+                spiralGroups[rangeIndex] = [];
+            }
+
+            spiralGroups[rangeIndex].push(m);
+
             i++;
         }
 
+        spiralGroups.forEach((a, index) => {
+            if (currentHighlightIndex.indexOf(index) === -1)
+                drawSpiral(a, index, index === ranges.length ? darkGrey : grey);
+        });
 
+        spiralGroups.forEach((a, index) => {
+            if (currentHighlightIndex.indexOf(index) !== -1)
+                drawSpiral(a, index, index === ranges.length ? darkGrey : grey);
+        });
+
+
+
+        drawCurrentPosition();
+        drawCircleMat();
+        drawCircle();
     }
 
     function drawCircle() {
@@ -92,10 +156,35 @@ let Draw = function () {
         c.beginPath();
         c.arc(x, y, radius, 0, Math.PI * 2, false);
         c.closePath();
-        c.lineWidth = 3;
-        c.strokeStyle = grey;
+        c.lineWidth = 1;
+        c.strokeStyle = "white";
         c.lineCap = capType;
         c.stroke();
+
+        c.restore();
+    }
+
+    function drawCircleMat() {
+
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+
+        c.save();
+
+        c.translate(canvas.width / 2, canvas.height / 2);
+
+        c.beginPath();
+        c.moveTo(-x, -y);
+        c.lineTo(-x, y);
+        c.lineTo(x, y);
+        c.lineTo(x, 0);
+        c.lineTo(radius, 0);
+        c.arc(0, 0, radius, 0, Math.PI * 2, false);
+        c.lineTo(x, 0);
+        c.lineTo(x, -y);
+        c.closePath();
+        c.fillStyle = "black";
+        c.fill();
 
         c.restore();
     }
@@ -117,13 +206,59 @@ let Draw = function () {
         c.restore();
     }
 
-    function drawSpiral(n, colorIndex) {
+    function drawCurrentPosition() {
+
+        let y = interval * currentNumber;
+
+        c.save();
+        c.translate(canvas.width / 2, canvas.height / 2);
+        c.beginPath();
+
+        c.arc(0, y, interval/2, 0, Math.PI * 2, false);
+        c.closePath();
+
+        c.fillStyle = grey;
+        c.fill();
+
+        c.restore();
+
+    }
+
+    function drawSpiral(a, colorIndex, defaultColor) {
 
         c.save();
 
         c.translate(canvas.width / 2, canvas.height / 2);
 
         c.beginPath();
+
+        a.forEach(n => {
+            traceSpiral(n);
+        });
+
+        //c.closePath();
+
+        let color = defaultColor;
+        if (currentHighlightIndex.indexOf(colorIndex) !== -1) {
+            let info = colors[colorIndex];
+            let r = info.r * colorSaturation + 255 * (1 - colorSaturation);
+            let g = info.g * colorSaturation + 255 * (1 - colorSaturation);
+            let b = info.b * colorSaturation + 255 * (1 - colorSaturation);
+            let alpha = colorAlpha * colorSaturation + 0.2 * (1 - colorSaturation);
+
+            color = `rgba(${r},${g},${b}, ${alpha})`;
+        }
+
+
+        c.lineWidth = interval; //interval;
+        c.strokeStyle = color;
+        c.lineCap = capType;
+        c.stroke();
+
+        c.restore();
+    }
+
+    function traceSpiral(n) {
         c.moveTo(0, 0);
 
         let radius = 0;
@@ -147,16 +282,6 @@ let Draw = function () {
 
             value += 0.001;
         }
-
-
-
-        //c.closePath();
-        c.lineWidth = interval; //interval;
-        c.strokeStyle = currentHighlightIndex.indexOf(colorIndex) !== -1 ? colors[colorIndex].color : grey;
-        c.lineCap = capType;
-        c.stroke();
-
-        c.restore();
     }
 
 
