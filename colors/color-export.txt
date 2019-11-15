@@ -1,0 +1,38 @@
+		7 English of Col. 6	15 King Scale of Colour [י]	15a hex code	16 The Queen Scale of Colour [ח]		17 The Emperor Scale of Colour [ו]		18 The Empress Scale of Colour [ח]		@	40 Precious Stones	 Stone Notes
+1	S	Sphere of the Primum Mobile	Brilliance	*	White brilliance	*	White brilliance	*	White flecked gold	ffffff FEDD00	@	Diamond
+2	S	Sphere of the Zodiac or Fixed Stars	Pure soft blue	8ABAD3	Grey	bfbfbf	Blue pearl grey, like mother-of pearl	99adbf	White, flecked red, blue, and yellow	*	@	Star Ruby, Turquiose
+3	S	Sphere of Saturn 	Crimson	AE0E36	Black	000000	Dark brown	38200a	Grey flecked pink	bfbfbf FDC3C6	@	Star Sapphire, Pearl
+D	S	[Daath]	Lavender	9A90CD	Grey-white	d4d4d4	Pure Violet	5b00cc	Grey flecked gold	bfbfbf FEDD00	@
+4	S	Sphere of Jupiter 	Deep Violet	2d0066	Blue	0085ca	Deep purple	550055	Deep azure, flecked yellow	1f649a FEDD00	@	Amethyst and Sapphire
+5	S	Sphere of Mars 	Orange	FF6D00	Scarlet red	F2301B	Bright scarlet	ff321c	Red, flecked black	EF3340 000000	@	Ruby
+6	S	Sphere of Sol 	Clear pink rose	FDC3C6	Yellow (gold)	FEDD00	Rich salmon	f25330	Gold amber	FFCA1A	@	Topaz, Yellow Diamond
+7	S	Sphere of Venus 	Amber	ffb734	Emerald	00A550	Bright yellow green	e0f317	Olive, flecked gold	8d8800 FEDD00	@	Emerald
+8	S	Sphere of Mercury 	Violet Purple	8C15C4	Orange	FF6D00	Red-russet	B1282B	Yellow-brown, flecked white	AD8809 ffffff	@	Opal, especially Fire Opal
+9	S	Sphere of Luna 	Indigo	001489	Violet	5c00cc	Very dark purple	330b33	Citrine, flecked azure	dedb2c 4D91C6	@	Quartz
+10	S	Sphere of the Elements 	Yellow	FEDD00	Citrine, olive, russet, and black	+	As Queen scale, but flecked with gold	+ FEDD00	Black rayed with yellow	000000 FEDD00	@	Rock Crystal
+11	E	Air 	Bright pale yellow	fee74d	Sky blue	8ABAD3	Blue emerald green	00958D	Emerald, flecked gold	00A550 FEDD00	@	Topaz, Chalcedony
+12	P	Mercury 	Yellow	FEDD00	Purple	BB29BB	Grey	bfbfbf	Indigo, rayed violet	001489 5c00cc	@	Opal, Agate	Yellow Agate
+13	P	Luna 	Blue	0085ca	Silver	e8e8e8	Cold pale blue	A5C5D9	Silver, rayed sky blue	e8e8e8 8ABAD3	@	Moonstone, Pearl, Crystal
+14	P	Venus 	Emerald Green	00A550	Sky blue	8ABAD3	Early spring green	b2d135	Bright rose or cerise, rayed pale green	C51959 a41247 B2E79F	@	Emerald, Turquiose
+15	Z	Aries 	Scarlet	ed2800	Red	EF3340	Brilliant flame	f5ac1c	Glowing red	ff0011	@	Ruby
+16	Z	Taurus 	Red orange	FF4E00	Deep indigo	000d59	Deep warm olive	C7B63C	Rich brown	5c3312	@	Topaz	Yellow Topaz
+17	Z	Gemini 	Orange	FF6D00	Pale Mauve	cca3b1	New yellow leather	e8af36	Reddish grey inclined to mauve	907172	@	Alexandrite, Tourmaline, Iceland Spar
+18	Z	Cancer 	Amber	ffb734	Maroon	800f13	Rich bright russet	d60d0a	Dark greenish brown	322F12	@	Amber
+19	Z	Leo 	Yellow, greenish	E5D708	Deep purple	550055	Grey	bfbfbf	Reddish amber	ff9934	@	Cat's Eye
+20	Z	Virgo 	Green, yellowish	59B934	Slate grey	9faeaa	Green grey	558c70	Plum colour	981733	@	Peridot
+21	P	Jupiter 	Violet Purple	8C15C4	Blue	0085ca	Rich purple	990099	Bright blue, rayed yellow	00a8ff fedd00	@	Amethyst, Lapis Lazuli
+22	Z	Libra 	Emerald Green	00A550	Blue	0085ca	Deep blue-green	008077	Pale green	B2E79F	@	Emerald
+23	E	Water 	Deep blue	0246bc	Sea green	149C88	Deep olive-green	5b6300	White, flecked purple, like mother-of-pearl	ffffff BB29BB	@	Beryl or Aquamarine
+24	Z	Scorpio 	Green blue	00958d	Dull brown	9D7446	Very dark brown	211307	Livid indigo brown (like a black beetle)	0c1225	@	Snakestone	"Serpentine" - a blueish green stone
+25	Z	Sagittarius 	Blue	0085ca	Yellow	FEDD00	Green	00A550	Dark vivid blue	003a80	@	Jacinth
+26	Z	Capricornus 	Indigo	001489	Black	000000	Blue black	000a44	Cold dark grey, approaching black	16161d	@	Black Diamond (Carbonado)
+27	P	Mars 	Scarlet	ed2800	Red	EF3340	Venetian red	b32009	Bright red, rayed azure or emerald	ff0000 4D91C6 00A550	@	Ruby, any red stone
+28	Z	Aquarius 	Violet	5c00cc	Sky blue	8ABAD3	Blueish mauve	ad78bd	White tinged purple	ffe8ff	@	Artificial Glass
+29	Z	Pisces 	Crimson (ultra violet)	AE0E36	Buff, flecked silver-white	F0DC82 F2F2F2	Light translucent pinkish brown	C08A80	Stone color	76826a	@	Pearl
+30	P	Sol 	Orange	FF6D00	Gold yellow	FEDD00	Rich amber	FFA500	Amber, rayed red	ffb734 EF3340	@	Crysoleth	Cryso = Gold, leth = stone Gold Stone (artificial)
+31	E	Fire 	Glowing orange scarlet	ff3300	Vermilion	D9381E	Scarlet, flecked gold	ed2800 FEDD00	Vermilion, flecked crimson and emerald	D9381E AE0E36 00A550	@	Fire Opal
+32	P	Saturn 	Indigo	001489	Black	000000	Blue black	000a44	Black, rayed blue	000000 0085ca	@	Onyx	Black Onyx
+31 bis	E	Spirit 	White merging into grey	*	Deep purple, nearly black	220022	The 7 prismatic colours, the violet being outside	*	White, red, yellow, blue, black (the latter outside)	*	@
+32 bis	E	Earth 	Citrine, olive, russet, and black	+	Amber	ffb734	Dark brown	38200a	Black, flecked yellow	000000 FEDD00	@	Salt
+X	E	+ 	Citrine	dedb2c	Olive	8d8800	Russet	731817	Black	000000	@
+32 bis earth green	E	Earth (Green) 	Green	00A550	Amber	ffb734	Dark brown	38200a	Green, flecked yellow	00A550 FEDD00	@
