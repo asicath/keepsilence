@@ -24,52 +24,72 @@ const pipPlacement = {
     },
     5: {
         type: 'onCircle',
-        radiusPercent: 0.5,
+        radiusPercent: 0.666,
         startAngle: 0
     },
     6: {
         type: 'onCircle',
-        radiusPercent: 0.5,
+        radiusPercent: 0.666,
         startAngle: 0
     },
     7: {
         type: 'onCircle',
-        radiusPercent: 0.5,
+        radiusPercent: 0.666,
         startAngle: 0
     },
     8: {
         type: 'onCircle',
-        radiusPercent: 0.5,
+        radiusPercent: 0.666,
         startAngle: 0
     },
     9: {
         type: 'onCircle',
-        radiusPercent: 0.5,
+        radiusPercent: 0.666,
         startAngle: 0
     },
     10: {
         type: 'onCircle',
-        radiusPercent: 0.5,
+        radiusPercent: 0.75,
         startAngle: 0
     }
 };
 
+let images = {};
+
 (async () => {
+    await loadImages();
     await drawCards();
 })();
 
+async function loadImages() {
+    let fileNames = ["tatva-fire.png", "tatva-water.png", "tatva-air.png", "tatva-earth.png"];
+    fileNames.forEach(async filename => {
+        let image = await loadImage(__dirname + "/" + filename);
+        //ctx.drawImage(image, 50, 0, 70, 70)
+        images[filename] = image;
+    });
+}
 
 async function drawCards() {
     for (let key in cards) {
         let card = cards[key];
         card.key = key;
 
-        if (!key.match(/^5_d01/)) continue;
-        await drawCard(card);
+        //if (!key.match(/^[2345]_/)) continue;
+        if (!key.match(/_[ds]\d\d/)) continue;
+        //if (!key.match(/_[wc]10/)) continue;
+
+        let pipImage = null;
+        if (key.match(/w\d\d/)) pipImage = "tatva-fire.png";
+        else if (key.match(/c\d\d/)) pipImage = "tatva-water.png";
+        else if (key.match(/s\d\d/)) pipImage = "tatva-air.png";
+        else if (key.match(/d\d\d/)) pipImage = "tatva-earth.png";
+
+        await drawCard(card, pipImage);
     }
 }
 
-async function drawCard(card) {
+async function drawCard(card, pipImage) {
 
     let layerCount = 4;
     let outerSize = 2400;
@@ -109,7 +129,7 @@ async function drawCard(card) {
     });
 
     // draw the pips
-    drawPips(canvas[3], card);
+    drawPips(canvas[3], card, pipImage);
 
     let outputCanvas = canvas[0];
     for (let n = 1; n < layerCount; n++) {
@@ -168,27 +188,39 @@ function exportCanvasToImage(canvas, name) {
 
 
 
-function drawPips(canvas, card) {
+function drawPips(canvas, card, pipImage) {
     let ctx = canvas.getContext('2d');
 
     if (!card.pips) return;
 
     let placementInfo = pipPlacement[card.pips];
 
-    let dAngle = (Math.PI * 2) / card.pips;
-    let startAngle = placementInfo.startAngle || -(Math.PI / 2);
 
-    let radius = (canvas.height / 2) * placementInfo.radiusPercent;
+    if (placementInfo.type === 'onCircle') {
+        let dAngle = (Math.PI * 2) / card.pips;
+        let startAngle = placementInfo.startAngle || -(Math.PI / 2);
 
-    for (let i = 0; i < card.pips; i++) {
+        let radius = (canvas.height / 2) * placementInfo.radiusPercent;
 
-        let x = Math.cos(startAngle + dAngle * i) * radius + canvas.height / 2;
-        let y = Math.sin(startAngle + dAngle * i) * radius + canvas.height / 2;
+        for (let i = 0; i < card.pips; i++) {
 
-        ctx.fillStyle = "#FFFFFF";
-        ctx.beginPath();
-        ctx.arc(x, y, 40, 0, 2 * Math.PI);
-        ctx.fill();
+            // find coordinate
+            let x = Math.cos(startAngle + dAngle * i) * radius + canvas.height / 2;
+            let y = Math.sin(startAngle + dAngle * i) * radius + canvas.height / 2;
+
+            // draw pip
+            if (pipImage) {
+                let pipSize = 300;
+                ctx.drawImage(images[pipImage], x - pipSize / 2, y - pipSize / 2, pipSize, pipSize);
+            }
+            else {
+                ctx.fillStyle = "#FFFFFF";
+                ctx.beginPath();
+                ctx.arc(x, y, 40, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+
+        }
     }
 
 }

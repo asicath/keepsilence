@@ -220,43 +220,53 @@ exports.cards = {
 
     "3_c01": {
         title: "Ace of Cups",
-        paths: ["23"]
+        paths: ["23"],
+        pips: 1
     },
     "3_c02": {
         title: "Two of Cups",
-        paths: ["14", "18"]
+        paths: ["14", "18"],
+        pips: 2
     },
     "3_c03": {
         title: "Three of Cups",
-        paths: ["12", "18"]
+        paths: ["12", "18"],
+        pips: 3
     },
     "3_c04": {
         title: "Four of Cups",
-        paths: ["13", "18"]
+        paths: ["13", "18"],
+        pips: 4
     },
     "3_c05": {
         title: "Five of Cups",
-        paths: ["27", "24"]
+        paths: ["27", "24"],
+        pips: 5
     },
     "3_c06": {
         title: "Six of Cups",
-        paths: ["30", "24"]
+        paths: ["30", "24"],
+        pips: 6
     },
     "3_c07": {
         title: "Seven of Cups",
-        paths: ["14", "24"]
+        paths: ["14", "24"],
+        pips: 7
     },
     "3_c08": {
         title: "Eight of Cups",
-        paths: ["32", "29"]
+        paths: ["32", "29"],
+        pips: 8
     },
     "3_c09": {
         title: "Nine of Cups",
-        paths: ["21", "29"]
+        paths: ["21", "29"],
+        pips: 9
     },
     "3_c10": {
         title: "Ten of Cups",
-        paths: ["27", "29"]
+        paths: ["27", "29"],
+        pips: 10
     },
     "3_c11-knight": {
         title: "knight of Cups",
@@ -278,43 +288,53 @@ exports.cards = {
 
     "4_s01": {
         title: "Ace of Swords",
-        paths: ["11"]
+        paths: ["11"],
+        pips: 1
     },
     "4_s02": {
         title: "Two of Swords",
-        paths: ["13","22"]
+        paths: ["13","22"],
+        pips: 2
     },
     "4_s03": {
         title: "Three of Swords",
-        paths: ["32","22"]
+        paths: ["32","22"],
+        pips: 3
     },
     "4_s04": {
         title: "Four of Swords",
-        paths: ["21","22"]
+        paths: ["21","22"],
+        pips: 4
     },
     "4_s05": {
         title: "Five of Swords",
-        paths: ["14","28"]
+        paths: ["14","28"],
+        pips: 5
     },
     "4_s06": {
         title: "4_six of Swords",
-        paths: ["12","28"]
+        paths: ["12","28"],
+        pips: 6
     },
     "4_s07": {
         title: "4_seven of Swords",
-        paths: ["13","28"]
+        paths: ["13","28"],
+        pips: 7
     },
     "4_s08": {
         title: "Eight of Swords",
-        paths: ["21","17"]
+        paths: ["21","17"],
+        pips: 8
     },
     "4_s09": {
         title: "Nine of Swords",
-        paths: ["27","17"]
+        paths: ["27","17"],
+        pips: 9
     },
     "4_s10": {
         title: "Ten of Swords",
-        paths: ["30","17"]
+        paths: ["30","17"],
+        pips: 10
     },
     "4_s11-knight": {
         title: "knight of Swords",
@@ -338,43 +358,53 @@ exports.cards = {
 
     "5_d01": {
         title: "Ace of Disks",
-        paths: ["32bis-green"]
+        paths: ["32bis-green"],
+        pips: 1
     },
     "5_d02": {
         title: "Two of Disks",
-        paths: ["21","26"]
+        paths: ["21","26"],
+        pips: 2
     },
     "5_d03": {
         title: "Three of Disks",
-        paths: ["27","26"]
+        paths: ["27","26"],
+        pips: 3
     },
     "5_d04": {
         title: "Four of Disks",
-        paths: ["30","26"]
+        paths: ["30","26"],
+        pips: 4
     },
     "5_d05": {
         title: "Five of Disks",
-        paths: ["12","16"]
+        paths: ["12","16"],
+        pips: 5
     },
     "5_d06": {
         title: "Six of Disks",
-        paths: ["13","16"]
+        paths: ["13","16"],
+        pips: 6
     },
     "5_d07": {
         title: "Seven of Disks",
-        paths: ["32", "16"]
+        paths: ["32", "16"],
+        pips: 7
     },
     "5_d08": {
         title: "Eight of Disks",
-        paths: ["30","20"]
+        paths: ["30","20"],
+        pips: 8
     },
     "5_d09": {
         title: "Nine of Disks",
-        paths: ["14","20"]
+        paths: ["14","20"],
+        pips: 9
     },
     "5_d10": {
         title: "Ten of Disks",
-        paths: ["12","20"]
+        paths: ["12","20"],
+        pips: 10
     },
     "5_d11-knight": {
         title: "knight of Disks",

@@ -1,2 +1,5 @@
 .idea
 /clock/node_modules/array-flatten
+/colors/node_modules
+/colors/export/node_modules
+/colors/export/output
