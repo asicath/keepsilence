@@ -2,13 +2,12 @@ let Draw = function () {
 
     let radius = 249;
     let grey = "rgba(255,255,255, 0.2)";
-    let darkGrey = "rgba(255,255,255, 0.1)";
     let lineColor = "rgba(255,255,0, 0.4)";
     let capType = 'round';
     let interval = 30;
     let currentHighlightIndex = [];
-    let currentNumber = 1;
-
+    let currentNumber = 2;
+    let lastPrime = 2;
 
 
     let colorAlpha = 1;
@@ -24,25 +23,20 @@ let Draw = function () {
     ];
 
     function moveToNextNumber() {
-        currentNumber++;
-        colorSaturation = 1.0;
-        lowerSaturation();
-        setTimeout(moveToNextNumber, 2000);
+
+        // lower the number
+        currentNumber += 0.01;
+
+        // set color saturation by number
+        colorSaturation = 1 - (currentNumber - Math.floor(currentNumber));
+
+        interval = radius / (currentNumber * 3);
+
+        // set the next
+        setTimeout(moveToNextNumber, 100);
     }
     moveToNextNumber();
 
-    setInterval(() => {
-        interval *= 0.998;
-    }, 100);
-
-    function lowerSaturation() {
-
-        if (colorSaturation <= 0) return;
-        setTimeout(() => {
-            colorSaturation -= 0.03;
-            lowerSaturation();
-        }, 50);
-    }
 
     let canvas, c;
     let lastPrimeCalc = null;
@@ -73,8 +67,9 @@ let Draw = function () {
         drawCircle();
         //drawIntegerLine();
 
-        let n = currentNumber;
-        let ranges, factors, isPrime;
+        let n = Math.floor(currentNumber);
+
+        let ranges, factors;
 
         if (lastPrimeCalc !== null) {
             if (lastPrimeCalc.n === n) {
@@ -105,10 +100,17 @@ let Draw = function () {
             })
         });
 
+        let isPrime = false;
+        if (currentHighlightIndex.length === 0) {
+            isPrime = true;
+            if (n !== lastPrime) lastPrime = n;
+        }
+
         // create the spiral groups for each range and one for all the other primes
         let i = 0;
         let rangeIndex = 0;
         let spiralGroups = [];
+        let spiralOfPrime = null;
         while (range.primes[i].n <= n) {
             let m = range.primes[i].n;
 
@@ -116,25 +118,39 @@ let Draw = function () {
                 rangeIndex++;
             }
 
-
-            //drawSpiral(m, rangeIndex);
             if (typeof spiralGroups[rangeIndex] === 'undefined') {
                 spiralGroups[rangeIndex] = [];
             }
 
-            spiralGroups[rangeIndex].push(m);
+            // grab the prime
+            if (isPrime && n === m) {
+                spiralOfPrime = [m];
+            }
+            else {
+                spiralGroups[rangeIndex].push(m);
+            }
+
 
             i++;
         }
 
+        // draw the prime first
+        if (spiralOfPrime !== null) {
+            let fadeInPercent = 1- colorSaturation;
+            drawSpiral(spiralOfPrime, -1, grey, fadeInPercent);
+        }
+
+        // draw the grey ones
         spiralGroups.forEach((a, index) => {
-            if (currentHighlightIndex.indexOf(index) === -1)
-                drawSpiral(a, index, index === ranges.length ? darkGrey : grey);
+            if (currentHighlightIndex.indexOf(index) === -1) {
+                drawSpiral(a, index, grey, 1);
+            }
         });
 
+        // then the colored ones
         spiralGroups.forEach((a, index) => {
             if (currentHighlightIndex.indexOf(index) !== -1)
-                drawSpiral(a, index, index === ranges.length ? darkGrey : grey);
+                drawSpiral(a, index, grey, 1);
         });
 
 
@@ -224,7 +240,7 @@ let Draw = function () {
 
     }
 
-    function drawSpiral(a, colorIndex, defaultColor) {
+    function drawSpiral(a, colorIndex, defaultColor, fadeInPercent) {
 
         c.save();
 
@@ -247,6 +263,10 @@ let Draw = function () {
             let alpha = colorAlpha * colorSaturation + 0.2 * (1 - colorSaturation);
 
             color = `rgba(${r},${g},${b}, ${alpha})`;
+        }
+        else if (fadeInPercent !== 1) {
+            let alpha = 0.2 * fadeInPercent;
+            color = `rgba(255,255,255, ${alpha})`;
         }
 
 

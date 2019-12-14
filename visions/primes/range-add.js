@@ -24,7 +24,7 @@ var range = (function() {
             if (prime.n > max) return true;
 
             // found a factor
-            if (n % prime.n == 0) return false;
+            if (n % prime.n === 0) return false;
         }
 
         return true;
@@ -70,7 +70,7 @@ var range = (function() {
 
         // make sure we've got enough primes
         //var target = Math.floor(Math.sqrt(n));
-        var target = Math.floor(n/2);
+        var target = n;// Math.floor(n/2);
         createPrimesTo(n);
 
         // find the max prime for this number

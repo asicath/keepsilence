@@ -14,7 +14,7 @@ function generatePrimes(count) {
 
 function isPrime(n, primes) {
     for (var i = 0; i < primes.length; i++) {
-        if (n % primes[i] == 0) return false;
+        if (n % primes[i] === 0) return false;
     }
     return true;
 }

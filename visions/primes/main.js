@@ -84,7 +84,7 @@ $(function() {
             var note = notes[l];
 
             // set the note
-            var loud = note.isActive ? 0.2 : 0;
+            var loud = note.isActive ? 0.1 : 0;
             var name = note.note + note.octave;
             pool.set(name, note.freq, loud);
 
