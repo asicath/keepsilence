@@ -57,7 +57,7 @@ const pipPlacement = {
 let images = {};
 
 (async () => {
-    await loadImages();
+    //await loadImages();
     await drawCards();
 })();
 
@@ -76,7 +76,7 @@ async function drawCards() {
         card.key = key;
 
         //if (!key.match(/^[2345]_/)) continue;
-        if (!key.match(/_[ds]\d\d/)) continue;
+        if (!key.match(/t\d\d/)) continue;
         //if (!key.match(/_[wc]10/)) continue;
 
         let pipImage = null;
@@ -92,7 +92,9 @@ async function drawCards() {
 async function drawCard(card, pipImage) {
 
     let layerCount = 4;
-    let outerSize = 2400;
+    //let outerSize = 2400;
+    let outerSize = 1080;
+    let width = 1920;
 
     let ratio = outerSize / 1200;
     let layerSize = 150 * ratio;
@@ -100,7 +102,8 @@ async function drawCard(card, pipImage) {
     const canvas = [];
     for (let n = 0; n < layerCount; n++) {
         let size = outerSize - layerSize * n;
-        canvas.push(createCanvas(size, size));
+        let cWidth = n === 0 ? width : size;
+        canvas.push(createCanvas(cWidth, size));
     }
 
     card.paths.forEach((pathKey, pathCount) => {
@@ -270,7 +273,7 @@ function drawGradient(canvas, color, roundCorners) {
 function rayIt(canvas, color) {
     let ctx = canvas.getContext('2d');
     let center = {x:canvas.width/2, y: canvas.height/2};
-    let rayCount = 12;
+    let rayCount = 18;
     let arcLength = ((Math.PI * 2) / rayCount) * (1/3);
     let radius = Math.max(canvas.width, canvas.height);
     ctx.beginPath();
