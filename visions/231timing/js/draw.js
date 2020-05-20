@@ -48,15 +48,6 @@ function init() {
         return total + part.count;
     }, 0);
 
-    // put the counts in an array
-    state.partsByCount = [];
-    state.config.parts.forEach(part => {
-        for (let i = 0; i < part.count; i++) {
-            state.partsByCount.push(part);
-        }
-    });
-    state.count = state.partsByCount.length;
-
     // create the timer
     state.timer = new BeatTimer(state.config);
 
@@ -134,7 +125,6 @@ function drawPartsOnCircle({context, outerRadius, center}) {
     context.translate(center.x, center.y);
 
     let radius = outerRadius * 0.9;
-    let angleIncr = (Math.PI * 2) / state.count;
     let angleOffset = -1 * Math.PI / 2;
 
     // draw the hand
@@ -163,19 +153,17 @@ function drawPartsOnCircle({context, outerRadius, center}) {
 
     // draw the words
     let fontSize = 18;
-    for (let i = 0; i < state.partsByCount.length; i++) {
-        let part = state.partsByCount[i];
-        if (i > 0 && part === state.partsByCount[i-1]) {
-            context.fillStyle = 'rgba(0, 0, 0, 0.5)';
-        }
-        else {
-            context.fillStyle = 'rgba(0, 0, 0, 1)';
-        }
+    let anglePerCount = (Math.PI * 2) / state.partCount;
+    angle = 0;
+    for (let i = 0; i < state.config.parts.length; i++) {
+        let part = state.config.parts[i];
 
-        let angle = angleIncr * i + angleOffset;
-        let x = Math.cos(angle) * radius;
-        let y = Math.sin(angle) * radius + fontSize / 2;
+        context.fillStyle = 'rgba(0, 0, 0, 1)';
+        let x = Math.cos(angle + angleOffset) * radius;
+        let y = Math.sin(angle + angleOffset) * radius + fontSize / 2;
         context.fillText(part.text, x, y);
+
+        angle += anglePerCount * part.count;
     }
 
     context.restore();

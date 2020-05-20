@@ -39,6 +39,8 @@ class BeatTimer {
         this.parts = parts;
         this.listeners = {};
 
+        this.startTime = 0;
+
         this.linePercent = 0;
         this.setupTick();
     }
@@ -46,82 +48,109 @@ class BeatTimer {
     setupTick() {
 
         // get the total count
-        this.partCount = this.parts.reduce((total, part) => {
+        this.countTotal = this.parts.reduce((total, part) => {
             return total + part.count;
         }, 0);
 
-        // put the counts in an array
-        let partsByCount = [];
-        this.parts.forEach(part => {
-            for (let i = 0; i < part.count; i++) {
-                partsByCount.push(part);
-            }
-        });
+        // assign each part a percent
+        let p = 0;
+        for (let i = 0; i < this.parts.length; i++) {
+            let part = this.parts[i];
+            part.startPercent = p;
+            p += part.count / this.countTotal;
+        }
 
-        this.startTime = Date.now();
-
-        let lastPart = null;
-        let recalculateDuration = true;
+        let recalculateDuration = true; // force duration calculation on the first time
         let duration = -1;
-        let lastCount = -1;
+        let lastPart = null;
 
+        // user should call this as often as possible
         this.onTick = () => {
 
-            let totalTime = Date.now() - this.startTime;
+            let now = Date.now();
+
+            // mark the start time, should probably do on first tick
+            if (this.startTime === 0) {
+                this.startTime = now;
+                this.lineStartTime = this.startTime;
+            }
+
+            // calculate the time since start
+            let totalTime = now - this.startTime;
             this.timeRemaining = this.totalTime - totalTime;
 
-            let time = Date.now() - this.lineStartTime;
+            // calculate how far in the current breath
+            let time = now - this.lineStartTime;
 
+            // determine if we've gone over the time for this line
             if (time > duration) {
-
                 // check for end
                 if (totalTime > this.totalTime) {
-
+                    // past the end, no need to change the duration
                 }
                 else {
                     recalculateDuration = true;
                 }
-
             }
 
             // get the line duration for this exact moment
             if (recalculateDuration) {
-
                 recalculateDuration = false;
-                let percentLinear = 1 - (totalTime / this.totalTime);
 
-                // apply easing
+                // first, record how much was left over from last time
+                let leftOver = duration === -1 ? 0 : time - duration;
+
+                // calculate the percent we are through the entire session
+                let percentLinear = totalTime / this.totalTime;
+
+                // apply easing to this percent
                 //let percent = percentLinear;
                 let percent = EasingFunctions.easeInCubic(percentLinear);
                 //let percent = EasingFunctions.easeInOutQuad(percentLinear);
                 //let percent = EasingFunctions.easeInOutCubic(percentLinear); // longer head/tail
                 //let percent = EasingFunctions.easeInOutQuart(percentLinear); // even longer head/tail
 
-                duration = Math.floor((this.initialDuration - this.finalDuration) * percent) + this.finalDuration;
+                // determine the duration of this breath based on this percent
+                duration = Math.floor((this.initialDuration - this.finalDuration) * (1-percent)) + this.finalDuration;
+                this.lineDuration = duration;
+
                 console.log(`duration: ${duration} - totalTime: ${totalTime} - percentLinear: ${percentLinear} - percentEase: ${percent}`);
 
-                this.lineStartTime = Date.now();
+                // set the new start time
+                this.lineStartTime = now - leftOver;
 
-                // redo the time
-                time = Date.now() - this.lineStartTime;
+                // recalculate the time into this line
+                time = now - this.lineStartTime;
             }
 
+            // allow for overage, time will always be less than duration during the session
             let innerTime = time % duration;
-            this.linePercent = innerTime / duration; // allow outside to see the percent
-            this.lineDuration = duration;
 
-            let countTime = duration / this.partCount;
-            let count = Math.floor(innerTime / countTime);
-            let part = partsByCount[count];
+            // calculate the progress of the current breath
+            this.linePercent = innerTime / duration;
 
+            // calculate how much time assigned to each count
+            let timePerCount = duration / this.countTotal;
+
+            // determine which part we are on
+            let part = null;
+            for (let i = this.parts.length-1; i >= 0; i--) {
+                if (this.linePercent >= this.parts[i].startPercent) {
+                    part = this.parts[i];
+                    break;
+                }
+            }
+
+            // if we've started a new part, emit an event
             if (lastPart !== part) {
-                this.emit('beat', Object.assign({duration: Math.floor(countTime * part.count)}, part));
+                this.emit('beat', Object.assign({duration: part.count * timePerCount}, part));
                 lastPart = part;
             }
-            else if (lastCount !== count) {
-                this.emit('tick', Object.assign({}, part));
-            }
-            lastCount = count;
+
+            // else if (lastCount !== count) {
+            //     this.emit('tick', Object.assign({}, part));
+            // }
+
         };
 
         // start it
@@ -180,11 +209,11 @@ const words = {
         background: '#00A550',
         parts: [
             {text:'dηn', count:2, audio:'high'},
-            {text:'a', count:1, audio:'low'},
+            {text:'a', count:1.3, audio:'low'},
             {text:'star', count:2, audio:'high'},
             {text:'tar', count:1, audio:'high'},
             {text:'ωθ', count:2, audio:'low'},
-            {text:'-', count: 1}
+            {text:'-', count: 0.5}
         ]
     }
 
