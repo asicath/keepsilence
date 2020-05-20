@@ -1,29 +1,97 @@
 const { createCanvas, loadImage } = require('canvas');
+const { readdirSync } = require('fs');
 
 let debugMarks = false;
 
+let spiritNames = {
+    
+    m11:`Aعu-iao-uعa`,
+    m12:`Beعθaoooabitom`,
+    m13:`Gitωnosapφωllois`,
+    m14:`Dηnaⲝartarωθ`,
+    m15:`Hoo-oorω-iⲝ`,
+    m16:`Vuaretza`,
+    m17:`Zooωasar`,
+    m18:`Chiva-abrahadabra-cadaxviii`,
+    m19:`θalعⲝer-ā-dekerval`,
+    m20:`Iehuvahaⲝanعθatan`,
+    m21:`Kerugunaviel`,
+    m22:`Lusanaherandraton`,
+    m23:`Malai`,
+    m24:`Nadimraphoroiozعθalai`,
+    m25:`Salaθlala-amrodnaθعiⲝ`,
+    m26:`Oaoaaaoooع-iⲝ`,
+    m27:`Puraθmetai-apηmetai`,
+    m28:`XanθaⲝeranⲈϘ-iⲝ`,
+    m29:`QaniΔnayx-ipamai`,
+    m30:`Ra-a-gioselahladnaimawa-iⲝ`,
+    m31:`Shabnax-odobor`,
+    m32:`Thath’thʻthithعthuth-thiⲝ`,
+
+    q11:`Amprodias`,
+    q12:`Baratchial`,
+    q13:`Gargophias`,
+    q14:`Dagadiel`,
+    q15:`Hemethterith`,
+    q16:`Uriens`,
+    q17:`Zamradiel`,
+    q18:`Characith`,
+    q19:`Temphioth`,
+    q20:`Yamatu`,
+    q21:`Kurgasiax`,
+    q22:`Lafcursiax`,
+    q23:`Malkunofat`,
+    q24:`Niantiel`,
+    q25:`Saksaksalim`,
+    q26:`A’ano’nin`,
+    q27:`Parfaxitas`,
+    q28:`Tzuflifu`,
+    q29:`Qulielfi`,
+    q30:`Raflifu`,
+    q31:`Shalicu`,
+    q32:`Thantifaxath`,
+    
+};
+
+
 (async () => {
     //await loadImages();
-    await main();
+    //await main();
+
+    // const filename = `${__dirname}/231/${name}.png`;
+
+    const getDirectories = source =>
+        readdirSync(source, { withFileTypes: true })
+            .filter(dirent => dirent.isDirectory())
+            .map(dirent => dirent.name);
+
+    let root = `C:\\git\\arcanorum\\Assets\\231\\textures`;
+
+    let folders = getDirectories(root).filter(name => name.match(/^[qm]\d\d$/));
+    folders.forEach(name => {
+        let path = `${root}\\${name}\\`;
+        let text = spiritNames[name];
+        main(path + "color.png", path + "color_text.png", text);
+    });
+
+
+
 })();
 
-async function main() {
+async function main(input, output, text) {
 
     let canvas = createCanvas(1024, 1024);
     let ctx = canvas.getContext('2d');
 
+    // start with white bg
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // add the sigil
+    let image = await loadImage(input);
+    ctx.drawImage(image, 0, 0, image.width, image.height);
 
-
-
-    //let text = "Dηnaⲝartarωθ";
-    //let text = "Dagdagiel";
-    //let text = "IgM-IgMyIgMyIgMy";
-    let text = "Vuaretza";
-
-
+    // draw the text and circle
     await drawNameCircle(canvas, text);
 
     if (debugMarks) {
@@ -31,7 +99,7 @@ async function main() {
         ctx.drawImage(image, 0, 0, image.width, image.height);
     }
 
-    await exportCanvasToImage(canvas, "test");
+    await exportCanvasToImage(canvas, output);
 }
 
 async function drawNameCircle(canvas, text) {
@@ -70,6 +138,12 @@ async function drawNameCircle(canvas, text) {
             fontName = 'CS Pishoi';
             //fontName = 'CS Copt';
             letter = 'x';
+        }
+        else if (letter === 'Ⲉ') {
+            //fontName = 'CS Pishoi';
+            //letter = 'E';
+
+            fontName = 'Antinoou';
         }
         else if (letter.match(/[a-z]/i)) {
             fontName = 'ColdstyleRoman';
@@ -215,10 +289,9 @@ async function getMinimumSizeImage(text, fontName, fontSize) {
     return value;
 }
 
-function exportCanvasToImage(canvas, name) {
+function exportCanvasToImage(canvas, filename) {
     return new Promise((resolve, reject) => {
         const fs = require('fs');
-        const filename = `${__dirname}/231/${name}.png`;
         const out = fs.createWriteStream(filename);
         const stream = canvas.createPNGStream();
         stream.pipe(out);
