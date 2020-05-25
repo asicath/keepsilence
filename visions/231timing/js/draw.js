@@ -23,8 +23,8 @@ function init() {
         {
             background: '#ffffff'
         },
-        words.daleth,
-        times.first
+        words.resh,
+        times.short2
     );
 
     // init the audio
@@ -168,45 +168,3 @@ function drawPartsOnCircle({context, outerRadius, center}) {
 
     context.restore();
 }
-
-// // 77 on top
-// fontSize = 16 * z;
-// context.font = 'bold ' + fontSize + 'pt "Vollkorn"';
-// context.textAlign = 'center';
-// context.fillText('77', center.x, center.y - 38 * z);
-//
-// // 7 on left
-// context.fillText('7', left.x - 7 * z, left.y + 3 * z);
-//
-// // 7 on left
-// context.fillText('77', right.x + offset + 11 * z, right.y + 3 * z);
-//
-// // 7 on lower left
-// context.fillText('7', lowerLeft.x, lowerLeft.y + 15 * z);
-//
-// // 7 on lower right
-// context.fillText('7', lowerRight.x, lowerRight.y + 15 * z);
-
-
-
-// function drawTextAlongCircle(str, centerX, centerY, radius, start) {
-//     let len = str.length, s;
-//     let angle = Math.PI * 2;
-//     context.save();
-//     context.translate(centerX, centerY);
-//
-//     context.rotate(start);
-//     for (let n = 0; n < len; n++) {
-//
-//         context.save();
-//         context.translate(0, -1 * radius);
-//         s = str[n];
-//
-//         context.fillStyle = 'rgba(0, 0, 0, 1)';
-//         context.fillText(s, 0, 0);
-//         context.restore();
-//
-//         context.rotate(angle / len);
-//     }
-//     context.restore();
-// }

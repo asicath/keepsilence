@@ -193,31 +193,7 @@ const times = {
     }
 };
 
-const words = {
-    shin: {
-        background: '#ed2800',
-        parts: [
-            {text:'shab', count:2},
-            {text:'nax', count:2},
-            {text:'od', count:1},
-            {text:'ob', count:1},
-            {text:'or', count:1},
-            {text:'', count: 1}
-        ]
-    },
-    daleth: {
-        background: '#00A550',
-        parts: [
-            {text:'dηn', count:2, audio:'high'},
-            {text:'a', count:1.3, audio:'low'},
-            {text:'star', count:2, audio:'high'},
-            {text:'tar', count:1, audio:'high'},
-            {text:'ωθ', count:2, audio:'low'},
-            {text:'-', count: 0.5}
-        ]
-    }
 
-};
 
 
 if (typeof module !== 'undefined' && module.parent === null) {
