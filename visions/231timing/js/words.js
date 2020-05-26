@@ -27,21 +27,21 @@ const words = {
         //`Ra-a-gi o selah lad na i ma wa-iⲝ`
         background: '#FF6D00',
         parts: [
-            {text:'Ra', count:2.5, audio:'low'},
-            {text:'a', count:2.5},
-            {text:'gi', count:3},
-            {text:'os', count:4},
+            {text:'Ra', count:2, audio:'high'},
+            {text:'a', count:3, audio: 'high'},
+            {text:'gi', count:2, audio: 'high'},
+            {text:'os', count:5, audio: 'high'},
 
             {text:'el', count:6, audio:'low'},
-            {text:'ah', count:6},
+            {text:'ah', count:6, audio: 'low'},
 
-            {text:'lad', count:3, audio:'low'},
-            {text:'na', count:3},
-            {text:'i', count:6},
+            {text:'lad', count:3, audio:'high'},
+            {text:'na', count:2, audio: 'high'},
+            {text:'i', count:6, audio: 'low'},
 
-            {text:'ma', count:3, audio:'low'},
-            {text:'wa', count:3},
-            {text:'iⲝ', count:6},
+            {text:'ma', count:3, audio:'high'},
+            {text:'wa', count:2, audio: 'high'},
+            {text:'iⲝ', count:8, audio: 'low'},
         ]
     }
 

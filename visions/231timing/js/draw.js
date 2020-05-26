@@ -29,14 +29,14 @@ function init() {
 
     // init the audio
     state.audio = {
-        low: {url:'./low.mp3'},
-        high: {url:'./high.mp3'}
+        low: {url:'./low2.mp3'},
+        high: {url:'./high2-short.mp3'}
     };
     for (let key in state.audio) {
         let o = state.audio[key];
         o.index = 0;
         o.audioArray = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 30; i++) {
             o.audioArray.push(new Audio(o.url));
         }
     }
@@ -195,8 +195,7 @@ function drawNameCircle(canvas, ctx, parts) {
 
             ctx.rotate(Math.PI * 2 / 70);
         }
-
-
+        
         // advance the angle
         let advanceAngle = anglePerCount * part.count;
         angle += advanceAngle;
@@ -204,10 +203,7 @@ function drawNameCircle(canvas, ctx, parts) {
         ctx.restore();
     }
 
-
-
     // draw the circles
-
     ctx.save();
     ctx.translate(center.x, center.y);
 
