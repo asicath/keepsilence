@@ -102,10 +102,11 @@ class BeatTimer {
 
                 // calculate the percent we are through the entire session
                 let percentLinear = totalTime / this.totalTime;
+                this.percentLinear = percentLinear;
 
                 // apply easing to this percent
                 //let percent = percentLinear;
-                let percent = EasingFunctions.easeInCubic(percentLinear);
+                let percent = EasingFunctions.easeInOutCubic(percentLinear);
                 //let percent = EasingFunctions.easeInOutQuad(percentLinear);
                 //let percent = EasingFunctions.easeInOutCubic(percentLinear); // longer head/tail
                 //let percent = EasingFunctions.easeInOutQuart(percentLinear); // even longer head/tail

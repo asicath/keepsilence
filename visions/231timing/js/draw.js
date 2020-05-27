@@ -24,7 +24,7 @@ function init() {
             background: '#ffffff'
         },
         words.resh,
-        times.first
+        times.short2
     );
 
     // init the audio
@@ -57,7 +57,7 @@ function init() {
         if (beat.audio) {
             let name = beat.audio;
             let o = state.audio[name];
-            o.audioArray[o.index].play();
+            //o.audioArray[o.index].play();
             o.index = (o.index + 1) % o.audioArray.length;
         }
 
@@ -96,32 +96,7 @@ function draw(id) {
     drawNameCircle(canvas, context, state.config.parts);
 }
 
-function getTrimmedLetter(letter) {
-    // find preferred font size/name
-    let fontSize = 40;
-    let fontName = 'Times New Roman';
-    if (letter === 'ⲝ') {
-        //fontName = 'Noto Sans Coptic';
-        //fontName = 'Antinoou';
-
-        // this has the best version
-        fontName = 'CS Pishoi';
-        //fontName = 'CS Copt';
-        letter = 'x';
-    }
-    else if (letter === 'Ⲉ') {
-        //fontName = 'CS Pishoi';
-        //letter = 'E';
-
-        fontName = 'Antinoou';
-    }
-    else if (letter.match(/[a-z]/i)) {
-        fontName = 'ColdstyleRoman';
-    }
-
-    // generate the letter image
-    return getMinimumSizeImage(letter, fontName, fontSize);
-}
+let maxSize = {};
 
 function drawNameCircle(canvas, ctx, parts) {
 
@@ -144,7 +119,7 @@ function drawNameCircle(canvas, ctx, parts) {
         ctx.save();
         ctx.translate(center.x, center.y);
 
-        let max = radius.textTop;
+        let max = radius.textBottom;
         let angle = Math.PI * 2 * state.timer.linePercent -Math.PI/2;
         let x0 = Math.cos(angle) * max * 0.2;
         let y0 = Math.sin(angle) * max * 0.2;
@@ -152,11 +127,12 @@ function drawNameCircle(canvas, ctx, parts) {
         let y1 = Math.sin(angle) * max;
 
         ctx.strokeStyle = 'rgba(0,0,0,1)';
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
         ctx.stroke();
+
 
         ctx.restore();
     })();
@@ -193,9 +169,19 @@ function drawNameCircle(canvas, ctx, parts) {
             y -= trimmed.height / 2;
             ctx.drawImage(trimmed.image, x, y, trimmed.width, trimmed.height);
 
+            // little line as a tick
+            if (i === 0) {
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, -radius.textBottom*0.9);
+                ctx.lineTo(0, -radius.textBottom*1.05);
+                ctx.stroke();
+            }
+
             ctx.rotate(Math.PI * 2 / 70);
         }
-        
+
         // advance the angle
         let advanceAngle = anglePerCount * part.count;
         angle += advanceAngle;
@@ -220,62 +206,107 @@ function drawNameCircle(canvas, ctx, parts) {
     ctx.strokeStyle = '#000';
     ctx.stroke();
 
-    ctx.restore();
 
+    (() => {
+        // remaining time
+        let fontSize = 50;
+        let fontName = 'consolas';
+        ctx.font = `${fontSize}pt "${fontName}"`;
+
+        let timeRemaining = state.timer.timeRemaining;
+        let timeRemainingNeg = timeRemaining < 0 ? "-" : "";
+        timeRemaining = Math.ceil(Math.abs(timeRemaining) / 1000);
+        let minutes = Math.floor(timeRemaining / 60);
+        let seconds = (timeRemaining - minutes * 60).toString();
+        if (seconds.length === 1) seconds = "0" + seconds;
+
+        let remainingText = `${timeRemainingNeg}${minutes}:${seconds}`;
+        ctx.textAlign = 'right';
+        ctx.fillText(remainingText, radius.textTop, radius.textTop);
+
+        // time per rotation
+        let lineDuration = Math.floor(state.timer.lineDuration / 100) / 10;
+        let lineDurationText = lineDuration.toString();
+        if (lineDurationText.indexOf(".") === -1) lineDurationText = lineDurationText + ".0";
+        ctx.textAlign = 'left';
+        ctx.fillText(lineDurationText, -radius.textTop, radius.textTop);
+
+        drawTimeLine(canvas, ctx, -1 * (radius.textTop-10), radius.textTop - 160, 100, 100);
+    })();
+
+
+    ctx.restore();
 }
 
-function drawPartsOnCircle({context, outerRadius, center}) {
-    context.save();
-    context.translate(center.x, center.y);
+function getMaxSize(key, value) {
+    if (key in maxSize) {
+        maxSize[key] = Math.max(value, maxSize[key]);
+    }
+    else {
+        maxSize[key] = 0;
+    }
+    return maxSize[key];
+}
 
-    let radius = outerRadius * 0.9;
-    let angleOffset = -1 * Math.PI / 2;
+function drawTimeLine(canvas, ctx, x, y, width, height) {
 
-    // draw the hand
-    let angle = Math.PI * 2 * state.timer.linePercent + angleOffset;
-    let x0 = Math.cos(angle) * radius * 0.2;
-    let y0 = Math.sin(angle) * radius * 0.2;
-    let x1 = Math.cos(angle) * radius;
-    let y1 = Math.sin(angle) * radius;
+    //generate x/y points
 
-    context.strokeStyle = 'rgba(0,0,0,1)';
-    context.beginPath();
-    context.moveTo(x0, y0);
-    context.lineTo(x1, y1);
-    context.stroke();
-
-    // remaining time
-    let timeRemaining = Math.ceil(state.timer.timeRemaining / 1000);
-    let minutes = Math.floor(timeRemaining / 60);
-    let seconds = (timeRemaining - minutes * 60).toString();
-    if (seconds.length === 1) seconds = "0" + seconds;
-    context.fillText(`${minutes}:${seconds}`, 0, -30);
-
-    // time per rotation
-    let lineDuration = Math.floor(state.timer.lineDuration / 100) / 10;
-    context.fillText(lineDuration.toString(), 0, 30);
-
-    // draw the words
-    let fontSize = 18;
-    let anglePerCount = (Math.PI * 2) / state.partCount;
-    angle = 0;
-    for (let i = 0; i < state.config.parts.length; i++) {
-        let part = state.config.parts[i];
-
-        context.fillStyle = 'rgba(0, 0, 0, 1)';
-        let x = Math.cos(angle + angleOffset) * radius;
-        let y = Math.sin(angle + angleOffset) * radius + fontSize / 2;
-        context.fillText(part.text, x, y);
-
-        angle += anglePerCount * part.count;
+    //EasingFunctions
+    let points = [];
+    let pointCount = 50;
+    for (let i = 0; i < pointCount; i++) {
+        let x = i / pointCount;
+        let y = EasingFunctions.easeInOutCubic(x);
+        points.push({x, y});
     }
 
-    context.restore();
+    //let scale = 100;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x * width + x, points[0].y * height + y);
+    for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x * width + x, points[i].y * height + y);
+    }
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    //draw the current state
+    let index = Math.floor(state.timer.percentLinear * pointCount);
+    let xI = points[index].x * width + x;
+    let yI = points[index].y * height + y;
+
+    ctx.beginPath();
+    ctx.arc(xI, yI, 4, 0, Math.PI*2);
+    ctx.fill();
 }
 
 
+function getTrimmedLetter(letter) {
+    // find preferred font size/name
+    let fontSize = 40;
+    let fontName = 'Times New Roman';
+    if (letter === 'ⲝ') {
+        //fontName = 'Noto Sans Coptic';
+        //fontName = 'Antinoou';
 
+        // this has the best version
+        fontName = 'CS Pishoi';
+        //fontName = 'CS Copt';
+        letter = 'x';
+    }
+    else if (letter === 'Ⲉ') {
+        //fontName = 'CS Pishoi';
+        //letter = 'E';
 
+        fontName = 'Antinoou';
+    }
+    else if (letter.match(/[a-z]/i)) {
+        fontName = 'ColdstyleRoman';
+    }
+
+    // generate the letter image
+    return getMinimumSizeImage(letter, fontName, fontSize);
+}
 
 let minImageCache = {};
 
@@ -287,7 +318,7 @@ function getMinimumSizeImage(text, fontName, fontSize) {
     }
 
     // create the canvas/ctx
-    let width = Math.ceil(fontSize*3);
+    let width = Math.ceil(fontSize*3 * text.length);
     let height = width;
     //let canvas = createCanvas(width, height);
     let canvas = new OffscreenCanvas(width, height);
