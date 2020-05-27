@@ -24,7 +24,7 @@ function init() {
             background: '#ffffff'
         },
         words.resh,
-        times.short2
+        times.demo
     );
 
     // init the audio
@@ -57,7 +57,7 @@ function init() {
         if (beat.audio) {
             let name = beat.audio;
             let o = state.audio[name];
-            //o.audioArray[o.index].play();
+            o.audioArray[o.index].play();
             o.index = (o.index + 1) % o.audioArray.length;
         }
 
@@ -257,7 +257,7 @@ function drawTimeLine(canvas, ctx, x, y, width, height) {
     let pointCount = 50;
     for (let i = 0; i < pointCount; i++) {
         let x = i / pointCount;
-        let y = EasingFunctions.easeInOutCubic(x);
+        let y = state.config.easingFunction(x);
         points.push({x, y});
     }
 

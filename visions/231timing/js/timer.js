@@ -1,38 +1,6 @@
 
-const EasingFunctions = {
-    // no easing, no acceleration
-    linear: t => t,
-    // accelerating from zero velocity
-    easeInQuad: t => t*t,
-    // decelerating to zero velocity
-    easeOutQuad: t => t*(2-t),
-    // acceleration until halfway, then deceleration
-    easeInOutQuad: t => t<.5 ? 2*t*t : -1+(4-2*t)*t,
-    // accelerating from zero velocity
-    easeInCubic: t => t*t*t,
-    // decelerating to zero velocity
-    easeOutCubic: t => (--t)*t*t+1,
-    // acceleration until halfway, then deceleration
-    easeInOutCubic: t => t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1,
-    // accelerating from zero velocity
-    easeInQuart: t => t*t*t*t,
-    // decelerating to zero velocity
-    easeOutQuart: t => 1-(--t)*t*t*t,
-    // acceleration until halfway, then deceleration
-    easeInOutQuart: t => t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t,
-    // accelerating from zero velocity
-    easeInQuint: t => t*t*t*t*t,
-    // decelerating to zero velocity
-    easeOutQuint: t => 1+(--t)*t*t*t*t,
-    // acceleration until halfway, then deceleration
-    easeInOutQuint: t => t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t
-};
-
-//const EventEmitter = require( 'events' );
-//
-
 class BeatTimer {
-    constructor({parts, initialDuration, finalDuration, totalTime}) {
+    constructor({parts, initialDuration, finalDuration, totalTime, easingFunction}) {
         this.initialDuration = initialDuration;
         this.finalDuration = finalDuration;
         this.totalTime = totalTime;
@@ -40,6 +8,7 @@ class BeatTimer {
         this.listeners = {};
 
         this.startTime = 0;
+        this.easingFunction = easingFunction || EasingFunctions.linear;
 
         this.linePercent = 0;
         this.setupTick();
@@ -106,7 +75,7 @@ class BeatTimer {
 
                 // apply easing to this percent
                 //let percent = percentLinear;
-                let percent = EasingFunctions.easeInOutCubic(percentLinear);
+                let percent = this.easingFunction(percentLinear);
                 //let percent = EasingFunctions.easeInOutQuad(percentLinear);
                 //let percent = EasingFunctions.easeInOutCubic(percentLinear); // longer head/tail
                 //let percent = EasingFunctions.easeInOutQuart(percentLinear); // even longer head/tail
@@ -168,31 +137,9 @@ class BeatTimer {
         this.listeners[name] = fn;
     }
 
-
 }
 
-const times = {
-    demo: {
-        initialDuration: 1000 * 10,
-        finalDuration: 1000 * 2,
-        totalTime: 1000*60*2
-    },
-    short3: {
-        initialDuration: 1000 * 5,
-        finalDuration: 1000 * 1.5,
-        totalTime: 1000*60*3
-    },
-    short2: {
-        initialDuration: 1000 * 5,
-        finalDuration: 1000 * 1.5,
-        totalTime: 1000*60*2
-    },
-    first: {
-        initialDuration: 1000 * 12,
-        finalDuration: 1000 * 1.7,
-        totalTime: 1000*60*11
-    }
-};
+
 
 
 

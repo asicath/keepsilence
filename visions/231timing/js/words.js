@@ -26,6 +26,7 @@ const words = {
     resh: {
         //`Ra-a-gi o selah lad na i ma wa-iⲝ`
         background: '#FF6D00',
+        minDuration: 1000*2,
         parts: [
             {text:'Ra', count:2, audio:'high'},
             {text:'a', count:3, audio: 'high'},
@@ -47,3 +48,30 @@ const words = {
 
 };
 
+
+const times = {
+    demo: {
+        initialDuration: 1000 * 4,
+        finalDuration: 1000 * 4,
+        totalTime: 1000*60*2,
+        easingFunction: EasingFunctions.linear
+    },
+    short3: {
+        initialDuration: 1000 * 5,
+        finalDuration: 1000 * 1.5,
+        totalTime: 1000*60*3,
+        easingFunction: EasingFunctions.easeInCubic
+    },
+    short2: {
+        initialDuration: 1000 * 5,
+        finalDuration: 1000 * 1.5,
+        totalTime: 1000*60*2,
+        easingFunction: EasingFunctions.easeInCubic
+    },
+    first: {
+        initialDuration: 1000 * 12,
+        finalDuration: 1000 * 1.7,
+        totalTime: 1000*60*11,
+        easingFunction: EasingFunctions.easeInOutCubic
+    }
+};
