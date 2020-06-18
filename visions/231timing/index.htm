@@ -35,11 +35,21 @@
                 },
                 active: function () {
                     $(document).ready(function () {
-                        init();
+
+                        init(words.mem, times.short2);
                         startDrawing();
+
                     });
                 }
             });
+
+            document.body.onkeydown = function(e){
+                if(e.keyCode == 32) state.timer.togglePause();
+            };
+            document.body.onclick = function(e){
+                state.timer.togglePause();
+            };
+
 
             function drawFrame() {
                 draw('#seal');

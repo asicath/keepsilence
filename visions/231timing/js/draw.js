@@ -17,20 +17,20 @@ function fullscreenCanvas(id) {
     if ($(canvas).attr('height') !== size) { $(canvas).attr('height', size); }
 }
 
-function init() {
+function init(wordConfig, timeConfig) {
     state = {};
     state.config = Object.assign(
         {
             background: '#ffffff'
         },
-        words.mem,
-        times.short2
+        wordConfig,
+        timeConfig
     );
 
     // init the audio
     state.audio = {
-        low: {url:'./low2.mp3'},
-        high: {url:'./high2-short.mp3'}
+        low: {url:'./sound/low2.mp3'},
+        high: {url:'./sound/high2-short.mp3'}
     };
     for (let key in state.audio) {
         let o = state.audio[key];
@@ -41,12 +41,6 @@ function init() {
         }
     }
 
-    state.paused = true;
-    document.body.onkeyup = function(e){
-        if(e.keyCode == 32){
-            state.paused = !state.paused;
-        }
-    };
 
     $('body').css('background-color', state.config.background);
 
@@ -64,7 +58,7 @@ function init() {
         if (beat.audio) {
             let name = beat.audio;
             let o = state.audio[name];
-            //o.audioArray[o.index].play();
+            o.audioArray[o.index].play();
             o.index = (o.index + 1) % o.audioArray.length;
         }
 
@@ -76,13 +70,9 @@ function init() {
     state.img = new Image();
     state.img.onload = function(){
         //ctx.drawImage(img,0,0);
-
-
-
-
     };
-    //state.img.src = './XIX.png';
-    state.img.src = './XII.png';
+    //state.img.src = './img/XIX.png';
+    state.img.src = './img/XII.png';
 
 }
 
@@ -95,14 +85,8 @@ function draw(id) {
 
     if (state === null) return;
 
-    if (state.paused) {
+    state.timer.onTick();
 
-    }
-    else {
-        state.timer.onTick();
-    }
-
-    
     // get the canvas and init
     let canvas = $(id)[0];
     let context = canvas.getContext('2d');
@@ -255,14 +239,22 @@ function drawNameCircle(canvas, ctx, parts) {
 
     (() => {
 
-        drawTimeLine(canvas, ctx, -1 * (radius.textTop-10), radius.textTop - 160, 100, 100);
 
-        if (typeof state.timer.timeRemaining === 'undefined') return;
+        drawTimeLine(canvas, ctx, -1 * (radius.textTop-10), radius.textTop - 160, 100, 100);
 
         // remaining time
         let fontSize = 50;
         let fontName = 'consolas';
         ctx.font = `${fontSize}pt "${fontName}"`;
+
+        if (state.timer.countDown > 0) {
+            let countDownText = `${Math.ceil(state.timer.countDown/1000)}`;
+            ctx.textAlign = 'center';
+            ctx.fillText(countDownText, radius.textTop, -radius.textTop);
+        }
+        
+        // dont draw if over
+        if (typeof state.timer.timeRemaining === 'undefined') return;
 
         let timeRemaining = state.timer.timeRemaining;
         let timeRemainingNeg = timeRemaining < 0 ? "-" : "";

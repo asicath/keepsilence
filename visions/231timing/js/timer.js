@@ -1,6 +1,6 @@
 
 class BeatTimer {
-    constructor({parts, initialDuration, finalDuration, minDuration, totalTime, easingFunction}) {
+    constructor({parts, initialDuration, finalDuration, minDuration, totalTime, easingFunction, paused = true}) {
         this.initialDuration = initialDuration;
 
         this.finalDuration = finalDuration;
@@ -16,7 +16,18 @@ class BeatTimer {
         this.easingFunction = easingFunction || EasingFunctions.linear;
 
         this.linePercent = 0;
+        this.prevTickNow = null;
+        this.totalElapsed = 0;
+        this.lineStartTime = 0;
+        this.paused = paused;
+
+        this.countDown = 5000;
+
         this.setupTick();
+    }
+
+    togglePause() {
+        this.paused = !this.paused;
     }
 
     setupTick() {
@@ -42,24 +53,30 @@ class BeatTimer {
         this.onTick = () => {
 
             let now = Date.now();
+            let elapsed = (this.prevTickNow === null) ? 0 : now - this.prevTickNow;
+            this.prevTickNow = now;
 
-            // mark the start time, should probably do on first tick
-            if (this.startTime === 0) {
-                this.startTime = now;
-                this.lineStartTime = this.startTime;
+            // if we are paused, then do nothing
+            if (this.paused) return;
+
+            // process countdown
+            if (this.countDown > 0) {
+                this.countDown -= elapsed;
+                console.log(this.countDown);
+                return;
             }
 
             // calculate the time since start
-            let totalTime = now - this.startTime;
-            this.timeRemaining = this.totalTime - totalTime;
+            this.totalElapsed += elapsed;
+            this.timeRemaining = this.totalTime - this.totalElapsed;
 
             // calculate how far in the current breath
-            let time = now - this.lineStartTime;
+            let time = this.totalElapsed - this.lineStartTime;
 
             // determine if we've gone over the time for this line
             if (time > duration) {
                 // check for end
-                if (totalTime > this.totalTime) {
+                if (this.totalElapsed > this.totalTime) {
                     // past the end, no need to change the duration
                 }
                 else {
@@ -75,7 +92,7 @@ class BeatTimer {
                 let leftOver = duration === -1 ? 0 : time - duration;
 
                 // calculate the percent we are through the entire session
-                let percentLinear = totalTime / this.totalTime;
+                let percentLinear = this.totalElapsed / this.totalTime;
                 this.percentLinear = percentLinear;
 
                 // apply easing to this percent
@@ -89,13 +106,13 @@ class BeatTimer {
                 duration = Math.floor((this.initialDuration - this.finalDuration) * (1-percent)) + this.finalDuration;
                 this.lineDuration = duration;
 
-                console.log(`duration: ${duration} - totalTime: ${totalTime} - percentLinear: ${percentLinear} - percentEase: ${percent}`);
+                console.log(`duration: ${duration} - totalTime: ${this.totalElapsed} - percentLinear: ${percentLinear} - percentEase: ${percent}`);
 
                 // set the new start time
-                this.lineStartTime = now - leftOver;
+                this.lineStartTime = this.totalElapsed - leftOver;
 
                 // recalculate the time into this line
-                time = now - this.lineStartTime;
+                time = this.totalElapsed - this.lineStartTime;
             }
 
             // allow for overage, time will always be less than duration during the session
