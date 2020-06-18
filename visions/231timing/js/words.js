@@ -51,11 +51,19 @@ const words = {
     mem: {
 
         background: '#0246bc',
-        minDuration: 1000*4,
+        minDuration: 1000*1,
         parts: [
-            {text:'Ma', count:15.25, audio:'low'},
-            {text:'la', count:16.63, audio: 'low'},
-            {text:'i', count:16.12, audio: 'high'}
+            {text:'Ma', count:16.14, audio:'low'},
+            {text:'la', count:16.16, audio: 'low'},
+            {text:'i',  count:15.70, audio: 'high'}
+
+            // 16.14
+            // 16.16
+            // 15.70
+
+            // 16.14
+            // 16.98
+            // 14.88
         ]
     }
 
@@ -79,7 +87,7 @@ const times = {
         easingFunction: EasingFunctions.easeOutCubic
     },
     long: {
-        initialDuration: 1000 * 12,
+        initialDuration: 1000 * 10,
         totalTime: 1000*60*11,
         easingFunction: EasingFunctions.easeInOutCubic
     }
