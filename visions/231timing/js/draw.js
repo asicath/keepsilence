@@ -23,8 +23,8 @@ function init() {
         {
             background: '#ffffff'
         },
-        words.resh,
-        times.demo
+        words.mem,
+        times.short2
     );
 
     // init the audio
@@ -40,6 +40,13 @@ function init() {
             o.audioArray.push(new Audio(o.url));
         }
     }
+
+    state.paused = true;
+    document.body.onkeyup = function(e){
+        if(e.keyCode == 32){
+            state.paused = !state.paused;
+        }
+    };
 
     $('body').css('background-color', state.config.background);
 
@@ -57,7 +64,7 @@ function init() {
         if (beat.audio) {
             let name = beat.audio;
             let o = state.audio[name];
-            o.audioArray[o.index].play();
+            //o.audioArray[o.index].play();
             o.index = (o.index + 1) % o.audioArray.length;
         }
 
@@ -66,8 +73,20 @@ function init() {
         //console.log(` .`);
     });
 
-    state.timer.onTick();
+    state.img = new Image();
+    state.img.onload = function(){
+        //ctx.drawImage(img,0,0);
+
+
+
+
+    };
+    //state.img.src = './XIX.png';
+    state.img.src = './XII.png';
+
 }
+
+
 
 
 function draw(id) {
@@ -76,7 +95,13 @@ function draw(id) {
 
     if (state === null) return;
 
-    state.timer.onTick();
+    if (state.paused) {
+
+    }
+    else {
+        state.timer.onTick();
+    }
+
     
     // get the canvas and init
     let canvas = $(id)[0];
@@ -96,6 +121,7 @@ function draw(id) {
     drawNameCircle(canvas, context, state.config.parts);
 }
 
+
 let maxSize = {};
 
 function drawNameCircle(canvas, ctx, parts) {
@@ -114,6 +140,26 @@ function drawNameCircle(canvas, ctx, parts) {
     let innerCircleWidth = 6;
     radius.innerCircle = radius.textBottom - innerCircleWidth;
 
+    // draw the image
+    (() => {
+        ctx.save();
+        ctx.translate(center.x, center.y);
+
+        // max size should be innerCircle / 2
+        //let imgRadius = state.img.height / 2;
+        let imgRadius = Math.sqrt(Math.pow(state.img.width, 2) + Math.pow(state.img.height, 2)) / 2;
+
+        let imgScale = (radius.textBottom) / imgRadius;
+        imgScale *= 0.5;
+        let scaledWidth = state.img.width*imgScale;
+        let scaledHeight = state.img.height*imgScale;
+
+        ctx.drawImage(state.img,
+            0,0,state.img.width,state.img.height,
+            -scaledWidth / 2, -scaledHeight / 2, scaledWidth, scaledHeight);
+        ctx.restore();
+    })();
+
     // draw the line
     (() => {
         ctx.save();
@@ -121,8 +167,8 @@ function drawNameCircle(canvas, ctx, parts) {
 
         let max = radius.textBottom;
         let angle = Math.PI * 2 * state.timer.linePercent -Math.PI/2;
-        let x0 = Math.cos(angle) * max * 0.2;
-        let y0 = Math.sin(angle) * max * 0.2;
+        let x0 = Math.cos(angle) * max * 0.5;
+        let y0 = Math.sin(angle) * max * 0.5;
         let x1 = Math.cos(angle) * max;
         let y1 = Math.sin(angle) * max;
 
@@ -208,6 +254,11 @@ function drawNameCircle(canvas, ctx, parts) {
 
 
     (() => {
+
+        drawTimeLine(canvas, ctx, -1 * (radius.textTop-10), radius.textTop - 160, 100, 100);
+
+        if (typeof state.timer.timeRemaining === 'undefined') return;
+
         // remaining time
         let fontSize = 50;
         let fontName = 'consolas';
@@ -231,7 +282,7 @@ function drawNameCircle(canvas, ctx, parts) {
         ctx.textAlign = 'left';
         ctx.fillText(lineDurationText, -radius.textTop, radius.textTop);
 
-        drawTimeLine(canvas, ctx, -1 * (radius.textTop-10), radius.textTop - 160, 100, 100);
+
     })();
 
 
@@ -271,13 +322,18 @@ function drawTimeLine(canvas, ctx, x, y, width, height) {
     ctx.stroke();
 
     //draw the current state
-    let index = Math.floor(state.timer.percentLinear * pointCount);
+    let p = typeof state.timer.percentLinear !== 'undefined' ? state.timer.percentLinear : 0;
+    let index = Math.floor(p * pointCount);
     let xI = points[index].x * width + x;
     let yI = points[index].y * height + y;
 
     ctx.beginPath();
     ctx.arc(xI, yI, 4, 0, Math.PI*2);
     ctx.fill();
+
+
+
+
 }
 
 

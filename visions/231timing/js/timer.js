@@ -1,8 +1,13 @@
 
 class BeatTimer {
-    constructor({parts, initialDuration, finalDuration, totalTime, easingFunction}) {
+    constructor({parts, initialDuration, finalDuration, minDuration, totalTime, easingFunction}) {
         this.initialDuration = initialDuration;
+
         this.finalDuration = finalDuration;
+        if (minDuration) {
+            this.finalDuration = minDuration;
+        }
+
         this.totalTime = totalTime;
         this.parts = parts;
         this.listeners = {};
