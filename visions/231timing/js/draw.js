@@ -42,6 +42,18 @@ function init(wordConfig, timeConfig) {
         }
     }
 
+    let synthConfig = {
+        envelope: {
+            attack: 0.005,
+            decay: 0.1,
+            sustain: 0.1,
+            release: 0.1,
+        }
+    };
+
+    // now the alt synth
+    const synth1 = new Tone.Synth(synthConfig).toDestination();
+    const synth2 = new Tone.Synth(synthConfig).toDestination();
 
     $('body').css('background-color', state.config.background);
 
@@ -59,9 +71,19 @@ function init(wordConfig, timeConfig) {
 
         if (beat.audio && state.drumsEnabled) {
             let name = beat.audio;
-            let o = state.audio[name];
-            o.audioArray[o.index].play();
-            o.index = (o.index + 1) % o.audioArray.length;
+
+            //let o = state.audio[name];
+            //o.audioArray[o.index].play();
+            //o.index = (o.index + 1) % o.audioArray.length;
+
+            if (name === 'low') {
+                synth1.triggerAttackRelease("C3", 0.1);
+            }
+            else if (name === 'high') {
+                synth2.triggerAttackRelease("C4", 0.005);
+            }
+            //play a middle 'C' for the duration of an 8th note
+
         }
 
     });
