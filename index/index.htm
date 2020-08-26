@@ -1,7 +1,8 @@
 <html>
-<head>
+<head profile="http://www.w3.org/2005/10/profile">
+    <link rel="icon" type="image/png" href="silent-watcher-ico.png">
     <meta charset="UTF-8">
-    <title>keep silence</title>
+    <title>Keep Silence</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 
@@ -29,7 +30,7 @@
         }
         #main
         {
-            width: 55em;
+            width: 100%;
             min-height: 100%;
             margin-left: auto;
             margin-right: auto;
@@ -44,10 +45,22 @@
         td#watcher {
             width: 23em;
             text-align: right;
+            display: none;
         }
         #watcher img {
             width: 16em;
         }
+        @media (min-width: 800px) {
+            td#watcher {
+                display: table-cell;
+            }
+            #main
+            {
+                width: 55em;
+            }
+        }
+
+
         td#links {
             padding-left: 2em;
             font-size: 1.3em;
