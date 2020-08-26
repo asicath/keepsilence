@@ -18,6 +18,24 @@
 
         <script type="text/javascript">
 
+            const customTimes = {
+                long: {
+                    initialDuration: 1000 * 10,
+                    totalTime: 1000*60*11,
+                    easingFunction: EasingFunctions.easeInOutQuad
+                },
+                short3: {
+                    initialDuration: 1000 * 10,
+                    totalTime: 1000*60*3,
+                    easingFunction: EasingFunctions.easeOutQuad
+                },
+                short2: {
+                    initialDuration: 1000 * 7,
+                    totalTime: 1000*60*2,
+                    easingFunction: EasingFunctions.easeOutQuad
+                },
+            };
+
             window.requestAnimFrame = ( function() {
                 return  window.requestAnimationFrame       ||
                     window.webkitRequestAnimationFrame ||
@@ -40,7 +58,7 @@
                         let timingKey = getQueryParams('timing') || 'long';
 
 
-                        init(words.mem, times[timingKey]);
+                        init(words.kaph, customTimes[timingKey]);
                         startDrawing();
 
                     });

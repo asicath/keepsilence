@@ -56,14 +56,43 @@ const words = {
             {text:'Ma', count:16.14, audio:'low'},
             {text:'la', count:16.16, audio: 'low'},
             {text:'i',  count:15.70, audio: 'high'}
+        ]
+    },
 
-            // 16.14
-            // 16.16
-            // 15.70
+    pe: {
+        background: '#ed2800',
+        minDuration: 1000*2.5,
+        parts: [
+            {text:'Pu', count:5.65, audio:'low'},
+            {text:'raθ', count:6.44, audio: 'low'},
+            {text:'me',  count:3.07, audio: 'high'},
+            {text:'ta',  count:3.16, audio: 'high'},
+            {text:'i',  count:5.89, audio: 'high'},
 
-            // 16.14
-            // 16.98
-            // 14.88
+            {text:'a', count:5.75, audio:'low'},
+            {text:'pη', count:5.93, audio: 'low'},
+            {text:'me',  count:2.95, audio: 'high'},
+            {text:'ta',  count:3.05, audio: 'high'},
+            {text:'i',  count:6.12, audio: 'high'},
+        ]
+    },
+
+    kaph: {
+        background: '#8C15C4',
+        minDuration: 1000*1.3,
+        parts: [
+            // 6.33
+            // 9.28
+            // 6.45
+            // 9.65
+            // 6.68
+            // 9.61
+            {text:'Ke', count: 6.33, audio: 'low'},
+            {text:'ru', count: 9.28, audio: 'low'},
+            {text:'gu', count: 6.45, audio: 'high'},
+            {text:'na', count: 9.65, audio: 'high'},
+            {text:'vi', count: 6.68, audio: 'high'},
+            {text:'el', count: 9.61, audio: 'low'},
         ]
     }
 
@@ -71,11 +100,6 @@ const words = {
 
 
 const times = {
-    demo: {
-        initialDuration: 1000 * 15,
-        totalTime: 1000*60*2,
-        easingFunction: EasingFunctions.linear
-    },
     short3: {
         initialDuration: 1000 * 8,
         totalTime: 1000*60*3,

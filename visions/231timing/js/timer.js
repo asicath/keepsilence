@@ -59,10 +59,11 @@ class BeatTimer {
             // if we are paused, then do nothing
             if (this.paused) return;
 
+            this.emit('tick', {});
+
             // process countdown
             if (this.countDown > 0) {
                 this.countDown -= elapsed;
-                console.log(this.countDown);
                 return;
             }
 
@@ -140,7 +141,7 @@ class BeatTimer {
             }
 
             // else if (lastCount !== count) {
-            //     this.emit('tick', Object.assign({}, part));
+            //
             // }
 
         };

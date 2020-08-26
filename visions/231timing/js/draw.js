@@ -30,7 +30,8 @@ function init(wordConfig, timeConfig) {
     // init the audio
     state.audio = {
         low: {url:'./sound/low2.mp3'},
-        high: {url:'./sound/high2-short.mp3'}
+        high: {url:'./sound/high2-short.mp3'},
+        beep: {url:'./sound/beep.wav'},
     };
     for (let key in state.audio) {
         let o = state.audio[key];
@@ -52,10 +53,11 @@ function init(wordConfig, timeConfig) {
     // create the timer
     state.timer = new BeatTimer(state.config);
 
+    state.drumsEnabled = getQSBool('drums', true);
     state.timer.on('beat', beat => {
         //console.log(`${beat.text}\t${(beat.duration/1000)}`);
 
-        if (beat.audio) {
+        if (beat.audio && state.drumsEnabled) {
             let name = beat.audio;
             let o = state.audio[name];
             o.audioArray[o.index].play();
@@ -63,8 +65,21 @@ function init(wordConfig, timeConfig) {
         }
 
     });
+
+    state.beepsEnabled = getQSBool('beeps', false);
+    state.lastCount = 10;
     state.timer.on('tick', beat => {
         //console.log(` .`);
+
+        if (!state.beepsEnabled) return;
+        let countDown = Math.ceil(state.timer.countDown / 1000);
+        if (countDown > 2 && state.lastCount !== countDown) {
+            let o = state.audio.beep;
+            o.audioArray[o.index].play();
+            o.index = (o.index + 1) % o.audioArray.length;
+
+            state.lastCount = countDown;
+        }
     });
 
     state.img = new Image();
@@ -72,8 +87,8 @@ function init(wordConfig, timeConfig) {
         //ctx.drawImage(img,0,0);
     };
     //state.img.src = './img/XIX.png';
-    state.img.src = './img/XII.png';
-
+    //state.img.src = './img/XII.png';
+    state.img.src = './img/XVI.png';
 }
 
 
@@ -248,15 +263,27 @@ function drawNameCircle(canvas, ctx, parts) {
         ctx.font = `${fontSize}pt "${fontName}"`;
 
         if (state.timer.countDown > 0) {
-            let countDownText = `${Math.ceil(state.timer.countDown/1000)}`;
-            ctx.textAlign = 'center';
-            ctx.fillText(countDownText, radius.textTop, -radius.textTop);
-        }
-        
-        // dont draw if over
-        if (typeof state.timer.timeRemaining === 'undefined') return;
+            // "start"
+            ctx.font = `${fontSize/2}pt "${fontName}"`;
+            ctx.fillText("starts in:", radius.textTop-fontSize*4, -radius.textTop + fontSize*0.5);
 
-        let timeRemaining = state.timer.timeRemaining;
+            // now the actual timer
+            ctx.font = `${fontSize}pt "${fontName}"`;
+            let countDownText = `${Math.ceil(state.timer.countDown/1000)}`;
+            ctx.textAlign = 'left';
+            ctx.fillText(countDownText, radius.textTop, -radius.textTop + fontSize);
+        }
+
+        // dont draw if over
+        if (typeof state.timer.timeRemaining === 'undefined') {
+
+            //this.totalTime
+            //this.initialDuration
+
+            //return;
+        }
+
+        let timeRemaining = state.timer.timeRemaining || state.timer.totalTime;
         let timeRemainingNeg = timeRemaining < 0 ? "-" : "";
         timeRemaining = Math.ceil(Math.abs(timeRemaining) / 1000);
         let minutes = Math.floor(timeRemaining / 60);
@@ -268,7 +295,9 @@ function drawNameCircle(canvas, ctx, parts) {
         ctx.fillText(remainingText, radius.textTop, radius.textTop);
 
         // time per rotation
-        let lineDuration = Math.floor(state.timer.lineDuration / 100) / 10;
+        let lineDuration = state.timer.lineDuration || state.timer.initialDuration;
+        lineDuration = Math.floor(lineDuration / 100) / 10;
+
         let lineDurationText = lineDuration.toString();
         if (lineDurationText.indexOf(".") === -1) lineDurationText = lineDurationText + ".0";
         ctx.textAlign = 'left';
