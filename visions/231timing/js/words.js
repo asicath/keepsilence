@@ -79,14 +79,8 @@ const words = {
 
     kaph: {
         background: '#8C15C4',
-        minDuration: 1000*1.3,
+        minDuration: 1000*1.7,
         parts: [
-            // 6.33
-            // 9.28
-            // 6.45
-            // 9.65
-            // 6.68
-            // 9.61
             {text:'Ke', count: 6.33, audio: 'low'},
             {text:'ru', count: 9.28, audio: 'low'},
             {text:'gu', count: 6.45, audio: 'high'},

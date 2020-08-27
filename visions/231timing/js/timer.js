@@ -23,6 +23,8 @@ class BeatTimer {
 
         this.countDown = 5000;
 
+        this.beatOffset = 150;
+
         this.setupTick();
     }
 
@@ -48,6 +50,7 @@ class BeatTimer {
         let recalculateDuration = true; // force duration calculation on the first time
         let duration = -1;
         let lastPart = null;
+        let lastEarlyPart = null;
 
         // user should call this as often as possible
         this.onTick = () => {
@@ -63,6 +66,16 @@ class BeatTimer {
 
             // process countdown
             if (this.countDown > 0) {
+
+                if (this.countDown - this.beatOffset < 0) {
+                    // stolen from below
+                    let earlyPart = this.lookupPartByPercent(0);
+                    if (lastEarlyPart !== earlyPart) {
+                        this.emit('early-beat', Object.assign({duration: earlyPart.count * 0}, earlyPart));
+                        lastEarlyPart = earlyPart;
+                    }
+                }
+
                 this.countDown -= elapsed;
                 return;
             }
@@ -126,24 +139,43 @@ class BeatTimer {
             let timePerCount = duration / this.countTotal;
 
             // determine which part we are on
-            let part = null;
-            for (let i = this.parts.length-1; i >= 0; i--) {
-                if (this.linePercent >= this.parts[i].startPercent) {
-                    part = this.parts[i];
-                    break;
-                }
-            }
+            let part = this.lookupPartByPercent(this.linePercent);
 
             // if we've started a new part, emit an event
             if (lastPart !== part) {
+
+                //audio: "low"
+                // count: 6.33
+                // startPercent: 0
+                // text: "Ke"
+                console.log(`beat ${part.text} ${innerTime} ${this.linePercent}`);
                 this.emit('beat', Object.assign({duration: part.count * timePerCount}, part));
                 lastPart = part;
+            }
+
+            // now calculate the early beat
+            let earlyTime = (time+this.beatOffset) % duration; // 90ms look ahead
+            let earlyPercent = earlyTime / duration;
+            let earlyPart = this.lookupPartByPercent(earlyPercent);
+            if (lastEarlyPart !== earlyPart) {
+                console.log(`early-beat ${earlyPart.text} ${earlyTime} ${earlyPercent}`);
+                this.emit('early-beat', Object.assign({duration: earlyPart.count * timePerCount}, earlyPart));
+                lastEarlyPart = earlyPart;
             }
 
             // else if (lastCount !== count) {
             //
             // }
 
+        };
+
+        this.lookupPartByPercent = percent => {
+            for (let i = this.parts.length-1; i >= 0; i--) {
+                if (percent >= this.parts[i].startPercent) {
+                    return this.parts[i];
+                }
+            }
+            return null;
         };
 
         // start it

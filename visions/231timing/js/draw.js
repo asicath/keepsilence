@@ -42,7 +42,7 @@ function init(wordConfig, timeConfig) {
         }
     }
 
-    let synthConfig = {
+    let synthConfig1 = {
         envelope: {
             attack: 0.005,
             decay: 0.1,
@@ -50,10 +50,19 @@ function init(wordConfig, timeConfig) {
             release: 0.1,
         }
     };
+    let synthConfig2 = {
+        envelope: {
+            attack: 0.005,
+            decay: 0.1,
+            sustain: 0.05,
+            release: 0.1,
+        }
+    };
+
 
     // now the alt synth
-    const synth1 = new Tone.Synth(synthConfig).toDestination();
-    const synth2 = new Tone.Synth(synthConfig).toDestination();
+    const synth1 = new Tone.Synth(synthConfig1).toDestination();
+    const synth2 = new Tone.Synth(synthConfig2).toDestination();
 
     $('body').css('background-color', state.config.background);
 
@@ -66,7 +75,7 @@ function init(wordConfig, timeConfig) {
     state.timer = new BeatTimer(state.config);
 
     state.drumsEnabled = getQSBool('drums', true);
-    state.timer.on('beat', beat => {
+    state.timer.on('early-beat', beat => {
         //console.log(`${beat.text}\t${(beat.duration/1000)}`);
 
         if (beat.audio && state.drumsEnabled) {
@@ -96,10 +105,10 @@ function init(wordConfig, timeConfig) {
         if (!state.beepsEnabled) return;
         let countDown = Math.ceil(state.timer.countDown / 1000);
         if (countDown > 2 && state.lastCount !== countDown) {
-            let o = state.audio.beep;
-            o.audioArray[o.index].play();
-            o.index = (o.index + 1) % o.audioArray.length;
-
+            //let o = state.audio.beep;
+            //o.audioArray[o.index].play();
+            //o.index = (o.index + 1) % o.audioArray.length;
+            synth2.triggerAttackRelease("C5", 0.005);
             state.lastCount = countDown;
         }
     });
@@ -110,7 +119,8 @@ function init(wordConfig, timeConfig) {
     };
     //state.img.src = './img/XIX.png';
     //state.img.src = './img/XII.png';
-    state.img.src = './img/XVI.png';
+    //state.img.src = './img/XVI.png';
+    state.img.src = './img/X.png';
 }
 
 
