@@ -1,3 +1,24 @@
+
+window.customTimes = {
+    long: {
+        initialDuration: 1000 * 10,
+        totalTime: 1000*60*11,
+        easingFunction: EasingFunctions.easeInOutQuad
+    },
+    short3: {
+        initialDuration: 1000 * 10,
+        totalTime: 1000*60*3,
+        easingFunction: EasingFunctions.easeOutCubic
+    },
+    short2: {
+        initialDuration: 1000 * 7,
+        totalTime: 1000*60*2,
+        easingFunction: EasingFunctions.easeOutCubic
+    },
+};
+
+window.spirit = null;
+
 window.requestAnimFrame = ( function() {
     return  window.requestAnimationFrame       ||
         window.webkitRequestAnimationFrame ||
@@ -17,11 +38,8 @@ function initPageJs() {
         },
         active: function () {
             $(document).ready(function () {
-
                 let timingKey = getQueryParams('timing') || 'long';
-
-
-                init(words.kaph, customTimes[timingKey]);
+                init(window.spirit, customTimes[timingKey]);
                 startDrawing();
 
             });
