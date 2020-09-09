@@ -10,6 +10,8 @@
     <script type="text/javascript" src="js/words.js"></script>
     <script type="text/javascript" src="js/timer.js"></script>
     <script type="text/javascript" src="js/draw.js"></script>
+
+    <script type="text/javascript" src="js/page.js"></script>
 </head>
     <body style="text-align: center;">
 
@@ -18,6 +20,11 @@
         </div>
 
         <script type="text/javascript">
+
+            window.spirit = words.pe;
+            window.customTimes.short3.easingFunction = EasingFunctions.easeOutQuad;
+            window.customTimes.short2.easingFunction = EasingFunctions.easeOutQuad;
+            initPageJs();
 
             const customTimes = {
                 short3: {
