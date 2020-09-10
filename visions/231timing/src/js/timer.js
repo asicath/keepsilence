@@ -1,12 +1,9 @@
 
 class BeatTimer {
-    constructor({parts, initialDuration, finalDuration, minDuration, totalTime, easingFunction, paused = true}) {
+    constructor({parts, initialDuration, minDuration, totalTime, easingFunction, paused = true}) {
         this.initialDuration = initialDuration;
 
-        this.finalDuration = finalDuration;
-        if (minDuration) {
-            this.finalDuration = minDuration;
-        }
+        this.finalDuration = minDuration;
 
         this.totalTime = totalTime;
         this.parts = parts;
@@ -203,7 +200,7 @@ if (typeof module !== 'undefined' && module.parent === null) {
 
     const config = Object.assign({
         initialDuration: 10000,
-        finalDuration: 2000,
+        minDuration: 2000,
         totalTime: 1000*60*1,
     }, words.daleth);
 

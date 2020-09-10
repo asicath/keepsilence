@@ -4,26 +4,25 @@ const words = {
     shin: {
         background: '#ed2800',
         imgSrc: '300.png',
+        minDuration: 1000 * 1.5,
         parts: [
-            {text:'shab', count:2},
-            {text:'nax', count:2},
-            {text:'od', count:1},
-            {text:'ob', count:1},
-            {text:'or', count:1},
-            {text:'', count: 1}
+            {text:'shab', count:2, audio:'high'},
+            {text:'nax', count:2, audio:'high'},
+            {text:'od', count:1, audio:'low'},
+            {text:'ob', count:1, audio:'low'},
+            {text:'or', count:2, audio:'low'}
         ]
     },
     daleth: {
         background: '#00A550',
         imgSrc: '004.png',
-        finalDuration: 1000 * 1.5,
+        minDuration: 1000 * 1.5,
         parts: [
             {text:'dηn', count:2, audio:'high'},
             {text:'a', count:1.3, audio:'low'},
             {text:'star', count:2, audio:'high'},
             {text:'tar', count:1, audio:'high'},
-            {text:'ωθ', count:2, audio:'low'},
-            {text:'-', count: 0.5}
+            {text:'ωθ', count:2.5, audio:'low'}
         ]
     },
     resh: {
@@ -46,7 +45,7 @@ const words = {
 
             {text:'ma', count:3.07, audio:'high'},
             {text:'wa', count:2.29, audio: 'high'},
-            {text:'iⲝ', count:8.09, audio: 'low'},
+            {text:'iⲝ', count:8.09, audio: 'low'}
         ]
     },
     mem: {
