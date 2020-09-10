@@ -57,21 +57,52 @@ function initPageJs() {
         active: function () {
             $(document).ready(function () {
 
-                const spirit = getQueryParams('spirit') || 'kaph';
-                const wordConfig = words[spirit];
+                // check if a spirit is specified
+                const spirit = getQueryParams('spirit') || null;
 
-                // override customtimes with any word specific
-                const times = Object.assign(wordConfig.customTimes || {}, defaultTimes);
-
-                const timingKey = getQueryParams('timing') || 'long';
-                const timeConfig = times[timingKey];
-
-                init(wordConfig, timeConfig);
-                startDrawing();
+                if (spirit !== null) {
+                    showSpirit(spirit);
+                }
+                else {
+                    // show the index
+                    showIndex();
+                }
 
             });
         }
     });
+
+    function showSpirit(spirit) {
+        const wordConfig = words[spirit];
+
+        // override customtimes with any word specific
+        const times = Object.assign(wordConfig.customTimes || {}, defaultTimes);
+
+        const timingKey = getQueryParams('timing') || 'long';
+        const timeConfig = times[timingKey];
+
+        init(wordConfig, timeConfig);
+        startDrawing();
+    }
+
+    function showIndex() {
+
+        // compile index
+        let lines = Object.keys(words).map((key, i) => {
+            let prefix = '';
+            let suffix = '';
+            if (i % 3 === 0) {
+                prefix = `<div class="row">`;
+            }
+            if (i % 3 === 2) {
+                suffix = `</div>`;
+            }
+            return `${prefix}<div class="spiritLink" style="background-color: ${words[key].background};"><a href="index.htm?spirit=${key}">${key}</a></div>${suffix}`
+        });
+        lines.push('</div>');
+
+        $('body').html(`<div>${lines.join('\n')}</div>`);
+    }
 
     document.body.onkeydown = function(e){
         if(e.keyCode == 32) state.timer.togglePause();
