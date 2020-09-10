@@ -9,6 +9,24 @@ window.requestAnimFrame = ( function() {
         };
 })();
 
+const defaultTimes = {
+    short3: {
+        initialDuration: 1000 * 8,
+        totalTime: 1000*60*3,
+        easingFunction: EasingFunctions.easeOutCubic
+    },
+    short2: {
+        initialDuration: 1000 * 6,
+        totalTime: 1000*60*2,
+        easingFunction: EasingFunctions.easeOutCubic
+    },
+    long: {
+        initialDuration: 1000 * 10,
+        totalTime: 1000*60*11,
+        easingFunction: EasingFunctions.easeInOutCubic
+    }
+};
+
 function initPageJs() {
     // do the Google Font Loader stuff....
     WebFont.load({
@@ -18,10 +36,16 @@ function initPageJs() {
         active: function () {
             $(document).ready(function () {
 
-                let timingKey = getQueryParams('timing') || 'long';
+                const spirit = getQueryParams('spirit') || 'kaph';
+                const wordConfig = words[spirit];
 
+                // override customtimes with any word specific
+                const times = Object.assign(wordConfig.customTimes || {}, defaultTimes);
 
-                init(words.kaph, customTimes[timingKey]);
+                const timingKey = getQueryParams('timing') || 'long';
+                const timeConfig = times[timingKey];
+
+                init(wordConfig, timeConfig);
                 startDrawing();
 
             });

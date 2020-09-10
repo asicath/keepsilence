@@ -117,10 +117,8 @@ function init(wordConfig, timeConfig) {
     state.img.onload = function(){
         //ctx.drawImage(img,0,0);
     };
-    //state.img.src = './img/XIX.png';
-    //state.img.src = './img/XII.png';
-    //state.img.src = './img/XVI.png';
-    state.img.src = './img/X.png';
+
+    state.img.src = `./img/${wordConfig.imgSrc}`;
 }
 
 

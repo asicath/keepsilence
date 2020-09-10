@@ -3,6 +3,7 @@
 const words = {
     shin: {
         background: '#ed2800',
+        imgSrc: '300.png',
         parts: [
             {text:'shab', count:2},
             {text:'nax', count:2},
@@ -14,6 +15,7 @@ const words = {
     },
     daleth: {
         background: '#00A550',
+        imgSrc: '004.png',
         finalDuration: 1000 * 1.5,
         parts: [
             {text:'dηn', count:2, audio:'high'},
@@ -27,9 +29,8 @@ const words = {
     resh: {
         //`Ra-a-gi o selah lad na i ma wa-iⲝ`
         background: '#FF6D00',
-
+        imgSrc: '200.png',
         minDuration: 1000*4,
-
         parts: [
             {text:'Ra', count:1.95, audio:'high'},
             {text:'a', count:3.64, audio: 'high'},
@@ -49,9 +50,17 @@ const words = {
         ]
     },
     mem: {
-
         background: '#0246bc',
+        imgSrc: '040.png',
         minDuration: 1000*1,
+        customTimes: {
+            short3: {
+                easingFunction: EasingFunctions.easeOutQuad
+            },
+            short2: {
+                easingFunction: EasingFunctions.easeOutQuad
+            }
+        },
         parts: [
             {text:'Ma', count:16.14, audio:'low'},
             {text:'la', count:16.16, audio: 'low'},
@@ -61,7 +70,16 @@ const words = {
 
     pe: {
         background: '#ed2800',
+        imgSrc: '080.png',
         minDuration: 1000*2.5,
+        customTimes: {
+            short3: {
+                easingFunction: EasingFunctions.easeOutQuad
+            },
+            short2: {
+                easingFunction: EasingFunctions.easeOutQuad
+            }
+        },
         parts: [
             {text:'Pu', count:5.65, audio:'low'},
             {text:'raθ', count:6.44, audio: 'low'},
@@ -79,6 +97,7 @@ const words = {
 
     kaph: {
         background: '#8C15C4',
+        imgSrc: '020.png',
         minDuration: 1000*1.7,
         parts: [
             {text:'Ke', count: 6.33, audio: 'low'},
@@ -88,25 +107,23 @@ const words = {
             {text:'vi', count: 6.68, audio: 'high'},
             {text:'el', count: 9.61, audio: 'low'},
         ]
+    },
+
+    aleph: {
+        background: '#fee74d',
+        imgSrc: '001.png',
+        minDuration: 1000*1.7,
+        parts: [
+            {text:'A', count: 1, audio: ''},
+            {text:'ع', count: 1, audio: ''},
+            {text:'u', count: 1, audio: ''},
+            {text:'i', count: 1, audio: ''},
+            {text:'a', count: 1, audio: ''},
+            {text:'o', count: 1, audio: ''},
+            {text:'u', count: 1, audio: ''},
+            {text:'ع', count: 1, audio: ''},
+            {text:'a', count: 1, audio: ''}
+        ]
     }
 
-};
-
-
-const times = {
-    short3: {
-        initialDuration: 1000 * 8,
-        totalTime: 1000*60*3,
-        easingFunction: EasingFunctions.easeOutCubic
-    },
-    short2: {
-        initialDuration: 1000 * 6,
-        totalTime: 1000*60*2,
-        easingFunction: EasingFunctions.easeOutCubic
-    },
-    long: {
-        initialDuration: 1000 * 10,
-        totalTime: 1000*60*11,
-        easingFunction: EasingFunctions.easeInOutCubic
-    }
 };
