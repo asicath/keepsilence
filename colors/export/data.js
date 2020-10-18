@@ -1049,7 +1049,7 @@ exports.paths = JSON.parse(`{
       {
         "name": "Bright red, rayed azure or emerald",
         "back": "FF0000",
-        "rayed": "4D91C6"
+        "rayed": "00A550"
       }
     ]
   },

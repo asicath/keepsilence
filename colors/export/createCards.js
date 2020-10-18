@@ -77,6 +77,7 @@ async function drawCards() {
 
         //if (!key.match(/^[2345]_/)) continue;
         if (!key.match(/t\d\d/)) continue;
+        //if (!key.match(/t21/)) continue;
         //if (!key.match(/_[wc]10/)) continue;
 
         let pipImage = null;
@@ -93,8 +94,8 @@ async function drawCard(card, pipImage) {
 
     let layerCount = 4;
     //let outerSize = 2400;
-    let outerSize = 1080;
-    let width = 1920;
+    let outerSize = 999;
+    let width = 999;
 
     let ratio = outerSize / 1200;
     let layerSize = 150 * ratio;
@@ -111,6 +112,7 @@ async function drawCard(card, pipImage) {
         let path = paths[pathKey];
 
         for (let i = 0; i < layerCount; i++) {
+            if (i > 0) continue;
 
             let color = path.colors[3 - i];
 
@@ -139,7 +141,7 @@ async function drawCard(card, pipImage) {
         combineCanvas(canvas[n], outputCanvas);
     }
 
-    await exportCanvasToImage(outputCanvas, card.key);
+    await exportCanvasToImage(outputCanvas, "background/" + card.key);
 }
 
 function combineCanvas(src, dest) {
@@ -177,9 +179,15 @@ function combineHalf(src, dest) {
 function exportCanvasToImage(canvas, name) {
     return new Promise((resolve, reject) => {
         const fs = require('fs');
-        const filename = `${__dirname}/output/${name}.png`;
+        const filename = `${__dirname}/output/${name}.jpg`;
         const out = fs.createWriteStream(filename);
-        const stream = canvas.createPNGStream();
+        //const stream = canvas.createPNGStream();
+        const stream  = canvas.createJPEGStream({
+            quality: 1,
+            chromaSubsampling: false, progressive: false
+        });
+
+
         stream.pipe(out);
         out.on('finish', () => {
             console.log(`${filename} was created.`);
