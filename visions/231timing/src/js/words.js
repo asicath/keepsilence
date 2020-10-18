@@ -5,19 +5,19 @@ const words = {
     'aleph': {
         background: '#fee74d',
         imgSrc: '001.png',
-        minDuration: 1000*1.7,
+        minDuration: 1000*3.0,
         parts: [
-            {text:'A', count: 1, audio: 'low'},
-            {text:'ع', count: 1, audio: 'high'},
-            {text:'u', count: 2, audio: 'high'},
+            {text:'A', count: 1, countx: 4.10, audio: 'high'},
+            {text:'ع', count: 1, countx: 3.86, audio: 'low'},
+            {text:'u', count: 2, countx: 7.05, audio: 'low'},
 
-            {text:'i', count: 1, audio: 'high'},
-            {text:'a', count: 1, audio: 'low'},
-            {text:'o', count: 2, audio: 'high'},
+            {text:'i', count: 1, countx: 4.08, audio: 'low'},
+            {text:'a', count: 1, countx: 3.99, audio: 'high'},
+            {text:'o', count: 2, countx: 8.17, audio: 'low'},
 
-            {text:'u', count: 1, audio: 'high'},
-            {text:'ع', count: 1, audio: 'high'},
-            {text:'a', count: 2, audio: 'low'}
+            {text:'u', count: 1, countx: 3.97, audio: 'low'},
+            {text:'ع', count: 1, countx: 4.44, audio: 'low'},
+            {text:'a', count: 2, countx: 8.34, audio: 'high'}
         ]
     },
     'beth':{
