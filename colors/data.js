@@ -460,25 +460,24 @@ const cards = {
         ]
     },
 
-    "tav": {
-        title: "Tav",
-        paths: ["32"],
-        noCard: true,
+    "spirit": {
+        title: "Spirit",
+        paths: ["31bis-green"],
+        noCard:true,
         cardGroups: [
             {
-                name: "Atu XXI: The Universe",
-                cards: ["t21"]
+                name: "Atu XX: The Aeon",
+                cards: ["t20"]
             },
             {
-                name: "The Small Cards: Saturn",
-                cards: ["w05","w10","c08","s03","d07"]
+                name: "Cards featuring Rainbow",
+                cards: ["t19", "t14", "w08"]
             }
         ]
     },
-
-    "spirit": {
-        title: "Spirit",
-        paths: ["31bis"],
+    "elements": {
+        title: "Elements",
+        paths: ["elemental"],
         noCard:true
     },
 
@@ -565,7 +564,7 @@ const cards = {
     },
     "t14": {
         title: "",
-        paths: ["25"]
+        paths: ["25", "31bis-green"]
     },
     "t15": {
         title: "",
@@ -589,7 +588,7 @@ const cards = {
     },
     "t20": {
         title: "",
-        paths: ["31", "23", "11"]
+        paths: ["31", "31bis-green"]
     },
     "t21": {
         title: "",
@@ -1643,6 +1642,48 @@ const paths = JSON.parse(`{
       }
     ]
   },
+  "31bis-green": {
+    "type": "Element",
+    "name": "Spirit (New Aeon)",
+    "colors": [
+      {
+        "name": "White merging into grey",
+        "back": "FFFFFF",
+        "gradient": [
+          "FFFFFF",
+          "BFBFBF"
+        ]
+      },
+      {
+        "name": "Deep purple, nearly black",
+        "back": "220022"
+      },
+      {
+        "name": "The 7 prismatic colours, the violet being outside",
+        "back": "5C00CC",
+        "circles": [
+          "5C00CC",
+          "001489",
+          "0085CA",
+          "00A550",
+          "FEDD00",
+          "FF6D00",
+          "EF3340"
+        ]
+      },
+      {
+        "name": "White, red, yellow, blue, green (the latter outside)",
+        "back": "00A550",
+        "circles": [
+          "00A550",
+          "0085CA",
+          "FEDD00",
+          "EF3340",
+          "FFFFFF"
+        ]
+      }
+    ]
+  },
   "32bis": {
     "type": "Element",
     "name": "Earth",
@@ -1694,375 +1735,27 @@ const paths = JSON.parse(`{
         "flecked": "FEDD00"
       }
     ]
+  },
+  "elemental": {
+    "type": "Element",
+    "name": "The Four Elements",
+    "colors": [
+      {
+        "name": "Red",
+        "back": "EF3340"
+      },
+      {
+        "name": "Deep blue",
+        "back": "0246BC"
+      },
+      {
+        "name": "Bright pale yellow",
+        "back": "FEE74D"
+      },
+      {
+        "name": "Green",
+        "back": "00A550"
+      }
+    ]
   }
 }`);
-
-
-/*
-const paths = {
-
-    "1": {
-        type: 'Sphere',
-        name: 'Kether',
-        colors: [
-            { back: "ffffff", name: "Brilliance" },
-            { back: "ffffff", name: "White brilliance" },
-            { back: "ffffff", name: "White brilliance" },
-            { back: "ffffff", flecked: "FEDD00", name: "White flecked gold" }
-        ]
-    },
-    "2": {
-        type: 'Sphere',
-        name: 'Chokmah',
-        colors: [
-            { back: "8ABAD3", name: "Pure soft blue" },
-            { back: "bfbfbf", name: "Grey" },
-            { back: "a4b2bf", name: "Blue pearl grey, like mother-of pearl" },
-            { back: "ffffff", flecked: ["ed1c24", "0085ca", "FEDD00"], name: "White, flecked red, blue, and yellow" }
-        ]
-    },
-    "3": {
-        type: 'Sphere',
-        name: 'Binah',
-        colors: [
-            { back: "AE0E36", name: "Crimson" },
-            { back: "000000", name: "Black", fore:'w' },
-            { back: "38200a", name: "Dark brown", fore:'w' },
-            { back: "bfbfbf", flecked: "FDC3C6", name: "Grey flecked pink" }
-        ]
-    },
-    "d": {
-        type: 'Sphere',
-        name: 'Daath',
-        colors: [
-            { back: "9A90CD", name: "Lavender" },
-            { back: "bfbfbf", name: "Grey-white" },
-            { back: "5b00cc", name: "Pure Violet" },
-            { back: "808080", flecked: "FEDD00", name: "Grey flecked gold" }
-        ]
-    },
-    "4": {
-        type: 'Sphere',
-        name: 'Chesed',
-        colors: [
-            { back: "2d0066", name: "Deep Violet" },
-            { back: "0085ca", name: "Blue" },
-            { back: "550055", name: "Deep purple" },
-            { back: "1f649a", flecked: "FEDD00", name: "Deep azure, flecked yellow" }
-        ]
-    },
-    "5": {
-        type: 'Sphere',
-        name: 'Geburah',
-        colors: [
-            { back: "FF6D00", name: "Orange" },
-            { back: "F2301B", name: "Scarlet red" },
-            { back: "ff321c", name: "Bright scarlet" },
-            { back: "ed1c24", flecked: "000000", name: "Red, flecked black" }
-        ]
-    },
-    "6": {
-        type: 'Sphere',
-        name: 'Tiphareth',
-        colors: [
-            //
-            { back: "FDC3C6", name: "Clear pink rose" },
-            { back: "FEDD00", name: "Yellow (gold)" },
-            { back: "f25330", name: "Rich salmon" },
-            { back: "FFCA1A", name: "Gold amber" }
-        ]
-    },
-    "7": {
-        type: 'Sphere',
-        name: 'Netzach',
-        colors: [
-            { back: "ffb734", name: "Amber" },
-            { back: "00A550", name: "Emerald" },
-            { back: "e0f317", name: "Bright yellow green" },
-            { back: "8d8800", flecked: "FEDD00", name: "Olive, flecked gold" }
-        ]
-    },
-    "8": {
-        type: 'Sphere',
-        name: 'Hod',
-        colors: [
-            { back: "7f14aa", name: "Violet Purple" },
-            { back: "FF6D00", name: "Orange" },
-            { back: "B1282B", name: "Red-russet" },
-            { back: "AD8809", flecked: "ffffff", name: "Yellow-brown, flecked white" }
-        ]
-    },
-    "9": {
-        type: 'Sphere',
-        name: 'Yesod',
-        colors: [
-            { back: "001489", name: "Indigo" },
-            { back: "440099", name: "Violet" },
-            { back: "330b33", name: "Very dark purple" },
-            { back: "dedb2c", flecked: "4D91C6", name: "Citrine, flecked azure" }
-        ]
-    },
-    "10": {
-        type: 'Sphere',
-        name: 'Malkuth',
-        colors: [
-            { back: "FEDD00", name: "Yellow" },
-            { back: "000000", quartered:["dedb2c", "8d8800", "731817", "000000"], name: "Citrine, olive, russet, and black" },
-            { back: "000000", quartered:["dedb2c", "8d8800", "731817", "000000"], flecked: "FEDD00", name: "As Queen scale, but flecked with gold" },
-            { back: "000000", rayed:"FEDD00", name: "Black rayed with yellow" }
-        ]
-    },
-    "11": {
-        type: 'Element',
-        name: 'Air',
-        colors: [
-            { back: "fee74d", name: "Bright pale yellow" },
-            { back: "8ABAD3", name: "Sky blue" },
-            { back: "00958D", name: "Blue emerald green" },
-            { back: "00A550", flecked: "FFB000", name: "Emerald, flecked gold"}
-        ]
-    },
-    "12": {
-        type: 'Planet',
-        name: 'Mercury',
-        colors: [
-            { back: "FEDD00", name: "Yellow" },
-            { back: "BB29BB", name: "Purple" },
-            { back: "808080", name: "Grey" },
-            { back: "001489", fore:"dddddd", rayed: "440099", name: "Indigo, rayed violet" }
-        ]
-    },
-    "13": {
-        type: 'Planet',
-        name: 'Luna',
-        colors: [
-            { back: "0085ca", name: "Blue" },
-            { back: "e8e8e8", name: "Silver" },
-            { back: "A5C5D9", name: "Cold pale blue" },
-            { back: "e8e8e8", rayed: "8ABAD3", name: "Silver, rayed sky blue" }
-        ]
-    },
-    "14": {
-        type: 'Planet',
-        name: 'Venus',
-        colors: [
-            { back: "00A550", name:"Emerald Green" },
-            { back: "8ABAD3", name:"Sky blue" },
-            { back: "b2d135", name:"Early spring green" },
-            { back: "a41247", rayed: "B2E79F", name:"Bright rose or cerise, rayed pale green" }
-        ]
-    },
-    "15": {
-        type: 'Zodiac',
-        name: 'Aries',
-        colors: [
-            { back: "F2301B", name: "Scarlet" },
-            { back: "ed1c24", name: "Red" },
-            { back: "f5ac1c", name: "Brilliant flame" },
-            { back: "ff1500", name: "Glowing red" }
-        ]
-    },
-    "16": {
-        type: 'Zodiac',
-        name: 'Taurus',
-        colors: [
-            { back: "FF4E00", name:"Red orange" },
-            { back: "000d59", name:"Deep indigo" },
-            { back: "C7B63C", name:"Deep warm olive" },
-            { back: "5c3312", name:"Rich brown" }
-        ]
-    },
-    "17": {
-        type: 'Zodiac',
-        name: 'Gemini',
-        colors: [
-            { back: "FF6D00", name: "Orange" },
-            { back: "cca3b1", name: "Pale Mauve" },
-            { back: "e8af36", name: "New yellow leather" },
-            { back: "907172", name: "Reddish grey inclined to mauve" }
-        ]
-    },
-    "18": {
-        type: 'Zodiac',
-        name: 'Cancer',
-        colors: [
-            { back: "ffb734", name: "Amber" },
-            { back: "800f13", name: "Maroon" },
-            { back: "d60d0a", name: "Rich bright russet" },
-            { back: "322F12", name: "Dark greenish brown" }
-        ]
-    },
-    "19": {
-        type: 'Zodiac',
-        name: 'Leo',
-        colors: [
-            { back: "E5D708", name: "Yellow, greenish" },
-            { back: "550055", name: "Deep purple" },
-            { back: "808080", name: "Grey" },
-            { back: "ff9934", name: "Reddish amber" }
-        ]
-    },
-    "20": {
-        type: 'Zodiac',
-        name: 'Virgo',
-        colors: [
-            { back: "59B934", name: "Green, yellowish" },
-            { back: "9faeaa", name: "Slate grey" },
-            { back: "558c70", name: "Green grey" },
-            { back: "981733", name: "Plum colour" }
-        ]
-    },
-    "21": {
-        type: 'Planet',
-        name: 'Jupiter',
-        colors: [
-            { back: "7f14aa", name: "Violet Purple" },
-            { back: "0085ca", name: "Blue" },
-            { back: "990099", name: "Rich purple" },
-            { back: "00a8ff", rayed:"fedd00", name: "Bright blue, rayed yellow" }
-        ]
-    },
-    "22": {
-        type: 'Zodiac',
-        name: 'Libra',
-        colors: [
-            { back: "00A550", name: "Emerald Green" },
-            { back: "0085ca", name: "Blue" },
-            { back: "008077", name: "Deep blue-green" },
-            { back: "B2E79F", name: "Pale green" }
-        ]
-    },
-    "23": {
-        type: 'Element',
-        name: 'Water',
-        colors: [
-            { back: "004dab", name: "Deep blue" },
-            { back: "149C88", name: "Sea green" },
-            { back: "5b6300", name: "Deep olive-green" },
-            { back: "ffffff", flecked:"BB29BB", name: "White, flecked purple, like mother-of-pearl" }
-        ]
-    },
-    "24": {
-        type: 'Zodiac',
-        name: 'Scorpio',
-        colors: [
-            { back: "00958d", name:"Green blue" },
-            { back: "9D7446", name:"Dull brown" },
-            { back: "211307", name:"Very dark brown" },
-            { back: "0c1225", name:"Livid indigo brown (like a black beetle)" }
-        ]
-    },
-    "25": {
-        type: 'Zodiac',
-        name: 'Sagittarius',
-        colors: [
-            { back: "0085ca", name: "Blue" },
-            { back: "FEDD00", name: "Yellow" },
-            { back: "00A550", name: "Green" },
-            { back: "003a80", name: "Dark vivid blue" }
-        ]
-    },
-    "26": {
-        type: 'Zodiac',
-        name: 'Capricornus',
-        colors: [
-            { back: "001489", name: "Indigo", fore:'w' },
-            { back: "000000", name: "Black", fore:'w' },
-            { back: "000a44", name: "Blue black", fore:'w' },
-            { back: "28292b", name: "Cold dark grey, approaching black", fore:'w' }
-        ]
-    },
-    "27": {
-        type: 'Planet',
-        name: 'Mars',
-        colors: [
-            { back: "ed2000", name: "Scarlet" },
-            { back: "ed1c24", name: "Red" },
-            { back: "c80815", name: "Venetian red" },
-            { back: "ff0000", rayed:"00A550", name: "Bright red, rayed azure or emerald" }
-        ]
-    },
-    "28": {
-        type: 'Zodiac',
-        name: 'Aquarius',
-        colors: [
-            { back: "440099", name: "Violet" },
-            { back: "8ABAD3", name: "Sky blue" },
-            { back: "ad78bd", name: "Blueish mauve" },
-            { back: "ffe8ff", name: "White tinged purple" }
-        ]
-    },
-    "29": {
-        type: 'Zodiac',
-        name: 'Pisces',
-        colors: [
-            { back: "AE0E36", name: "Crimson (ultra violet)" },
-            { back: "F0DC82", flecked:"F2F2F2", name: "Buff, flecked silver-white"},
-            { back: "C08A80", name: "Light translucent pinkish brown" },
-            { back: "76826a", name: "Stone color" }
-        ]
-    },
-    "30": {
-        type: 'Planet',
-        name: 'Sol',
-        colors: [
-            { back: "FF6D00", name: 'Orange' },
-            { back: "FEDD00", name: 'Gold yellow' },
-            { back: "FFA500", name: 'Rich amber' },
-            { back: "ffb734", rayed: "ed1c24", name: 'Amber, rayed red' }
-        ]
-    },
-    "31": {
-        type: 'Element',
-        name: 'Fire',
-        colors: [
-            { back: "ff2a00", name: "Glowing orange scarlet" },
-            { back: "D9381E", name: "Vermilion" },
-            { back: "ed2000", flecked: "FFB000", name: "Scarlet, flecked gold" },
-            { back: "D9381E", flecked:["AE0E36", "00A550"], name: "Vermilion, flecked crimson and emerald" }
-        ]
-    },
-    "32": {
-        type: 'Planet',
-        name: 'Saturn',
-        colors: [
-            { back: "001489", name: "Indigo" },
-            { back: "000000", name: "Black" },
-            { back: "000a44", name: "Blue black" },
-            { back: "000000", rayed:"0085ca", name: "Black, rayed blue" }
-        ]
-    },
-    "31bis": {
-        type: 'Element',
-        name: 'Spirit',
-        colors: [
-            { back: "ffffff", gradient:["ffffff", "808080"], name: "White merging into grey" },
-            { back: "220022", fore:'w', name: "Deep purple, nearly black" },
-            { back: "440099", circles:["440099", "001489", "0085ca", "00A550", "FEDD00", "FF6D00", "ed1c24"], name: "The 7 prismatic colours, the violet being outside" },
-            { back: "000000", circles:["000000", "0085ca", "FEDD00", "ed1c24", "ffffff"], name: "White, red, yellow, blue, black (the latter outside)" }
-        ]
-    },
-    "32bis": {
-        type: 'Element',
-        name: 'Earth',
-        colors: [
-            { back: "000000", fore:'w', quartered:["dedb2c", "8d8800", "731817", "000000"], name: "Citrine, olive, russet, and black" },
-            { back: "ffb734", name: "Amber" },
-            { back: "38200a", fore:'w', name: "Dark brown" },
-            { back: "000000", fore:'w', flecked:"FEDD00", name: "Black, flecked yellow" }
-        ]
-    },
-    "32bis-green": {
-        type: 'Element',
-        name: 'Earth (Green)',
-        colors: [
-            { back: "00A550", name: "Green" },
-            { back: "ffb734", name: "Amber" },
-            { back: "38200a", name: "Dark brown" },
-            { back: "00A550", flecked:"FEDD00", name: "Green, flecked yellow" }
-        ]
-    }
-
-
-};
-*/
