@@ -201,7 +201,7 @@ $(function() {
 
     // try to get the geo location
     var position = null;
-    if (findLocation && navigator.geolocation) {
+    if (typeof findLocation !== 'undefined' && findLocation === true && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(value) {
             position = value;
         });
