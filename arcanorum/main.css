@@ -1,0 +1,201 @@
+﻿body
+{
+    background-color: #ffffff;
+    font-family: "goudy-old-style", "Vollkorn", Verdana, serif;
+    text-align: justify;
+    overflow-y: scroll;
+    color: #333;
+    background-color: #fff;
+    font-size:18px;
+    padding-bottom: 5em;
+}
+
+
+a, a:visited, a td
+{
+    text-decoration:none;
+    color:#c00;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+a:hover
+{
+    text-decoration:underline;
+}
+
+img.thumb {
+    height: 15em;
+}
+a > img.thumb {
+    height: 13.639em;
+}
+
+p {
+    margin: 0 0 0.5em 0;
+}
+p.quote {
+    margin: 0 2em 0.8em 2em;
+}
+ul {
+    margin-top: 0;
+}
+
+#main {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40em;
+    height:auto;
+    text-align: center;
+}
+
+#main #title {
+    margin-top: 3em;
+    display: inline-block;
+    text-align: center;
+    line-height: normal;
+    font-size:18px;
+    margin-bottom: 2.5em;
+    font-family: "goudy-old-style";
+}
+#main #title .text {
+
+}
+#main #title > div {
+    float:left;
+}
+#main #title .line1 {
+    font-size: 4em;
+    line-height: 1em;
+    padding-right: 0.02em;
+}
+#main #title .line3 {
+    font-size: 1.43em;
+}
+
+#main #info {
+    text-align: left;
+}
+#main #info .section {
+    margin-bottom: 2.5em;
+}
+
+.section > p {
+    margin-bottom: 0.5em;
+}
+.section > p.sectionTitle {
+    font-size: 1.5em;
+    border-bottom: #ccc solid 1px;
+}
+span.sectionSubtitle {
+    font-size: 0.6em;
+    margin-left: 0.5em;
+}
+
+#liber table {
+    padding-right: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+#liber td {
+    padding-right: 1em;
+}
+
+
+
+@media only screen and (max-width : 840px) {
+    #main {
+        width:100%;
+    }
+}
+
+@media only screen and (max-width : 600px) {
+
+    #main #title {
+        font-size: 14px;
+        margin-top: 0;
+    }
+
+    #main .info {
+        text-align: justify;
+        margin-top: 1em;
+        font-size: inherit;
+    }
+    #main .info > div {
+        display: inline;
+    }
+
+    #main #menuRight, #main #menuLeft {
+        margin-top: 1.5em;
+    }
+    #content {
+        margin-top: 1em;
+    }
+
+    #content .section .col {
+        display: block;
+    }
+    #content .section .col .divide {
+        display:none;
+    }
+}
+
+@media only screen and (max-width : 500px) {
+
+    #main #title {
+        font-size: 10px;
+        margin-top: 0;
+    }
+
+    #main #menuRight, #main #menuLeft {
+        margin-left: 1em;
+        float: none;
+    }
+}
+
+#main.electors .section {
+    margin-top:1.5em;
+}
+
+#main.cif .location {
+    font-weight: bold;
+}
+
+#main.cif .list td {
+    padding-top: 0.8em;
+    padding-right: 1em;
+}
+
+
+#main.meetings .past {
+    margin-top: 2em;
+}
+
+#main.meetings .sectionHeader {
+    font-size: 1.2em;
+    color:#000;
+    border-bottom: black solid 0.15em;
+}
+
+#main.meetings .meetingTable {
+    border-collapse: collapse;
+    width:100%;
+}
+#main.meetings .meetingTable td {
+    padding: 0;
+}
+#main.meetings .meetingTable .col1 {
+    width:40%;
+}
+#main.meetings .meetingTable .col2 {
+    text-align: right;
+    width:20%;
+}
+#main.meetings .meetingTable .col3 {
+    text-align: left;
+    padding-left: .4em;
+    width:20%;
+}
+#main.meetings .meetingTable .col4 {
+    text-align: right;
+    width:20%;
+}
