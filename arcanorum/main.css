@@ -99,6 +99,11 @@ span.sectionSubtitle {
 #liber td {
     padding-right: 1em;
 }
+#otherBooks div.list {
+    margin-bottom: 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
 
 
 
@@ -106,96 +111,40 @@ span.sectionSubtitle {
     #main {
         width:100%;
     }
+    #main #title {
+        margin-top: 1em;
+    }
 }
 
 @media only screen and (max-width : 600px) {
 
     #main #title {
-        font-size: 14px;
-        margin-top: 0;
+        font-size: 0.53em;
+        margin-top: 0.2em;
+    }
+    #main #title .line3 {
+        font-size: 2em;
+    }
+    .section > p.sectionTitle {
+        font-size: 1.4em;
+    }
+    .section > p.sectionTitle .sectionSubtitle {
+        display: block;
+        margin-left: 0em;
     }
 
-    #main .info {
-        text-align: justify;
-        margin-top: 1em;
-        font-size: inherit;
+    img.thumb {
+        height: 8em;
     }
-    #main .info > div {
-        display: inline;
+    a > img.thumb {
+        height: 7.2727em;
     }
-
-    #main #menuRight, #main #menuLeft {
-        margin-top: 1.5em;
-    }
-    #content {
-        margin-top: 1em;
-    }
-
-    #content .section .col {
+    .mobileBreak {
         display: block;
     }
-    #content .section .col .divide {
-        display:none;
-    }
 }
 
-@media only screen and (max-width : 500px) {
-
-    #main #title {
-        font-size: 10px;
-        margin-top: 0;
-    }
-
-    #main #menuRight, #main #menuLeft {
-        margin-left: 1em;
-        float: none;
-    }
-}
-
-#main.electors .section {
-    margin-top:1.5em;
-}
-
-#main.cif .location {
-    font-weight: bold;
-}
-
-#main.cif .list td {
-    padding-top: 0.8em;
-    padding-right: 1em;
-}
+@media only screen and (max-width : 400px) {
 
 
-#main.meetings .past {
-    margin-top: 2em;
-}
-
-#main.meetings .sectionHeader {
-    font-size: 1.2em;
-    color:#000;
-    border-bottom: black solid 0.15em;
-}
-
-#main.meetings .meetingTable {
-    border-collapse: collapse;
-    width:100%;
-}
-#main.meetings .meetingTable td {
-    padding: 0;
-}
-#main.meetings .meetingTable .col1 {
-    width:40%;
-}
-#main.meetings .meetingTable .col2 {
-    text-align: right;
-    width:20%;
-}
-#main.meetings .meetingTable .col3 {
-    text-align: left;
-    padding-left: .4em;
-    width:20%;
-}
-#main.meetings .meetingTable .col4 {
-    text-align: right;
-    width:20%;
 }
