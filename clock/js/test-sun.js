@@ -1,5 +1,5 @@
-const Julian = require('julian-date');
-console.log(new Julian().julian());
+//const Julian = require('julian-date');
+//console.log(new Julian().julian());
 
 /*const t = ((julianDate - 2451545.0) / 36525); // time in julian centuries
 const theta0 = 280.46061837 + 360.98564736629 * (julianDate - 2451545.0) + (0.000387933 * t * t) - (t * t * t / 38710000.0);
@@ -33,8 +33,9 @@ function reduce(degrees) {
     return value;
 }
 
+const radiansPerDegree= Math.PI / 180.0;
+
 function sunRightAscension(JD)    {
-    const radiansPerDegree= Math.PI / 180.0;
 
     // the number of days from J2000 (2000 January 1.5, Julian date 2451545.0)
     const T = (JD - 2451545.0) / 36525;

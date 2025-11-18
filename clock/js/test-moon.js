@@ -6,6 +6,8 @@ function reduce(degrees) {
     return value;
 }
 
+const radiansPerDegree= Math.PI / 180.0;
+
 function rev(angle){return angle-Math.floor(angle/360.0)*360.0;}
 function sind(angle){return Math.sin((angle*Math.PI)/180.0);}
 function cosd(angle){return Math.cos((angle*Math.PI)/180.0);}
@@ -169,24 +171,24 @@ function moonRightAscension(JD) {
     const T4= T3*T;
 
     // Moon's mean longitude L'
-    const LP= 218.3164477 + 481267.88123421*T - 0.0015786*T2 + T3/538841 - T4/65194000;
+    const LP= reduce(218.3164477 + 481267.88123421*T - 0.0015786*T2 + T3/538841 - T4/65194000);
 
     // Mean elongation of the Moon
-    const D= 297.8501921 + 445267.1114034*T - 0.0018819*T2 + T3/545868 - T4/113065000;
+    const D= reduce(297.8501921 + 445267.1114034*T - 0.0018819*T2 + T3/545868 - T4/113065000);
 
     // Moons mean anomaly M'
-    const MP= 134.9633964 + 477198.8675055*T + 0.0087414*T2 + T3/69699 - T4/14712000;
+    const MP= reduce(134.9633964 + 477198.8675055*T + 0.0087414*T2 + T3/69699 - T4/14712000);
 
     // Moons argument of latitude
-    const F= 93.2720950 + 483202.0175233*T - 0.0036539*T2 - T3/3526000 + T4/863310000;
+    const F= reduce(93.2720950 + 483202.0175233*T - 0.0036539*T2 - T3/3526000 + T4/863310000);
 
     // Suns mean anomaly
-    const M= 357.5291092 + 35999.0502909*T - 0.0001536*T2 + T3/24490000;
+    const M= reduce(357.5291092 + 35999.0502909*T - 0.0001536*T2 + T3/24490000);
 
     // Additional arguments
-    const A1= 119.75 + 131.849*T;
-    const A2= 53.09 + 479264.290*T;
-    const A3= 313.45 + 481266.484*T;
+    const A1= reduce(119.75 + 131.849*T);
+    const A2= reduce(53.09 + 479264.290*T);
+    const A3= reduce(313.45 + 481266.484*T);
 
     const E= 1 - 0.002516*T - 0.0000074*T2;
     const E2= E*E;
@@ -217,16 +219,21 @@ function moonRightAscension(JD) {
     Sb = Sb - 2235*sind(rev(LP)) + 382*sind(rev(A3)) + 175*sind(rev(A1-F)) + 175*sind(rev(A1+F)) + 127*sind(rev(LP-MP)) - 115*sind(rev(LP+MP));
 
     // geocentric longitude, latitude and distance
-    const mglong = rev(LP + Sl/1000000.0);
-    let mglat = rev(Sb/1000000.0);
-    if (mglat > 180.0) mglat = mglat - 360;
+    const lon = rev(LP + Sl/1000000.0);
+    let lat = rev(Sb/1000000.0);
+    if (lat > 180.0) lat = lat - 360;
 
     // Obliquity of Ecliptic
-    const obl= 23.4393 - 3.563E-7 * (JD - 2451543.5);
+    const e = 23.4393 - 3.563E-7 * (JD - 2451543.5);
 
-    const ra= rev(atan2d(sind(mglong) * cosd(obl) - tand(mglat) * sind(obl), cosd(mglong)));
+    //const ra = rev(atan2d(sind(lon) * cosd(e) - tand(lat) * sind(e), cosd(lon)));
 
-    return ra;
+    const RA = reduce(Math.atan2(
+        Math.sin(lon * radiansPerDegree) * Math.cos(e * radiansPerDegree) - Math.tan(lat * radiansPerDegree) * Math.sin(e * radiansPerDegree),
+        Math.cos(lon * radiansPerDegree)
+    ) / radiansPerDegree);
+
+    return RA;
 }
 
 function julianDate(time) {
